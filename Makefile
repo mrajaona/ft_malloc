@@ -3,6 +3,7 @@ ifeq ($(HOSTTYPE),)
 endif
 
 NAME			=	libft_malloc_$(HOSTTYPE).so
+LNAME			=	libft_malloc.so
 INCLUDE		 	=	./inc/
 
 INC				=	ft_malloc.h
@@ -32,6 +33,7 @@ CC				=	/usr/bin/gcc
 RM				=	/bin/rm -f
 ECHO			=	/usr/bin/printf
 LIB				=	/usr/bin/ar rc
+LN				=	/bin/ln
 
 all				:	$(NAME)
 
@@ -40,13 +42,14 @@ $(OBJS) :		$(INCS)
 $(NAME) :		$(INCS) $(SRCS) $(INCLUDE) $(OBJS)
 				$(CC) $(CFLAGS) $(OBJS)
 				$(LIB) $(NAME) $(OBJS)
+				$(LN) -s $(NAME) $(LNAME)
 				@$(ECHO) "\033[32m> Executable compiled\033[0m\n"
 
 clean	:
 				@$(RM) $(OBJS)
 				@$(ECHO) "\033[31m> Directory cleaned\033[0m\n"
 
-fclean	:				clean
+fclean	:		clean
 				@$(RM) $(NAME)
 				@$(ECHO) "\033[31m> Removed executable\033[0m\n"
 
