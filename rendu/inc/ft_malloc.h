@@ -50,8 +50,8 @@ enum	e_page
 	LARGE
 };
 
-# define TINY_MAX 1 << 6
-# define SMALL_MAX 1 << 10
+# define TINY_MAX (1 << 6)
+# define SMALL_MAX (1 << 10)
 
 /*
 ** addr : returned address

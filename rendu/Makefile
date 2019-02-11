@@ -27,12 +27,11 @@ SRCS			=	$(SRCS_FREE) \
 
 OBJS			=	$(SRCS:.c=.o)
 
-CFLAGS			=	-Wall -Wextra -Werror -shared -I $(INCLUDE) -c
+CFLAGS			=	-Wall -Wextra -Werror -fpic -I $(INCLUDE) -c
 
 CC				=	/usr/bin/gcc
 RM				=	/bin/rm -f
 ECHO			=	/usr/bin/printf
-LIB				=	/usr/bin/ar rc
 LN				=	/bin/ln
 
 all				:	$(NAME)
@@ -40,7 +39,7 @@ all				:	$(NAME)
 $(OBJS) :		$(INCS)
 
 $(NAME) :		$(INCS) $(SRCS) $(INCLUDE) $(OBJS)
-				$(LIB) $(NAME) $(OBJS)
+				$(CC) -shared -o $(NAME) $(OBJS)
 				$(LN) -s $(NAME) $(LNAME)
 				@$(ECHO) "\033[32m> Executable compiled\033[0m\n"
 
