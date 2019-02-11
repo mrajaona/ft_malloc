@@ -40,7 +40,6 @@ all				:	$(NAME)
 $(OBJS) :		$(INCS)
 
 $(NAME) :		$(INCS) $(SRCS) $(INCLUDE) $(OBJS)
-				$(CC) $(CFLAGS) $(OBJS)
 				$(LIB) $(NAME) $(OBJS)
 				$(LN) -s $(NAME) $(LNAME)
 				@$(ECHO) "\033[32m> Executable compiled\033[0m\n"
@@ -50,7 +49,7 @@ clean	:
 				@$(ECHO) "\033[31m> Directory cleaned\033[0m\n"
 
 fclean	:		clean
-				@$(RM) $(NAME)
+				@$(RM) $(NAME) $(LNAME)
 				@$(ECHO) "\033[31m> Removed executable\033[0m\n"
 
 re		:		fclean all
