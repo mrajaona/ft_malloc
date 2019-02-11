@@ -14,7 +14,8 @@ SRC_FREE		=	free.c
 SRCS_FREE		=	$(addprefix $(DIR_FREE), $(SRC_FREE))
 
 DIR_MALLOC		=	./src/malloc/
-SRC_MALLOC		=	malloc.c
+SRC_MALLOC		=	malloc.c \
+					zone.c
 SRCS_MALLOC		=	$(addprefix $(DIR_MALLOC), $(SRC_MALLOC))
 
 DIR_REALLOC		=	./src/realloc/
@@ -22,9 +23,14 @@ SRC_REALLOC		=	realloc.c \
 					ft_memcpy.c
 SRCS_REALLOC	=	$(addprefix $(DIR_REALLOC), $(SRC_REALLOC))
 
+DIR_UTIL		=	./src/util/
+SRC_UTIL		=	util.c
+SRCS_UTIL		=	$(addprefix $(DIR_UTIL), $(SRC_UTIL))
+
 SRCS			=	$(SRCS_FREE) \
 					$(SRCS_MALLOC) \
-					$(SRCS_REALLOC)
+					$(SRCS_REALLOC) \
+					$(SRCS_UTIL)
 
 OBJS			=	$(SRCS:.c=.o)
 

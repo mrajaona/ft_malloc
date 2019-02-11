@@ -59,7 +59,6 @@ enum	e_page
 ** prev : NULL | address of previous identifier
 ** next : NULL | address of next identifier
 */
-// TODO : alignment
 typedef struct	s_identifier
 {
 	enum e_page			type;
@@ -70,11 +69,13 @@ typedef struct	s_identifier
 
 /*
 ** type : type of allocation
+** size : allocated size in bytes (including identifier)
 ** first : NULL | addr of first identifier
 */
 typedef struct	s_zone_id
 {
 	enum e_page		type;
+	size_t			size;
 	t_identifier	*first;
 }				t_zone_id;
 

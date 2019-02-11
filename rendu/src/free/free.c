@@ -8,6 +8,6 @@ void	free(void *ptr)
 	if (ptr == NULL)
 		return ;
 	id = (t_identifier *)(ptr - sizeof(t_identifier));
-	if (id->type == LARGE)
+	// if (id->type == LARGE)
 		munmap(id, id->size + sizeof(t_identifier));
 }
