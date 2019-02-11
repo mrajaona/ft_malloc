@@ -18,7 +18,8 @@ SRC_MALLOC		=	malloc.c
 SRCS_MALLOC		=	$(addprefix $(DIR_MALLOC), $(SRC_MALLOC))
 
 DIR_REALLOC		=	./src/realloc/
-SRC_REALLOC		=	realloc.c
+SRC_REALLOC		=	realloc.c \
+					ft_memcpy.c
 SRCS_REALLOC	=	$(addprefix $(DIR_REALLOC), $(SRC_REALLOC))
 
 SRCS			=	$(SRCS_FREE) \

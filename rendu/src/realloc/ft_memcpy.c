@@ -1,6 +1,6 @@
 #include "ft_malloc.h"
 
-void                    *ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	char		*dst;
 	const char	*srcs;
