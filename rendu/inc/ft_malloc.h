@@ -91,9 +91,15 @@ typedef struct	s_map_list
 	struct s_identifier	*next;
 }				t_map_list;
 
+size_t	align(size_t size);
+
 void	free(void *ptr);
+
 void	*malloc(size_t size);
+
 void	*realloc(void *ptr, size_t size);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
+
 void	show_mem_alloc();
 
 #endif

@@ -1,6 +1,6 @@
 #include "ft_malloc.h"
 
-static size_t		align(size_t size)
+size_t				align(size_t size)
 {
 	int				page_size;
 	size_t			full;
@@ -39,7 +39,7 @@ void	*malloc(size_t size)
 
 	write(1, "malloc\n", 7);
 	id = NULL;
-	//if (size > SMALL_MAX)
+	// if (size > SMALL_MAX)
 		id = ft_malloc_large(size);
 	return (id + sizeof(t_identifier));
 }
