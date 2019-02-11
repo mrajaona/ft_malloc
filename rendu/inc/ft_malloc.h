@@ -54,7 +54,6 @@ enum	e_page
 # define SMALL_MAX (1 << 10)
 
 /*
-** addr : returned address
 ** type : type of allocation
 ** size : allocated size in bytes (not including identifier)
 ** prev : NULL | address of previous identifier
@@ -63,7 +62,6 @@ enum	e_page
 // TODO : alignment
 typedef struct	s_identifier
 {
-	void				*addr;
 	enum e_page			type;
 	size_t				size;
 	struct s_identifier	*prev;
@@ -79,6 +77,19 @@ typedef struct	s_zone_id
 	enum e_page		type;
 	t_identifier	*first;
 }				t_zone_id;
+
+/*
+** list of mapped zones
+** type : type of allocation
+** prev : NULL | address of previous zone
+** next : NULL | address of next zone
+*/
+typedef struct	s_map_list
+{
+	enum e_page			type;
+	struct s_identifier	*prev;
+	struct s_identifier	*next;
+}				t_map_list;
 
 void	free(void *ptr);
 void	*malloc(size_t size);
