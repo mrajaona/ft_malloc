@@ -27,7 +27,7 @@ SRCS			=	$(SRCS_FREE) \
 
 OBJS			=	$(SRCS:.c=.o)
 
-CFLAGS			=	-Wall -Wextra -Werror -I $(INCLUDE) -c
+CFLAGS			=	-Wall -Wextra -Werror -shared -I $(INCLUDE) -c
 
 CC				=	/usr/bin/gcc
 RM				=	/bin/rm -f
