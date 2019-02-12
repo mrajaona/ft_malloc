@@ -1,4 +1,4 @@
-#include "ft_malloc.h"
+#include "ft_malloc_util.h"
 
 size_t			align(size_t size)
 {
@@ -10,37 +10,50 @@ size_t			align(size_t size)
 	return (size);
 }
 
-t_block_id		*identify(void *addr)
-{
-	// check large
-	// check small
-	// check tiny
-	return ((t_block_id *)(addr - sizeof(t_block_id)));
-}
+/**** identify ****/
 
-t_block_id		*add_id(enum e_type type, void *addr)
+static t_block_id	*find_id(t_block_id *lst, void *addr)
 {
 	t_block_id	*id;
 
-	id = (t_block_id *)(addr);
-
-	id->type = type;
-	id->addr = addr + sizeof(t_block_id);
-
-	id->prev = NULL;
-	id->next = NULL;
-
-	return (id);
-}
-
-void			rm_id(t_block_id *id)
-{
-	if (id->prev != NULL)
-		id->prev->next = id->next;
-	else
+	id = lst;
+	while (id)
 	{
-		// update lst
+		if (id->addr == addr)
+			return (id);
+		id = id->next;
 	}
-	if (id->next != NULL)
-		id->next->prev = id->prev;
+	return (NULL);
 }
+
+t_block_id			*identify(void *addr)
+{
+	t_block_id	*id;
+	//t_zone_id	*zone;
+
+	// check large
+	if ((id = find_id(g_lst_large, addr)) != NULL)
+		return (id);
+	/*
+	// check small
+	zone = g_lst_small;
+	while (zone)
+	{
+		if (zone->map_start <= addr && zone->map_end >= addr)
+			if ((id = find_id(zone->lst_ids, addr)) != NULL)
+				return (id);
+		zone = zone->next;
+	}
+	// check tiny
+	zone = g_lst_tiny;
+	while (zone)
+	{
+		if (zone->map_start <= addr && zone->map_end >= addr)
+			if ((id = find_id(zone->lst_ids, addr)) != NULL)
+				return (id);
+		zone = zone->next;
+	}
+	*/
+	return (NULL);
+}
+

@@ -1,36 +1,62 @@
-#include "ft_malloc.h"
+#include "ft_malloc_util.h"
 
-static t_block_id	*ft_malloc_large(size_t size)
+t_zone_id	*g_lst_tiny = NULL;
+t_zone_id	*g_lst_small = NULL;
+t_block_id	*g_lst_large = NULL;
+/*
+static t_block_id	*check_zone(t_zone_id *zone, size_t size)
 {
-	void		*addr;
 	t_block_id	*id;
-	size_t		aligned;
 
-	aligned = align(size + sizeof(t_block_id));
-	addr = mmap(NULL, aligned, MMAP_PROT, MMAP_FLAGS, MMAP_FD, MMAP_OFFSET); // check NULL
+	id = zone->lst_ids;
+	while (id)
+	{
+		if (id->isfree == true && id->size >= size)
+			return (id);
+		id = id->next;
+	}
+	return (NULL);
+}
+*/
+/*
+static void	*ft_malloc(size_t size, enum e_type type, t_zone_id *lst)
+{
+	return (NULL);
+}
+*/
+static void	*ft_malloc_large(size_t size)
+{
+	size_t		length;
+	t_block_id	*id;
+	
+	length = align(size + sizeof(t_block_id));
+	if (
+		(id = (t_block_id *)mmap(
+			NULL, length, MMAP_PROT, MMAP_FLAGS, MMAP_FD, MMAP_OFFSET
+		)) == MAP_FAILED
+	)
+		return (NULL);
 
-	id = add_id(LARGE, addr);
-	id->size = aligned - sizeof(t_block_id);
-	return (id);
+	id->type = LARGE;
+	id->addr = id + sizeof(t_block_id);
+	id->size = length - sizeof(t_block_id);
+	id->isfree = false;
+
+	id->prev = NULL;
+	id->next = g_lst_large;
+	g_lst_large = id;
+
+	return (id == NULL ? NULL : id->addr);
 }
 
-/*
-** allocate size + sizeof(t_block_id)
-** sets identifier
-** returns id.addr
-*/
 void	*malloc(size_t size)
 {
-	t_block_id			*id;
-	/*
-	static t_zone_id	*lst_tiny = NULL;
-	static t_zone_id	*lst_small = NULL;
-	static t_block_id	*lst_large = NULL;
-	*/
 	write(1, "m", 1);
-	id = NULL;
-	// if (size > SMALL_MAX)
-		id = ft_malloc_large(size);
-	// check id == NULL
-	return (id->addr);
+/*
+	if (size <= TINY_SIZE_MAX)
+		return (ft_malloc(size, TINY, g_lst_tiny));
+	else if (size <= SMALL_SIZE_MAX)
+		return (ft_malloc(size, SMALL, g_lst_small));
+	else
+*/		return (ft_malloc_large(size));
 }
