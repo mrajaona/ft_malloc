@@ -70,7 +70,7 @@ enum	e_type
 /*
 ** type : type of allocation
 ** addr : adress returned to user
-** size : allocated size in bytes (not including identifier)
+** size : allocated size in bytes (including identifier)
 ** prev : NULL | address of previous identifier
 ** next : NULL | address of next identifier
 */
@@ -82,7 +82,7 @@ typedef struct	s_block_id
 	bool				isfree;
 	struct s_block_id	*prev;
 	struct s_block_id	*next;
-}				t_block_id;
+}				t_chunk_id;
 
 /*
 ** type : type of allocation
@@ -97,7 +97,7 @@ typedef struct	s_zone_id
 	enum e_type			type;
 	void				*map_start;
 	void				*map_end;
-	t_block_id			*lst_ids;
+	t_chunk_id			*lst_ids;
 	struct s_zone_id	*prev;
 	struct s_zone_id	*next;
 }				t_zone_id;
@@ -107,10 +107,10 @@ typedef struct	s_zone_id
 */
 extern t_zone_id	*g_lst_tiny;
 extern t_zone_id	*g_lst_small;
-extern t_block_id	*g_lst_large;
+extern t_chunk_id	*g_lst_large;
 
 size_t		align(size_t size);
-t_block_id	*identify(void *ptr);
+t_chunk_id	*identify(void *ptr);
 
 void		*ft_memcpy(void *dest, const void *src, size_t n);
 

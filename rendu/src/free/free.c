@@ -3,7 +3,7 @@
 // convert to free slot
 
 // merge consecutive free slots
-static void	merge(t_block_id *first, t_block_id *second)
+static void	merge(t_chunk_id *first, t_chunk_id *second)
 {
 	first->next = second->next;
 	if (first->next)
@@ -17,10 +17,9 @@ static void	merge(t_block_id *first, t_block_id *second)
 	second->next = NULL;
 }
 
-
 void	free(void *addr)
 {
-	t_block_id	*id;
+	t_chunk_id	*id;
 
 	write(1, "f", 1);
 	if (!addr)
@@ -43,6 +42,6 @@ void	free(void *addr)
 			id->prev->next = id->next;
 		else
 			g_lst_large = id->next;
-		munmap(id, id->size + sizeof(t_block_id));
+		munmap(id, id->size);
 	}
 }
