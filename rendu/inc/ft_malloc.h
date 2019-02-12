@@ -50,8 +50,11 @@ enum	e_page
 	LARGE
 };
 
-# define TINY_MAX (1 << 6)
-# define SMALL_MAX (1 << 10)
+# define TINY_SIZE_MAX (1 << 6)
+# define TINY_N_MAX 100
+
+# define SMALL_SIZE_MAX (1 << 10)
+# define SMALL_N_MAX 100
 
 /*
 ** type : type of allocation
@@ -70,13 +73,15 @@ typedef struct	s_identifier
 /*
 ** type : type of allocation
 ** size : allocated size in bytes (including identifier)
-** first : NULL | addr of first identifier
+** lst_alloc : NULL | addr of first allocated identifier
+** lst_free : NULL | addr of first free identifier
 */
 typedef struct	s_zone_id
 {
 	enum e_page		type;
 	size_t			size;
-	t_identifier	*first;
+	t_identifier	*lst_alloc;
+	t_identifier	*lst_free;
 }				t_zone_id;
 
 /*
