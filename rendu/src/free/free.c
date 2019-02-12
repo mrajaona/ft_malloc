@@ -1,13 +1,23 @@
 #include "ft_malloc.h"
 
-void	free(void *ptr)
-{
-	t_identifier	*id;
+// convert to free slot
 
-	write(1, "free\n", 5);
-	if (ptr == NULL)
+// merge consectutive free slots
+
+void	free(void *addr)
+{
+	t_block_id	*id;
+
+	write(1, "f", 1);
+	if (addr == NULL)
 		return ;
-	id = (t_identifier *)(ptr - sizeof(t_identifier));
+	id = identify(addr);
+	rm_id(id);
 	// if (id->type == LARGE)
-		munmap(id, id->size + sizeof(t_identifier));
+		munmap(id, id->size + sizeof(t_block_id));
+		// munmap(id->addr, id->size);
+
+	// update lst_alloc and lst_free
+	// delete zone if necessary. update lst_tiny or lst_small.
+
 }

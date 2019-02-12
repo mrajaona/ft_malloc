@@ -39,36 +39,42 @@
 ** N >= 100n
 ** M >= 100m
 ** 
-** malloc(1 - n) -> TINY
-** malloc(n+1 - m) -> SMALL
+** malloc(1 ~ n) -> TINY
+** malloc(n+1 ~ m) -> SMALL
 ** malloc(>= m+1) -> LARGE (hors zone == mmap())
 */
-enum	e_page
+enum	e_type
 {
 	TINY,
 	SMALL,
 	LARGE
 };
 
+# define TINY_SIZE_MIN 1
 # define TINY_SIZE_MAX (1 << 6)
-# define TINY_N_MAX 100
+# define TINY_N 100
 
+# define SMALL_SIZE_MIN (TINY_SIZE_MIN + 1)
 # define SMALL_SIZE_MAX (1 << 10)
-# define SMALL_N_MAX 100
+# define SMALL_N 100
+
+# define LARGE_SIZE_MIN (SMALL_SIZE_MAX + 1)
 
 /*
 ** type : type of allocation
+** addr : adress returned to user
 ** size : allocated size in bytes (not including identifier)
 ** prev : NULL | address of previous identifier
 ** next : NULL | address of next identifier
 */
-typedef struct	s_identifier
+typedef struct	s_block_id
 {
-	enum e_page			type;
+	enum e_type			type;
+	void				*addr;
 	size_t				size;
-	struct s_identifier	*prev;
-	struct s_identifier	*next;
-}				t_identifier;
+	struct s_block_id	*prev;
+	struct s_block_id	*next;
+}				t_block_id;
 
 /*
 ** type : type of allocation
@@ -78,10 +84,10 @@ typedef struct	s_identifier
 */
 typedef struct	s_zone_id
 {
-	enum e_page		type;
-	size_t			size;
-	t_identifier	*lst_alloc;
-	t_identifier	*lst_free;
+	enum e_type	type;
+	size_t		size;
+	t_block_id	*lst_alloc;
+	t_block_id	*lst_free;
 }				t_zone_id;
 
 /*
@@ -92,20 +98,24 @@ typedef struct	s_zone_id
 */
 typedef struct	s_map_list
 {
-	enum e_page			type;
-	struct s_identifier	*prev;
-	struct s_identifier	*next;
+	enum e_type	type;
+	t_block_id	*prev;
+	t_block_id	*next;
 }				t_map_list;
 
-size_t	align(size_t size);
+size_t		align(size_t size);
+t_block_id	*identify(void *ptr);
 
-void	free(void *ptr);
+t_block_id	*add_id(enum e_type type, void *addr);
+void		rm_id(t_block_id *id);
 
-void	*malloc(size_t size);
+void		free(void *ptr);
 
-void	*realloc(void *ptr, size_t size);
-void	*ft_memcpy(void *dest, const void *src, size_t n);
+void		*malloc(size_t size);
 
-void	show_mem_alloc();
+void		*realloc(void *ptr, size_t size);
+void		*ft_memcpy(void *dest, const void *src, size_t n);
+
+void		show_mem_alloc();
 
 #endif
