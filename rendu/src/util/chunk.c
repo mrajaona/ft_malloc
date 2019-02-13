@@ -38,7 +38,7 @@ void	split(t_chunk_id *first, size_t size)
 	first->next = second;
 
 	second->type = first->type;
-	second->addr = second + sizeof(t_chunk_id);
+	second->addr = (char *)second + sizeof(t_chunk_id);
 	second->size = second_size;
 	second->isfree = true;
 

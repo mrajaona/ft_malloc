@@ -38,7 +38,7 @@ static void	*ft_malloc_large(size_t size)
 	size_t		length;
 	t_chunk_id	*id;
 	
-	write(1, "_", 1);
+	write(1, "L", 1);
 	length = mmap_align(chunk_align(size));
 	if (
 		(id = (t_chunk_id *)mmap(
@@ -51,10 +51,7 @@ static void	*ft_malloc_large(size_t size)
 	}
 
 	id->type = LARGE;
-	id->addr = (void *)id + sizeof(t_chunk_id) * 8;
-
-	if (id->addr - sizeof(t_chunk_id) * 8 != (void *)id)
-		write(1, "\ngne\n", 5);
+	id->addr = (char *)id + sizeof(t_chunk_id);
 
 	id->size = length;
 	id->isfree = false;
@@ -63,9 +60,11 @@ static void	*ft_malloc_large(size_t size)
 	// order does not matter here
 	id->prev = NULL;
 	id->next = g_lst_large;
+	if (g_lst_large)
+		g_lst_large->prev = id;
 	g_lst_large = id;
 
-	return (!id ? NULL : id->addr);
+	return (id->addr);
 }
 
 void	*malloc(size_t size)

@@ -43,6 +43,7 @@ void	free(void *addr)
 	
 	else // if (id->type == LARGE)
 	{
+		write(1, "L", 1);
 		if (id->next)
 			id->next->prev = id->prev;
 		if (id->prev)
