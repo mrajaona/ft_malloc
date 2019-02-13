@@ -15,20 +15,36 @@ void	*realloc(void *addr, size_t size)
 	}
 	if ((id = identify(addr)) == NULL)
 		return (NULL);
-	if (id->type == LARGE)
+	/*
+	if (aligned_size == id_size)
+		return (addr);
+	else if (aligned_size < id->size)
 	{
-		if ((ptr = malloc(size)) == NULL)
-		{
-			errno = ENOMEM;
-			return (addr);
-		}
-		ft_memcpy(ptr, addr, id->size);
-		free(addr);
-		return (ptr);
+		free(useless part);
 	}
+	*/
 	else
 	{
-
+		if (
+			id->type != LARGE
+			&& id->next->isfree == NULL
+			&& (id->size + id->next->size) > (size + sizeof(t_chunk_id))
+		)
+		{
+			; // merge and split
+			return (addr);
+		}
+		else
+		{
+			if ((ptr = malloc(size)) == NULL)
+			{
+				errno = ENOMEM;
+				return (addr);
+			}
+			ft_memcpy(ptr, addr, id->size);
+			free(addr);
+			return (ptr);
+		}
 	}
 	return (NULL);
 }

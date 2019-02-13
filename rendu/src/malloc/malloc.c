@@ -4,11 +4,20 @@ t_zone_id	*g_lst_tiny = NULL;
 t_zone_id	*g_lst_small = NULL;
 t_chunk_id	*g_lst_large = NULL;
 
+static t_zone_id	*create_zone(t_zone_id **lst)
+{
+	// create zone
+	;
+	// create single free chunk
+	;
+}
+
 static t_chunk_id	*check_zone(t_zone_id *zone, size_t size)
 {
 	t_chunk_id	*id;
 
-	id = zone->lst_ids;
+	id = (t_chunk_id *)(zone + sizeof(t_zone_id));
+	size = chunk_align(size);
 	while (id)
 	{
 		if (id->isfree == true && id->size >= size)
@@ -18,9 +27,28 @@ static t_chunk_id	*check_zone(t_zone_id *zone, size_t size)
 	return (NULL);
 }
 
-static void	*ft_malloc(size_t size, enum e_type type, t_zone_id *lst)
+static void	*ft_malloc(size_t size, enum e_type type, t_zone_id **lst)
 {
-	return (NULL);
+	t_chunk_id	*id;
+	t_zone_id	*cursor;
+
+	if (!lst) // ???
+		return ;
+	cursor = *lst; // can be NULL
+	id = NULL;
+	while (cursor && !id)
+	{
+		id = check_zone(cursor, size);
+		cursor = cursor->next;
+	}
+	if (!id) // need new zone
+	{
+		if ((cursor = create_zone(lst, type)) == NULL)
+			return (NULL);
+		id = (t_chunk_id *)(cursor + sizeof(t_zone_id));
+	}
+	split(id, size);
+	return (id);
 }
 
 static void	*ft_malloc_large(size_t size)
@@ -28,7 +56,7 @@ static void	*ft_malloc_large(size_t size)
 	size_t		length;
 	t_chunk_id	*id;
 	
-	length = align(size + sizeof(t_chunk_id));
+	length = mmap_align(chunk_align(size));
 	if (
 		(id = (t_chunk_id *)mmap(
 			NULL, length, MMAP_PROT, MMAP_FLAGS, MMAP_FD, MMAP_OFFSET

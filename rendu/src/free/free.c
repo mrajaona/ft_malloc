@@ -1,25 +1,9 @@
 #include "ft_malloc_util.h"
 
-// convert to free slot
-
-// merge consecutive free slots
-static void	merge(t_chunk_id *first, t_chunk_id *second)
-{
-	first->next = second->next;
-	if (first->next)
-		first->next->prev = first;
-	first->size = first->size + second->size;
-
-	second->addr = NULL;
-	second->size = 0;
-	second->isfree = true;
-	second->prev = NULL;
-	second->next = NULL;
-}
-
 void	free(void *addr)
 {
 	t_chunk_id	*id;
+	t_zone_id	*zone;
 
 	write(1, "f", 1);
 	if (!addr)
@@ -31,8 +15,15 @@ void	free(void *addr)
 		id->isfree = true;
 		if (id->next && id->next->isfree == false)
 			merge(id, id->next);
-		// check empty list
-		//	munmap empty list
+		if ((!id->prev) && (!id->next)) // empty zone
+		{
+			zone = (t_zone_id *)(id - sizeof(t_zone_id));
+			if (zone->next)
+				zone->next->prev = zone->prev;
+			if (zone->prev)
+				zone->prev->next = zone->next;
+			munmap(zone, zone->size);
+		}
 	}
 	else // if (id->type == LARGE)
 	{
