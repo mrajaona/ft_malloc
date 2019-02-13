@@ -4,28 +4,6 @@ t_zone_id	*g_lst_tiny = NULL;
 t_zone_id	*g_lst_small = NULL;
 t_chunk_id	*g_lst_large = NULL;
 
-static t_zone_id	*create_zone(t_zone_id **lst)
-{
-	// create zone
-	;
-	// create single free chunk
-	;
-}
-
-static t_chunk_id	*check_zone(t_zone_id *zone, size_t size)
-{
-	t_chunk_id	*id;
-
-	id = (t_chunk_id *)(zone + sizeof(t_zone_id));
-	size = chunk_align(size);
-	while (id)
-	{
-		if (id->isfree == true && id->size >= size)
-			return (id);
-		id = id->next;
-	}
-	return (NULL);
-}
 
 static void	*ft_malloc(size_t size, enum e_type type, t_zone_id **lst)
 {
@@ -33,7 +11,7 @@ static void	*ft_malloc(size_t size, enum e_type type, t_zone_id **lst)
 	t_zone_id	*cursor;
 
 	if (!lst) // ???
-		return ;
+		return (NULL);
 	cursor = *lst; // can be NULL
 	id = NULL;
 	while (cursor && !id)
@@ -83,9 +61,9 @@ void	*malloc(size_t size)
 {
 	write(1, "m", 1);
 	if (size <= TINY_SIZE_MAX)
-		return (ft_malloc(size, TINY, g_lst_tiny));
+		return (ft_malloc(size, TINY, &g_lst_tiny));
 	else if (size <= SMALL_SIZE_MAX)
-		return (ft_malloc(size, SMALL, g_lst_small));
+		return (ft_malloc(size, SMALL, &g_lst_small));
 	else
 		return (ft_malloc_large(size));
 }

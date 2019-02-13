@@ -4,31 +4,32 @@ void	*realloc(void *addr, size_t size)
 {
 	t_chunk_id	*id;
 	void		*ptr;
+	size_t		aligned;
 
 	write(1, "r", 1);
 	if (!addr)
 		return (malloc(size));
 	if (size == 0)
 	{
-		free(ptr);
-		return ;
+		free(addr);
+		return (NULL);
 	}
 	if ((id = identify(addr)) == NULL)
 		return (NULL);
-	/*
-	if (aligned_size == id_size)
+	aligned = chunk_align(size);
+	if (aligned == id->size)
 		return (addr);
-	else if (aligned_size < id->size)
+	else if (aligned < id->size)
 	{
-		free(useless part);
+		// free(useless part);
+		return (addr);
 	}
-	*/
 	else
 	{
 		if (
 			id->type != LARGE
-			&& id->next->isfree == NULL
-			&& (id->size + id->next->size) > (size + sizeof(t_chunk_id))
+			&& id->next->isfree == true
+			&& (id->size + id->next->size) >= chunk_align(size)
 		)
 		{
 			; // merge and split
