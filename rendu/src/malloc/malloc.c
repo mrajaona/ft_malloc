@@ -49,6 +49,8 @@ static void	*ft_malloc_large(size_t size)
 	id->size = length;
 	id->isfree = false;
 
+	// add to g_lst_large start
+	// order does not matter here
 	id->prev = NULL;
 	id->next = g_lst_large;
 	g_lst_large = id;
