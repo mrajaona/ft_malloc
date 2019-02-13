@@ -1,10 +1,9 @@
 #include "ft_malloc_util.h"
 
-// ptr->addr
-
 // merge consecutive slots
 void	merge(t_chunk_id *first, t_chunk_id *second)
 {
+	write(1, "\nmerge ", 7);
 	if (!second)
 		return ;
 	first->next = second->next;
@@ -24,18 +23,21 @@ void	split(t_chunk_id *first, size_t size)
 	size_t		aligned;
 	size_t		second_size;
 
+	write(1, "\nsplit ", 7);
 	aligned = chunk_align(size);
 	second_size = first->size - aligned;
 	first->isfree = false;
 	// TODO : check aligned
 
-	// check second_size > MIN_ALLOC_SIZE
 	if (second_size < chunk_align(0))
 		return ;
 
 	first->size = aligned;
 
 	second = first + first->size;
+	first->next = second;
+
+	second->type = first->type;
 	second->addr = second + sizeof(t_chunk_id);
 	second->size = second_size;
 	second->isfree = true;
@@ -43,5 +45,4 @@ void	split(t_chunk_id *first, size_t size)
 	second->prev = first;
 	second->next = first->next;
 
-	first->next = second;
 }

@@ -60,15 +60,26 @@ t_zone_id	*create_zone(enum e_type type)
 
 t_chunk_id	*check_zone(t_zone_id *zone, size_t size)
 {
+	t_chunk_id	*cursor;
 	t_chunk_id	*id;
 
-	id = (t_chunk_id *)(zone + sizeof(t_zone_id));
+	id = NULL;
+	cursor = (t_chunk_id *)(zone + sizeof(t_zone_id));
 	size = chunk_align(size);
-	while (id)
+	while (cursor)
 	{
-		if (id->isfree == true && id->size >= size)
-			return (id);
-		id = id->next;
+		if (
+			cursor->isfree == true && cursor->size >= size
+			&& (!id || id->size > cursor->size)
+		)
+		{
+			write(1, ":", 1);
+			id = cursor;
+			// return (id);
+		}
+		else
+			write(1, ".", 1);
+		cursor = cursor->next;
 	}
-	return (NULL);
+	return (id);
 }

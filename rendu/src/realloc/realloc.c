@@ -6,7 +6,7 @@ void	*realloc(void *addr, size_t size)
 	void		*ptr;
 	size_t		aligned;
 
-	write(1, "r", 1);
+	write(1, "\nr", 2);
 	if (!addr)
 		return (malloc(size));
 	if (size == 0)
