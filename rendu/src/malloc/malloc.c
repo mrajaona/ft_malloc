@@ -17,13 +17,18 @@ static void	*ft_malloc(size_t size, enum e_type type)
 	{
 		id = check_zone(cursor, size);
 		cursor = cursor->next;
+		write(1, ".", 1);
 	}
 	if (!id) // need new zone
 	{
+		write(1, "?", 1);
 		if ((cursor = create_zone(type)) == NULL)
 			return (NULL);
 		id = (t_chunk_id *)(cursor + sizeof(t_zone_id));
 	}
+	else
+		write(1, "!", 1);
+
 	split(id, size);
 	return (id);
 }
@@ -33,6 +38,7 @@ static void	*ft_malloc_large(size_t size)
 	size_t		length;
 	t_chunk_id	*id;
 	
+	write(1, "_", 1);
 	length = mmap_align(chunk_align(size));
 	if (
 		(id = (t_chunk_id *)mmap(

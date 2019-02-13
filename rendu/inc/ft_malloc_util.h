@@ -64,10 +64,10 @@ enum	e_type
 };
 
 # define TINY_SIZE_MIN 1
-# define TINY_SIZE_MAX (1 << 6)
+# define TINY_SIZE_MAX (1 << 4)
 # define TINY_N 100
 
-# define SMALL_SIZE_MIN (TINY_SIZE_MIN + 1)
+# define SMALL_SIZE_MIN (TINY_SIZE_MAX + 1)
 # define SMALL_SIZE_MAX (1 << 10)
 # define SMALL_N 100
 
