@@ -21,7 +21,8 @@ void	*realloc(void *addr, size_t size)
 		return (addr);
 	else if (aligned < id->size)
 	{
-		// free(useless part);
+		split(id, size);
+		free(id->next);
 		return (addr);
 	}
 	else
@@ -29,10 +30,11 @@ void	*realloc(void *addr, size_t size)
 		if (
 			id->type != LARGE
 			&& id->next->isfree == true
-			&& (id->size + id->next->size) >= chunk_align(size)
+			&& (id->size + id->next->size) >= aligned
 		)
 		{
-			; // merge and split
+			merge(id, id->next);
+			split(id, size);
 			return (addr);
 		}
 		else

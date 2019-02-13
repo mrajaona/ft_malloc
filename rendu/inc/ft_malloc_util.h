@@ -117,7 +117,7 @@ size_t		chunk_align(size_t size);
 size_t		zone_align(size_t size);
 size_t		mmap_align(size_t size);
 
-t_zone_id	*create_zone(t_zone_id **lst, enum e_type type);
+t_zone_id	*create_zone(enum e_type type);
 t_chunk_id	*check_zone(t_zone_id *zone, size_t size);
 
 void		merge(t_chunk_id *first, t_chunk_id *second);

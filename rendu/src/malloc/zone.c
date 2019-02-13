@@ -1,8 +1,8 @@
 #include "ft_malloc_util.h"
 
-t_zone_id	*create_zone(t_zone_id **lst, enum e_type type)
+t_zone_id	*create_zone(enum e_type type)
 {
-	(void)lst; (void)type;
+	(void)type;
 	// create zone
 	;
 	// create single free chunk
