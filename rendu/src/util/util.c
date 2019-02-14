@@ -9,11 +9,6 @@ t_chunk_id	*identify(void *addr)
 
 	id = (t_chunk_id *)((char *)addr - sizeof(t_chunk_id));
 	
-	if (id)
-		write(1, "1", 1);
-	if (id->addr)
-		write(1, "2", 1);
-
 	// check valid id
 	if (id->addr != addr)
 	{

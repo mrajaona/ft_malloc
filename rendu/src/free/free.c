@@ -12,7 +12,10 @@ void	free(void *addr)
 		return ;
 	}
 	if ((id = identify(addr)) == NULL) // invalid addr
+	{
+		write(1, "o", 1);
 		return ;
+	}
 	if (id->type != LARGE)
 	{
 		write(1, "s", 1);
@@ -20,10 +23,16 @@ void	free(void *addr)
 		if (id->next && id->next->isfree == true)
 			merge(id, id->next);
 
+		if (id->prev && id->prev->isfree == true)
+		{
+			id = id->prev;
+			merge(id, id->next);
+		}
+
 		if (!(id->prev) && !(id->next)) // empty zone
 		{
 			write(1, "~", 1);
-			zone = (t_zone_id *)(id - sizeof(t_zone_id));
+			zone = (t_zone_id *)((char *)id - sizeof(t_zone_id));
 			if (zone->next)
 				zone->next->prev = zone->prev;
 			if (zone->prev)

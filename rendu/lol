@@ -1,17 +1,20 @@
 
-mS?c?
+mT?c
 split
+done
+
+mS?c
+split
+done
 
 mS
-zk.?c?
+zk:k'!
 split
+done
 
-mS
-zk.
-zk.?nc?
-split
-
-f1
-bug identify
-
-f1
+fs
+merge ~F
+fs
+fs
+merge 
+merge ~F

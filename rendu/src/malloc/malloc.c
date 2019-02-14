@@ -23,14 +23,13 @@ static void	*ft_malloc(size_t size, enum e_type type)
 		write(1, "?", 1);
 		if ((cursor = create_zone(type)) == NULL)
 			return (NULL);
-		write(1, "?", 1);
 		id = (t_chunk_id *)((char *)cursor + sizeof(t_zone_id));
 	}
 	else
 		write(1, "!", 1);
 
 	split(id, size);
-	return (id);
+	return (id->addr);
 }
 
 static void	*ft_malloc_large(size_t size)

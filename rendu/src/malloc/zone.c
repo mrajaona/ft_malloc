@@ -52,13 +52,11 @@ t_zone_id	*create_zone(enum e_type type)
 		z_id->prev = cursor;
 	}
 
-	length -= sizeof(t_zone_id);
-
 	// create single free chunk
 	c_id = (t_chunk_id *)((char *)z_id + sizeof(t_zone_id));
 	c_id->type = type;
 	c_id->addr = (char *)c_id + sizeof(t_chunk_id);
-	c_id->size = length;
+	c_id->size = length - sizeof(t_zone_id);
 	c_id->isfree = true;
 	c_id->prev = NULL;
 	c_id->next = NULL;
@@ -85,13 +83,14 @@ t_chunk_id	*check_zone(t_zone_id *zone, size_t size)
 			&& (!id || id->size > cursor->size)
 		)
 		{
-			write(1, ":", 1);
+			write(1, "'", 1);
 			id = cursor;
-			 return (id); // cache le pb
 		}
+		else if (cursor->isfree == false)
+			write(1, ":", 1);			
 		else
 			write(1, ".", 1);
-		cursor = cursor->next; // pb ici
+		cursor = cursor->next;
 	}
 	return (id);
 }

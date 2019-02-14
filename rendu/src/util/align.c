@@ -9,6 +9,8 @@ size_t		chunk_align(size_t size)
 	size_t	aligned;
 
 	aligned = size + sizeof(t_chunk_id);
+	while (aligned % 64)
+		aligned++;
 	return (aligned);
 }
 
@@ -17,7 +19,9 @@ size_t		zone_align(size_t size)
 	size_t	aligned;
 
 	aligned = size + sizeof(t_zone_id);
-	return (aligned);	
+	while (aligned % 64)
+		aligned++;
+	return (aligned);
 }
 
 size_t		mmap_align(size_t size)

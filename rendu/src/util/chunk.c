@@ -19,23 +19,33 @@ void	merge(t_chunk_id *first, t_chunk_id *second)
 */
 void	split(t_chunk_id *first, size_t size)
 {
-//	t_chunk_id	*second;
+
+	t_chunk_id	*second;
 	size_t		aligned;
 	size_t		second_size;
 
 	write(1, "\nsplit\n", 7);
 
+	if (!first)
+		return ;
 	first->isfree = false;
 
 	aligned = chunk_align(size);
+	if (first->size < aligned)
+	{
+		write(1, "cannot split\n", 14);
+		return ;
+	}
+
+	if (first->size == aligned)
+		return ;
+
 	second_size = first->size - aligned;
+
 	if (second_size < chunk_align(0))
 		return ;
 
-/*
-	first->size = aligned;
-
-	second = (t_chunk_id *)((char *)first + first->size);
+	second = (t_chunk_id *)((char *)first + aligned);
 	second->type = first->type;
 	second->addr = (char *)second + sizeof(t_chunk_id);
 	second->size = second_size;
@@ -44,6 +54,8 @@ void	split(t_chunk_id *first, size_t size)
 	second->prev = first;
 	second->next = first->next;
 
+	first->size = aligned;
 	first->next = second;
-*/
+
+	write(1, "done\n", 5);
 }
