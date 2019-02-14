@@ -23,26 +23,24 @@ void	split(t_chunk_id *first, size_t size)
 	size_t		aligned;
 	size_t		second_size;
 
-	write(1, "\nsplit ", 7);
+	write(1, "\nsplit\n", 7);
+
+	first->isfree = false;
+
 	aligned = chunk_align(size);
 	second_size = first->size - aligned;
-	first->isfree = false;
-	// TODO : check aligned
-
 	if (second_size < chunk_align(0))
 		return ;
 
 	first->size = aligned;
 
-	second = first + first->size;
+	second = (t_chunk_id *)((char *)first + first->size);
+	second->prev = first;
+	second->next = first->next;
 	first->next = second;
 
 	second->type = first->type;
 	second->addr = (char *)second + sizeof(t_chunk_id);
 	second->size = second_size;
 	second->isfree = true;
-
-	second->prev = first;
-	second->next = first->next;
-
 }

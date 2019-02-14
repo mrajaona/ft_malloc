@@ -7,7 +7,6 @@ t_zone_id	*create_zone(enum e_type type)
 	t_chunk_id	*c_id;
 	size_t		length;
 
-	(void)type;
 	// create zone
 	if (type == TINY)
 		length = TINY_N * chunk_align(TINY_SIZE_MAX);
@@ -23,6 +22,9 @@ t_zone_id	*create_zone(enum e_type type)
 		errno = ENOMEM;
 		return (NULL);
 	}
+
+	z_id->prev = NULL;
+	z_id->next = NULL;
 
 	// create single free chunk
 	c_id = (t_chunk_id *)((char *)z_id + sizeof(t_zone_id));
@@ -42,6 +44,7 @@ t_zone_id	*create_zone(enum e_type type)
 
 	if (!cursor)
 	{
+		write(1, "c", 1);
 		if (type == TINY)
 			g_lst_tiny = z_id;
 		else // SMALL
@@ -49,13 +52,15 @@ t_zone_id	*create_zone(enum e_type type)
 	}
 	else
 	{
-		while (cursor->next)
+		while (cursor->next) {
+			write(1, "n", 1);
 			cursor = cursor->next;
+		}
 		cursor->next = z_id;
 		z_id->prev = cursor;
 	}
 
-	return (NULL);
+	return (z_id);
 }
 
 t_chunk_id	*check_zone(t_zone_id *zone, size_t size)
@@ -64,22 +69,24 @@ t_chunk_id	*check_zone(t_zone_id *zone, size_t size)
 	t_chunk_id	*id;
 
 	id = NULL;
-	cursor = (t_chunk_id *)(zone + sizeof(t_zone_id));
+	cursor = (t_chunk_id *)((char *)zone + sizeof(t_zone_id));
 	size = chunk_align(size);
 	while (cursor)
 	{
+		write(1, "p", 1);
 		if (
-			cursor->isfree == true && cursor->size >= size
+			cursor->isfree == true
+			&& cursor->size >= size
 			&& (!id || id->size > cursor->size)
 		)
 		{
 			write(1, ":", 1);
 			id = cursor;
-			// return (id);
+			 return (id); // cache le pb
 		}
 		else
 			write(1, ".", 1);
-		cursor = cursor->next;
+		cursor = cursor->next; // pb ici
 	}
 	return (id);
 }

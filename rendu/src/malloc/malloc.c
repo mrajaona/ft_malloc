@@ -4,7 +4,6 @@ t_zone_id	*g_lst_tiny = NULL;
 t_zone_id	*g_lst_small = NULL;
 t_chunk_id	*g_lst_large = NULL;
 
-/*
 static void	*ft_malloc(size_t size, enum e_type type)
 {
 	t_chunk_id	*id;
@@ -21,18 +20,18 @@ static void	*ft_malloc(size_t size, enum e_type type)
 	}
 	if (!id) // need new zone
 	{
-		write(1, "?", 2);
+		write(1, "?", 1);
 		if ((cursor = create_zone(type)) == NULL)
 			return (NULL);
-		id = (t_chunk_id *)(cursor + sizeof(t_zone_id));
+		write(1, "?", 1);
+		id = (t_chunk_id *)((char *)cursor + sizeof(t_zone_id));
 	}
 	else
-		write(1, "!", 2);
+		write(1, "!", 1);
 
 	split(id, size);
 	return (id);
 }
-*/
 
 static void	*ft_malloc_large(size_t size)
 {
@@ -71,12 +70,16 @@ static void	*ft_malloc_large(size_t size)
 void	*malloc(size_t size)
 {
 	write(1, "\nm", 2);
-	/*************************
+
+/*
+	if (size > 0)
+		return (ft_malloc_large(size));
+*/
+
 	if (size <= TINY_SIZE_MAX)
 		return (ft_malloc(size, TINY));
 	else if (size <= SMALL_SIZE_MAX)
 		return (ft_malloc(size, SMALL));
 	else
-	************************/
 		return (ft_malloc_large(size));
 }
