@@ -12,6 +12,7 @@ t_zone_id	*create_zone(enum e_type type)
 		length = TINY_N * chunk_align(TINY_SIZE_MAX);
 	else // SMALL
 		length = SMALL_N * chunk_align(SMALL_SIZE_MAX);
+	length = zone_align(length);
 
 	if (
 		(z_id = (t_zone_id *)mmap(
@@ -23,17 +24,9 @@ t_zone_id	*create_zone(enum e_type type)
 		return (NULL);
 	}
 
+	z_id->size = length;
 	z_id->prev = NULL;
 	z_id->next = NULL;
-
-	// create single free chunk
-	c_id = (t_chunk_id *)((char *)z_id + sizeof(t_zone_id));
-	c_id->type = type;
-	c_id->addr = (char *)c_id + sizeof(t_chunk_id);
-	c_id->size = length - sizeof(t_zone_id);
-	c_id->isfree = true;
-	c_id->prev = NULL;
-	c_id->next = NULL;
 
 	// add to lst end
 	// order is important here
@@ -44,7 +37,6 @@ t_zone_id	*create_zone(enum e_type type)
 
 	if (!cursor)
 	{
-		write(1, "c", 1);
 		if (type == TINY)
 			g_lst_tiny = z_id;
 		else // SMALL
@@ -60,6 +52,19 @@ t_zone_id	*create_zone(enum e_type type)
 		z_id->prev = cursor;
 	}
 
+	length -= sizeof(t_zone_id);
+
+	// create single free chunk
+	c_id = (t_chunk_id *)((char *)z_id + sizeof(t_zone_id));
+	c_id->type = type;
+	c_id->addr = (char *)c_id + sizeof(t_chunk_id);
+	c_id->size = length;
+	c_id->isfree = true;
+	c_id->prev = NULL;
+	c_id->next = NULL;
+
+	write(1, "c", 1);
+
 	return (z_id);
 }
 
@@ -73,7 +78,7 @@ t_chunk_id	*check_zone(t_zone_id *zone, size_t size)
 	size = chunk_align(size);
 	while (cursor)
 	{
-		write(1, "p", 1);
+		write(1, "k", 1);
 		if (
 			cursor->isfree == true
 			&& cursor->size >= size

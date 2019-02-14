@@ -13,9 +13,9 @@ void	free(void *addr)
 	}
 	if ((id = identify(addr)) == NULL) // invalid addr
 		return ;
-
 	if (id->type != LARGE)
 	{
+		write(1, "s", 1);
 		id->isfree = true;
 		if (id->next && id->next->isfree == true)
 			merge(id, id->next);
