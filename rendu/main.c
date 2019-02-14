@@ -42,7 +42,7 @@ int	main(int ac, char **av)
 
 	show_mem_alloc();
 	write(1, "3 --\n", 5);
-/*
+
 	free(a); a = NULL;
 	free(b); b = NULL;
 	free(c); c = NULL;
@@ -57,7 +57,7 @@ int	main(int ac, char **av)
 
 	show_mem_alloc();
 	write(1, "4 --\n", 5);
-*/
+
 	free(a); a = NULL;
 	free(b); b = NULL;
 	free(c); c = NULL;
