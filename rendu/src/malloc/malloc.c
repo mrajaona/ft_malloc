@@ -25,35 +25,13 @@ static void	*ft_malloc(size_t size, enum e_type type)
 	return (id->addr);
 }
 
-static void	*ft_malloc_large(size_t size)
+static void	ft_push_large(t_chunk_id *id)
 {
-	size_t		length;
-	t_chunk_id	*id;
-	
-	length = mmap_align(chunk_align(size));
-	if (
-		(id = (t_chunk_id *)mmap(
-			NULL, length, MMAP_PROT, MMAP_FLAGS, MMAP_FD, MMAP_OFFSET
-		)) == MAP_FAILED
-	)
-	{
-		errno = ENOMEM;
-		return (NULL);
-	}
-
-	id->type = LARGE;
-	id->addr = (char *)id + sizeof(t_chunk_id);
-
-	id->size = length;
-	id->isfree = false;
-
-	// add in order
 	t_chunk_id	*cursor;
 
 	cursor = g_lst.large;
 	id->prev = NULL;
 	id->next = NULL;
-
 	if (!cursor)
 		g_lst.large = id;
 	else
@@ -72,7 +50,28 @@ static void	*ft_malloc_large(size_t size)
 			id->prev = cursor;
 		}
 	}
+}
 
+static void	*ft_malloc_large(size_t size)
+{
+	size_t		length;
+	t_chunk_id	*id;
+	
+	length = mmap_align(chunk_align(size));
+	if (
+		(id = (t_chunk_id *)mmap(
+			NULL, length, MMAP_PROT, MMAP_FLAGS, MMAP_FD, MMAP_OFFSET
+		)) == MAP_FAILED
+	)
+	{
+		errno = ENOMEM;
+		return (NULL);
+	}
+	id->type = LARGE;
+	id->addr = (char *)id + sizeof(t_chunk_id);
+	id->size = length;
+	id->isfree = false;
+	ft_push_large(id);
 	return (id->addr);
 }
 

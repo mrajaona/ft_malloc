@@ -1,10 +1,8 @@
 #include "ft_malloc_util.h"
 
-t_zone_id	*create_zone(enum e_type type)
+static t_zone_id	*ft_create(enum e_type type)
 {
-	t_zone_id	*cursor;
-	t_zone_id	*z_id;
-	t_chunk_id	*c_id;
+	t_zone_id	*zone;
 	size_t		length;
 
 	// create zone
@@ -15,7 +13,7 @@ t_zone_id	*create_zone(enum e_type type)
 	length = zone_align(length);
 
 	if (
-		(z_id = (t_zone_id *)mmap(
+		(zone = (t_zone_id *)mmap(
 			NULL, length, MMAP_PROT, MMAP_FLAGS, MMAP_FD, MMAP_OFFSET
 		)) == MAP_FAILED
 	)
@@ -24,51 +22,61 @@ t_zone_id	*create_zone(enum e_type type)
 		return (NULL);
 	}
 
-	z_id->size = length;
-	z_id->prev = NULL;
-	z_id->next = NULL;
+	zone->size = length;
+	zone->prev = NULL;
+	zone->next = NULL;
+	return (zone);
+}
 
+static void	ft_push(t_zone_id *zone, enum e_type type) // norme
+{
+	t_zone_id	*cursor;
+	
 	// add to lst in order
 	if (type == TINY)
-		cursor = g_lst.tiny;
-	else // SMALL
-		cursor = g_lst.small;
-
+		cursor = type == TINY ? g_lst.tiny : g_lst.small;
 	if (!cursor)
 	{
 		if (type == TINY)
-			g_lst.tiny = z_id;
+			g_lst.tiny = zone;
 		else // SMALL
-			g_lst.small = z_id;
+			g_lst.small = zone;
 	}
 	else
 	{
-		while (cursor->next && cursor < z_id)
+		while (cursor->next && cursor < zone)
 			cursor = cursor->next;
-
-		if (cursor > z_id)
+		if (cursor > zone)
 		{
-			z_id->prev = cursor->prev;
-			z_id->next = cursor;
-			cursor->prev = z_id;
+			zone->prev = cursor->prev;
+			zone->next = cursor;
+			cursor->prev = zone;
 		}
 		else // !cursor->next && cursor < id
 		{
-			cursor->next = z_id;
-			z_id->prev = cursor;
+			cursor->next = zone;
+			zone->prev = cursor;
 		}
 	}
+}
 
+t_zone_id	*create_zone(enum e_type type)
+{
+	t_zone_id	*zone;
+	t_chunk_id	*chunk;
+
+	if ((zone = ft_create(type)) == NULL)
+		return (NULL);
+	ft_push(zone, type);
 	// create single free chunk
-	c_id = (t_chunk_id *)((char *)z_id + sizeof(t_zone_id));
-	c_id->type = type;
-	c_id->addr = (char *)c_id + sizeof(t_chunk_id);
-	c_id->size = length - sizeof(t_zone_id);
-	c_id->isfree = true;
-	c_id->prev = NULL;
-	c_id->next = NULL;
-
-	return (z_id);
+	chunk = (t_chunk_id *)((char *)zone + sizeof(t_zone_id));
+	chunk->type = type;
+	chunk->addr = (char *)chunk + sizeof(t_chunk_id);
+	chunk->size = zone->size - sizeof(t_zone_id);
+	chunk->isfree = true;
+	chunk->prev = NULL;
+	chunk->next = NULL;
+	return (zone);
 }
 
 t_chunk_id	*check_zone(t_zone_id *zone, size_t size)
