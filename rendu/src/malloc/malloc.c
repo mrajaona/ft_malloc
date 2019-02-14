@@ -60,21 +60,21 @@ static void	*ft_malloc_large(size_t size)
 
 void	*malloc(size_t size)
 {
-	; // write(1, "\nm", 2);
+	write(1, "\nm", 2);
 
 	if (size <= TINY_SIZE_MAX)
 	{
-		; // write(1, "T", 1);
+		write(1, "T", 1);
 		return (ft_malloc(size, TINY));
 	}
 	else if (size <= SMALL_SIZE_MAX)
 	{
-		; // write(1, "S", 1);
+		write(1, "S", 1);
 		return (ft_malloc(size, SMALL));
 	}
 	else
 	{
-		; // write(1, "L", 1);
+		write(1, "L", 1);
 		return (ft_malloc_large(size));
 	}
 }
