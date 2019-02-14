@@ -14,20 +14,15 @@ static void	*ft_malloc(size_t size, enum e_type type)
 	id = NULL;
 	while (cursor && !id)
 	{
-		write(1, "\nz", 2);
 		id = check_zone(cursor, size);
 		cursor = cursor->next;
 	}
 	if (!id) // need new zone
 	{
-		write(1, "?", 1);
 		if ((cursor = create_zone(type)) == NULL)
 			return (NULL);
 		id = (t_chunk_id *)((char *)cursor + sizeof(t_zone_id));
 	}
-	else
-		write(1, "!", 1);
-
 	split(id, size);
 	return (id->addr);
 }
@@ -68,11 +63,6 @@ static void	*ft_malloc_large(size_t size)
 void	*malloc(size_t size)
 {
 	write(1, "\nm", 2);
-
-/*
-	if (size > 0)
-		return (ft_malloc_large(size));
-*/
 
 	if (size <= TINY_SIZE_MAX)
 	{

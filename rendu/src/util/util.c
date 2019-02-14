@@ -11,10 +11,7 @@ t_chunk_id	*identify(void *addr)
 	
 	// check valid id
 	if (id->addr != addr)
-	{
-		write(1, "\nbug identify\n", 14);
 		return (NULL);
-	}
 
 	return (id);
 }

@@ -11,6 +11,7 @@ void	*realloc(void *addr, size_t size)
 		return (malloc(size));
 	if (size == 0)
 	{
+		write(1, "!", 1);
 		free(addr);
 		return (NULL);
 	}
@@ -29,6 +30,8 @@ void	*realloc(void *addr, size_t size)
 	{
 		if (
 			id->type != LARGE
+			&& !(id->type == TINY && size > TINY_SIZE_MAX)
+			&& !(id->type == SMALL && size > SMALL_SIZE_MAX)
 			&& id->next->isfree == true
 			&& (id->size + id->next->size) >= aligned
 		)
@@ -37,8 +40,9 @@ void	*realloc(void *addr, size_t size)
 			split(id, size);
 			return (addr);
 		}
-		else
+		else // (LARGE || size > MAX_SIZE)
 		{
+			write(1, "!", 1);
 			if ((ptr = malloc(size)) == NULL)
 			{
 				errno = ENOMEM;

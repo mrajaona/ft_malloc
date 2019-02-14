@@ -3,7 +3,6 @@
 // merge consecutive slots
 void	merge(t_chunk_id *first, t_chunk_id *second)
 {
-	write(1, "\nmerge ", 7);
 	if (!second)
 		return ;
 	first->next = second->next;
@@ -24,19 +23,13 @@ void	split(t_chunk_id *first, size_t size)
 	size_t		aligned;
 	size_t		second_size;
 
-	write(1, "\nsplit\n", 7);
-
 	if (!first)
 		return ;
 	first->isfree = false;
 
 	aligned = chunk_align(size);
-	if (first->size < aligned)
-	{
-		write(1, "cannot split\n", 14);
+	if (first->size < aligned) // Error
 		return ;
-	}
-
 	if (first->size == aligned)
 		return ;
 
@@ -56,6 +49,4 @@ void	split(t_chunk_id *first, size_t size)
 
 	first->size = aligned;
 	first->next = second;
-
-	write(1, "done\n", 5);
 }

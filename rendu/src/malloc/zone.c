@@ -44,10 +44,8 @@ t_zone_id	*create_zone(enum e_type type)
 	}
 	else
 	{
-		while (cursor->next) {
-			write(1, "n", 1);
+		while (cursor->next)
 			cursor = cursor->next;
-		}
 		cursor->next = z_id;
 		z_id->prev = cursor;
 	}
@@ -60,8 +58,6 @@ t_zone_id	*create_zone(enum e_type type)
 	c_id->isfree = true;
 	c_id->prev = NULL;
 	c_id->next = NULL;
-
-	write(1, "c", 1);
 
 	return (z_id);
 }
@@ -76,20 +72,12 @@ t_chunk_id	*check_zone(t_zone_id *zone, size_t size)
 	size = chunk_align(size);
 	while (cursor)
 	{
-		write(1, "k", 1);
 		if (
 			cursor->isfree == true
 			&& cursor->size >= size
 			&& (!id || id->size > cursor->size)
 		)
-		{
-			write(1, "'", 1);
 			id = cursor;
-		}
-		else if (cursor->isfree == false)
-			write(1, ":", 1);			
-		else
-			write(1, ".", 1);
 		cursor = cursor->next;
 	}
 	return (id);
