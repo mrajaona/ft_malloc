@@ -1,6 +1,6 @@
 #include "ft_malloc_util.h"
 
-static t_zone_id	*ft_create(enum e_type type)
+static t_zone_id	*ft_create(const enum e_type type)
 {
 	t_zone_id	*zone;
 	size_t		length;
@@ -28,13 +28,12 @@ static t_zone_id	*ft_create(enum e_type type)
 	return (zone);
 }
 
-static void	ft_push(t_zone_id *zone, enum e_type type) // norme
+static void	ft_push(t_zone_id *zone, const enum e_type type) // norme
 {
 	t_zone_id	*cursor;
 	
 	// add to lst in order
-	if (type == TINY)
-		cursor = type == TINY ? g_lst.tiny : g_lst.small;
+	cursor = (type == TINY) ? g_lst.tiny : g_lst.small;
 	if (!cursor)
 	{
 		if (type == TINY)
@@ -60,7 +59,7 @@ static void	ft_push(t_zone_id *zone, enum e_type type) // norme
 	}
 }
 
-t_zone_id	*create_zone(enum e_type type)
+t_zone_id	*create_zone(const enum e_type type)
 {
 	t_zone_id	*zone;
 	t_chunk_id	*chunk;

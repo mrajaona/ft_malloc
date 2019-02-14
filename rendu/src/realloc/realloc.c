@@ -1,10 +1,25 @@
 #include "ft_malloc_util.h"
 
-static void	*ft_realloc(void *addr, t_chunk_id *id, size_t size)
+static void	*ft_realloc(void *addr, t_chunk_id *id, size_t size) // norme
 {
 	void		*ptr;
 
 	if (
+		(id->type == TINY && size < TINY_SIZE_MIN)
+		|| (id->type == SMALL && size < SMALL_SIZE_MIN)
+		|| (id->type == LARGE && size < LARGE_SIZE_MIN)
+		)
+	{
+		if ((ptr = malloc(size)) == NULL)
+		{
+			errno = ENOMEM;
+			return (addr);
+		}
+		ft_memcpy(ptr, addr, size);
+		free(addr);
+		return (ptr);		
+	}
+	else if (
 		id->type != LARGE
 		&& !(id->type == TINY && size > TINY_SIZE_MAX)
 		&& !(id->type == SMALL && size > SMALL_SIZE_MAX)
@@ -16,7 +31,7 @@ static void	*ft_realloc(void *addr, t_chunk_id *id, size_t size)
 		split(id, size);
 		return (addr);
 	}
-	else // (LARGE || size > MAX_SIZE)
+	else // (LARGE || size > MAX_SIZE || size < MIN_SIZE)
 	{
 		if ((ptr = malloc(size)) == NULL)
 		{

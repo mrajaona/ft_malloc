@@ -13,7 +13,7 @@ void	merge(t_chunk_id *first, t_chunk_id *second)
 	first->size = first->size + second->size;
 }
 
-static void	ft_insert_second_chunk(t_chunk_id *first, size_t size)
+static void	ft_insert_second_chunk(t_chunk_id *first, const size_t size)
 {
 	t_chunk_id	*second;
 
@@ -32,7 +32,7 @@ static void	ft_insert_second_chunk(t_chunk_id *first, size_t size)
 ** if split is possible
 ** allocate full chunk otherwise
 */
-void	split(t_chunk_id *first, size_t size)
+void	split(t_chunk_id *first, const size_t size)
 {
 	size_t		aligned;
 	size_t		second_size;

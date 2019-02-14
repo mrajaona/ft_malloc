@@ -1,6 +1,6 @@
 #include "ft_malloc_util.h"
 
-static void	ft_free_zone(enum e_type type, t_zone_id *zone)
+static void	ft_free_zone(const enum e_type type, t_zone_id *zone)
 {
 	if (zone->next)
 		zone->next->prev = zone->prev;

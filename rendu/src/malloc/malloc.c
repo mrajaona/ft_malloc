@@ -2,12 +2,12 @@
 
 t_list	g_lst = {NULL, NULL, NULL};
 
-static void	*ft_malloc(size_t size, enum e_type type)
+static void	*ft_malloc(const size_t size, const enum e_type type)
 {
 	t_chunk_id	*id;
 	t_zone_id	*cursor;
 
-	cursor = type == TINY ? g_lst.tiny : g_lst.small;
+	cursor = (type == TINY) ? g_lst.tiny : g_lst.small;
 	// cursor can be NULL at this point
 	id = NULL;
 	while (cursor && !id)
@@ -52,7 +52,7 @@ static void	ft_push_large(t_chunk_id *id)
 	}
 }
 
-static void	*ft_malloc_large(size_t size)
+static void	*ft_malloc_large(const size_t size)
 {
 	size_t		length;
 	t_chunk_id	*id;
@@ -78,9 +78,18 @@ static void	*ft_malloc_large(size_t size)
 void	*malloc(size_t size)
 {
 	if (size <= TINY_SIZE_MAX)
+	{
+		write(1, "T", 1);
 		return (ft_malloc(size, TINY));
+	}
 	else if (size <= SMALL_SIZE_MAX)
+	{
+		write(1, "S", 1);
 		return (ft_malloc(size, SMALL));
+	}
 	else
+	{
+		write(1, "L", 1);
 		return (ft_malloc_large(size));
+	}
 }

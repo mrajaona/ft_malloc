@@ -6,7 +6,7 @@ NAME			=	libft_malloc_$(HOSTTYPE).so
 LNAME			=	libft_malloc.so
 INCLUDE		 	=	./inc/
 
-INC				=	ft_malloc.h ft_malloc_util.h
+INC				=	ft_malloc.h ft_malloc_util.h ft_malloc_print.h
 INCS			=	$(addprefix $(INCLUDE), $(INC))
 
 DIR_FREE		=	./src/free/
@@ -24,7 +24,8 @@ SRC_REALLOC		=	realloc.c \
 SRCS_REALLOC	=	$(addprefix $(DIR_REALLOC), $(SRC_REALLOC))
 
 DIR_SHOW		=	./src/show/
-SRC_SHOW		=	show_mem_alloc.c
+SRC_SHOW		=	show_mem_alloc.c \
+					print_tools.c
 SRCS_SHOW		=	$(addprefix $(DIR_SHOW), $(SRC_SHOW))
 
 DIR_UTIL		=	./src/util/

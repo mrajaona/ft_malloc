@@ -126,14 +126,14 @@ size_t		chunk_align(size_t size);
 size_t		zone_align(size_t size);
 size_t		mmap_align(size_t size);
 
-t_zone_id	*create_zone(enum e_type type);
-t_chunk_id	*check_zone(t_zone_id *zone, size_t size);
+t_zone_id	*create_zone(const enum e_type type);
+t_chunk_id	*check_zone(t_zone_id *zone, const size_t size);
 
 void		merge(t_chunk_id *first, t_chunk_id *second);
-void		split(t_chunk_id *first, size_t size);
+void		split(t_chunk_id *first, const size_t size);
 
 t_chunk_id	*identify(void *ptr);
 
-void		*ft_memcpy(void *dest, const void *src, size_t n);
+void		*ft_memcpy(void *dest, const void *src, const size_t n);
 
 #endif
