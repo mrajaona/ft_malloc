@@ -32,9 +32,9 @@ void	free(void *addr)
 			else
 			{
 				if (id->type == TINY)
-					g_lst_tiny = zone->next;
+					g_lst.tiny = zone->next;
 				else
-					g_lst_small = zone->next;
+					g_lst.small = zone->next;
 			}
 			munmap(zone, zone->size);
 			write(1, "F", 1);
@@ -49,7 +49,7 @@ void	free(void *addr)
 		if (id->prev)
 			id->prev->next = id->next;
 		else
-			g_lst_large = id->next;
+			g_lst.large = id->next;
 		munmap(id, id->size);
 		write(1, "F", 1);
 	}

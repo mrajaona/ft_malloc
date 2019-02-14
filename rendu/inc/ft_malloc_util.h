@@ -105,11 +105,20 @@ typedef struct	s_zone_id
 }				t_zone_id;
 
 /*
+** listes des allocations
+*/
+typedef struct	s_list
+{
+	t_zone_id	*tiny;
+	t_zone_id	*small;
+	t_chunk_id	*large;
+}				t_list;
+
+
+/*
 ** store adresses of first zones
 */
-extern t_zone_id	*g_lst_tiny;
-extern t_zone_id	*g_lst_small;
-extern t_chunk_id	*g_lst_large;
+extern t_list	g_lst;
 
 void		merge(t_chunk_id *first, t_chunk_id *second);
 
@@ -126,6 +135,5 @@ void		split(t_chunk_id *first, size_t size);
 t_chunk_id	*identify(void *ptr);
 
 void		*ft_memcpy(void *dest, const void *src, size_t n);
-
 
 #endif

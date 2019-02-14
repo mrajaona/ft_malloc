@@ -1,15 +1,13 @@
 #include "ft_malloc_util.h"
 
-t_zone_id	*g_lst_tiny = NULL;
-t_zone_id	*g_lst_small = NULL;
-t_chunk_id	*g_lst_large = NULL;
+t_list	g_lst = {NULL, NULL, NULL};
 
 static void	*ft_malloc(size_t size, enum e_type type)
 {
 	t_chunk_id	*id;
 	t_zone_id	*cursor;
 
-	cursor = type == TINY ? g_lst_tiny : g_lst_small;
+	cursor = type == TINY ? g_lst.tiny : g_lst.small;
 	// cursor can be NULL at this point
 	id = NULL;
 	while (cursor && !id)
@@ -49,13 +47,13 @@ static void	*ft_malloc_large(size_t size)
 	id->size = length;
 	id->isfree = false;
 
-	// add to g_lst_large start
+	// add to g_lst.large start
 	// order does not matter here
 	id->prev = NULL;
-	id->next = g_lst_large;
-	if (g_lst_large)
-		g_lst_large->prev = id;
-	g_lst_large = id;
+	id->next = g_lst.large;
+	if (g_lst.large)
+		g_lst.large->prev = id;
+	g_lst.large = id;
 
 	return (id->addr);
 }

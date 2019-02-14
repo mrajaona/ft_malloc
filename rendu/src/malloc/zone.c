@@ -31,16 +31,16 @@ t_zone_id	*create_zone(enum e_type type)
 	// add to lst end
 	// order is important here
 	if (type == TINY)
-		cursor = g_lst_tiny;
+		cursor = g_lst.tiny;
 	else // SMALL
-		cursor = g_lst_small;
+		cursor = g_lst.small;
 
 	if (!cursor)
 	{
 		if (type == TINY)
-			g_lst_tiny = z_id;
+			g_lst.tiny = z_id;
 		else // SMALL
-			g_lst_small = z_id;
+			g_lst.small = z_id;
 	}
 	else
 	{
