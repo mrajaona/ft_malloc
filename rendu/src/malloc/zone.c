@@ -25,9 +25,9 @@ t_zone_id	*create_zone(enum e_type type)
 	}
 
 	// create single free chunk
-	c_id = (t_chunk_id *)(z_id + sizeof(t_zone_id));
+	c_id = (t_chunk_id *)((char *)z_id + sizeof(t_zone_id));
 	c_id->type = type;
-	c_id->addr = c_id + sizeof(t_chunk_id);
+	c_id->addr = (char *)c_id + sizeof(t_chunk_id);
 	c_id->size = length - sizeof(t_zone_id);
 	c_id->isfree = true;
 	c_id->prev = NULL;
