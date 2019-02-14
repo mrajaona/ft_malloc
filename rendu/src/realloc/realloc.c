@@ -6,12 +6,10 @@ void	*realloc(void *addr, size_t size)
 	void		*ptr;
 	size_t		aligned;
 
-	write(1, "\nr", 2);
 	if (!addr)
 		return (malloc(size));
 	if (size == 0)
 	{
-		write(1, "!", 1);
 		free(addr);
 		return (NULL);
 	}
@@ -42,7 +40,6 @@ void	*realloc(void *addr, size_t size)
 		}
 		else // (LARGE || size > MAX_SIZE)
 		{
-			write(1, "!", 1);
 			if ((ptr = malloc(size)) == NULL)
 			{
 				errno = ENOMEM;

@@ -5,7 +5,6 @@ void	free(void *addr)
 	t_chunk_id	*id;
 	t_zone_id	*zone;
 
-	write(1, "\nf", 2);
 	if (!addr)
 		return ;
 	if ((id = identify(addr)) == NULL) // invalid addr
@@ -37,7 +36,6 @@ void	free(void *addr)
 					g_lst.small = zone->next;
 			}
 			munmap(zone, zone->size);
-			write(1, "F", 1);
 		}
 
 	}
@@ -51,7 +49,6 @@ void	free(void *addr)
 		else
 			g_lst.large = id->next;
 		munmap(id, id->size);
-		write(1, "F", 1);
 	}
 
 }
