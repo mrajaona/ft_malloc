@@ -46,9 +46,12 @@ static void	ft_push_large(t_chunk_id *id)
 		}
 		else // !cursor->next && cursor->addr < id->addr
 		{
-			cursor->next = id;
+			id->next = cursor;
 			id->prev = cursor;
+			cursor->next = id;
 		}
+		if (id->prev == NULL)
+			g_lst.large = id;
 	}
 }
 
@@ -79,17 +82,17 @@ void	*malloc(size_t size)
 {
 	if (size <= TINY_SIZE_MAX)
 	{
-		write(1, "T", 1);
+		write(1, "T", 1); // debug
 		return (ft_malloc(size, TINY));
 	}
 	else if (size <= SMALL_SIZE_MAX)
 	{
-		write(1, "S", 1);
+		write(1, "S", 1); // debug
 		return (ft_malloc(size, SMALL));
 	}
 	else
 	{
-		write(1, "L", 1);
+		write(1, "L", 1); // debug
 		return (ft_malloc_large(size));
 	}
 }

@@ -53,8 +53,16 @@ static void	ft_push(t_zone_id *zone, const enum e_type type) // norme
 		}
 		else // !cursor->next && cursor < id
 		{
-			cursor->next = zone;
+			zone->next = cursor->next;
 			zone->prev = cursor;
+			cursor->next = zone;
+		}
+		if (zone->prev == NULL)
+		{
+			if (type == TINY)
+				g_lst.tiny = zone;
+			else // SMALL
+				g_lst.small = zone;
 		}
 	}
 }

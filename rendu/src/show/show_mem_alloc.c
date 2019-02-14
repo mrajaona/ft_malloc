@@ -89,16 +89,8 @@ void	show_mem_alloc()
 	t_list	c;
 
 	c = g_lst;
-		if (g_lst.tiny) write(1, "a", 1);
-		if (g_lst.small) write(1, "b", 1);
-		if (g_lst.large) write(1, "c", 1);
-		write(1, "\n", 1);
 	while (c.tiny || c.small || c.large)
 	{
-			if (c.tiny) write(1, "t", 1);
-			if (c.small) write(1, "s", 1);
-			if (c.large) write(1, "l", 1);
-			write(1, "\n", 1);
 		if (c.tiny && ft_smallest(c.tiny, c.small, c.large) == true)
 		{
 			ft_print_header(c.tiny, TINY);
@@ -118,7 +110,7 @@ void	show_mem_alloc()
 			c.large = c.large->next;
 		}
 		else
-			write(1, ".", 1);
+			write(1, ".", 1); // debug // error
 	}
 	ft_print_total(0);
 }
