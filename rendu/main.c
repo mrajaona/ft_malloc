@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <unistd.h>
 
 int	main(int ac, char **av)
 {
@@ -19,6 +20,9 @@ int	main(int ac, char **av)
 	a = realloc(a, 1 << 2);
 	b = realloc(b, 1 << 10);
 	c = realloc(c, 0);
+
+	if (realloc(a + 5, 1 << 2) == NULL)
+		write(1, "NULL\n", 5);
 
 	free(a);
 	free(b);

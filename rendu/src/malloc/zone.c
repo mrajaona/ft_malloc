@@ -28,8 +28,7 @@ t_zone_id	*create_zone(enum e_type type)
 	z_id->prev = NULL;
 	z_id->next = NULL;
 
-	// add to lst end
-	// order is important here
+	// add to lst in order
 	if (type == TINY)
 		cursor = g_lst.tiny;
 	else // SMALL
@@ -44,10 +43,20 @@ t_zone_id	*create_zone(enum e_type type)
 	}
 	else
 	{
-		while (cursor->next)
+		while (cursor->next && cursor < z_id)
 			cursor = cursor->next;
-		cursor->next = z_id;
-		z_id->prev = cursor;
+
+		if (cursor > z_id)
+		{
+			z_id->prev = cursor->prev;
+			z_id->next = cursor;
+			cursor->prev = z_id;
+		}
+		else // !cursor->next && cursor < id
+		{
+			cursor->next = z_id;
+			z_id->prev = cursor;
+		}
 	}
 
 	// create single free chunk

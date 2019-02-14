@@ -47,13 +47,31 @@ static void	*ft_malloc_large(size_t size)
 	id->size = length;
 	id->isfree = false;
 
-	// add to g_lst.large start
-	// order does not matter here
+	// add in order
+	t_chunk_id	*cursor;
+
+	cursor = g_lst.large;
 	id->prev = NULL;
-	id->next = g_lst.large;
-	if (g_lst.large)
-		g_lst.large->prev = id;
-	g_lst.large = id;
+	id->next = NULL;
+
+	if (!cursor)
+		g_lst.large = id;
+	else
+	{
+		while (cursor->next && cursor->addr < id->addr)
+			cursor = cursor->next;
+		if (cursor->addr > id->addr) // here : cursor->addr > id->addr
+		{
+			id->prev = cursor->prev;
+			id->next = cursor;
+			cursor->prev = id;
+		}
+		else // !cursor->next && cursor->addr < id->addr
+		{
+			cursor->next = id;
+			id->prev = cursor;
+		}
+	}
 
 	return (id->addr);
 }
