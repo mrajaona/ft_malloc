@@ -40,15 +40,18 @@ void			ft_append(char dst[BUFSIZE], const char *src)
 	ft_strcpy(dst, src, ft_strlen(dst));
 }
 
-static size_t	ft_revnbr(size_t nbr)
+/*
+** appends a '1' for printing 0s correctly
+*/
+static size_t	ft_revnbr(size_t nbr, size_t base)
 {
 	size_t	rev;
 
-	rev = 0;
+	rev = 1;
 	while (nbr > 0)
 	{
-		rev = rev * 10 + (nbr % 10);
-		nbr = nbr / 10;
+		rev = rev * base + (nbr % base);
+		nbr = nbr / base;
 	}
 	return (rev);
 }
@@ -67,9 +70,9 @@ void			ft_nbr(char buf[BUFSIZE], size_t n, unsigned b)
 		return ;
 	}
 	base = "0123456789ABCDEF";
-	n = ft_revnbr(n);
+	n = ft_revnbr(n, b);
 	i = ft_strlen(buf);
-	while (n > 0)
+	while (n != 1)
 	{
 		if (i == BUFSIZE)
 		{
@@ -79,7 +82,7 @@ void			ft_nbr(char buf[BUFSIZE], size_t n, unsigned b)
 		}
 		value = n % b;
 		buf[i] = base[value];
-		n = n / b;
+		n /= b;
 		i++;
 	}
 }

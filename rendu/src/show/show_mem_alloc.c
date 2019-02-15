@@ -11,8 +11,6 @@ static void	ft_put_addr(const void *addr, char buf[BUFSIZE])
 {
 	ft_append(buf, HEAD_HEX);
 	ft_nbr(buf, (size_t)addr, 16);
-	ft_append(buf, " ");
-	ft_nbr(buf, 64, 16); // 0x40
 }
 
 static void	ft_print_total(const size_t total) // in bytes
@@ -87,8 +85,6 @@ static bool ft_smallest(void *a, void *b, void *c)
 
 void	show_mem_alloc()
 {
-	write(1, "\nshow_mem_alloc\n", 16);
-
 	t_list	c;
 	size_t	total;
 
