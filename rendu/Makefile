@@ -25,7 +25,10 @@ SRCS_REALLOC	=	$(addprefix $(DIR_REALLOC), $(SRC_REALLOC))
 
 DIR_SHOW		=	./src/show/
 SRC_SHOW		=	show_mem_alloc.c \
-					print_tools.c
+					print_tools.c \
+					ft_print.c \
+					print_blocks.c \
+					ft_nbr.c
 SRCS_SHOW		=	$(addprefix $(DIR_SHOW), $(SRC_SHOW))
 
 DIR_UTIL		=	./src/util/

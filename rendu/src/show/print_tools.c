@@ -1,6 +1,6 @@
 #include "ft_malloc_print.h"
 
-static size_t	ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
@@ -12,15 +12,15 @@ static size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-static void		ft_strcpy(char dst[BUFSIZE], const char *src, size_t offset)
+void	ft_append(char dst[BUFSIZE], const char *src)
 {
 	size_t	i;
 	size_t	j;
 
-	i = 0;
-	j = offset;
 	if (!dst || !src)
 		return ;
+	i = 0;
+	j = ft_strlen(dst);
 	while (src[i])
 	{
 		if (j == BUFSIZE)
@@ -35,77 +35,7 @@ static void		ft_strcpy(char dst[BUFSIZE], const char *src, size_t offset)
 	}
 }
 
-void			ft_append(char dst[BUFSIZE], const char *src)
-{
-	ft_strcpy(dst, src, ft_strlen(dst));
-}
-
-/*
-** appends a '1' for printing 0s correctly
-*/
-static size_t	ft_revnbr(size_t nbr, size_t base)
-{
-	size_t	rev;
-
-	rev = 1;
-	while (nbr > 0)
-	{
-		rev = rev * base + (nbr % base);
-		nbr = nbr / base;
-	}
-	return (rev);
-}
-
-void			ft_nbr(char buf[BUFSIZE], size_t n, unsigned b)
-{
-	size_t		i;
-	unsigned	value;
-	char		*base;
-
-	if (b > 16)
-		return ;
-	if (n == 0)
-	{
-		ft_append(buf, "0");
-		return ;
-	}
-	base = "0123456789ABCDEF";
-	n = ft_revnbr(n, b);
-	i = ft_strlen(buf);
-	while (n != 1)
-	{
-		if (i == BUFSIZE)
-		{
-			ft_print(buf, STDOUT);
-			ft_clrbuf(buf);
-			i = 0;
-		}
-		value = n % b;
-		buf[i] = base[value];
-		n /= b;
-		i++;
-	}
-}
-
-void			ft_print(const char *str, const int fd)
-{
-	if (!str)
-		return ;
-	write(fd, str, ft_strlen(str));
-}
-
-void			ft_print_ln(char *str, const int fd)
-{
-	size_t	len;
-
-	if (!str)
-		return ;
-	len = ft_strlen(str);
-	str[len] = '\n';
-	write(fd, str, len + 1);
-}
-
-void			ft_clrbuf(char *buf)
+void	ft_clrbuf(char *buf)
 {
 	size_t	i;
 
