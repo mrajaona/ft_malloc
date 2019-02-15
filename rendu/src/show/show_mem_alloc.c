@@ -50,7 +50,6 @@ static void	ft_print_zone(const t_zone_id *zone, size_t *total)
 		{
 			ft_print_chunk(chunk);
 			*total += chunk->size;
-			ft_print_total(*total);
 		}
 		chunk = chunk->next;
 	}
@@ -113,7 +112,6 @@ void	show_mem_alloc()
 			ft_print_chunk(c.large);
 			total += c.large->size;
 			c.large = c.large->next;
-			ft_print_total(total);
 		}
 		else
 			write(1, ".", 1); // debug // error

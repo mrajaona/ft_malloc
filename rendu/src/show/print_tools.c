@@ -44,7 +44,7 @@ static size_t	ft_revnbr(size_t nbr)
 {
 	size_t	rev;
 
-	rev = 1;
+	rev = 0;
 	while (nbr > 0)
 	{
 		rev = rev * 10 + (nbr % 10);
@@ -69,7 +69,7 @@ void			ft_nbr(char buf[BUFSIZE], size_t n, unsigned b)
 	base = "0123456789ABCDEF";
 	n = ft_revnbr(n);
 	i = ft_strlen(buf);
-	while (n)
+	while (n > 0)
 	{
 		if (i == BUFSIZE)
 		{
@@ -79,7 +79,7 @@ void			ft_nbr(char buf[BUFSIZE], size_t n, unsigned b)
 		}
 		value = n % b;
 		buf[i] = base[value];
-		n /= b;
+		n = n / b;
 		i++;
 	}
 }
