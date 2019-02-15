@@ -63,6 +63,7 @@ void			ft_nbr(char buf[BUFSIZE], size_t n, unsigned b)
 		return ;
 	if (n == 0)
 	{
+		write(1, "_", 1);
 		ft_append(buf, "0");
 		return ;
 	}
