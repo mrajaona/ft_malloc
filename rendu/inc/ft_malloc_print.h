@@ -39,7 +39,8 @@
 
 # define BUFSIZE 1024
 
-void	ft_append(char *dst, const char *src);
+void	ft_append(char dst[BUFSIZE], const char *src);
+void	ft_nbr(char buf[BUFSIZE], size_t n, unsigned b);
 
 void	ft_print(const char *str, const int fd);
 void	ft_print_ln(char *str, const int fd);

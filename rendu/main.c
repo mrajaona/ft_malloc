@@ -86,6 +86,5 @@ int	main(int ac, char **av)
 
 	show_mem_alloc();
 	write(1, "6 --\n", 5);
-
 	return (0);
 }

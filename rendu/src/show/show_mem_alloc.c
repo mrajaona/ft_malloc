@@ -3,16 +3,14 @@
 
 static void	ft_put_size(const size_t size, char buf[BUFSIZE])
 {
-	(void)size;
-	ft_append(buf, "TODO");
+	ft_nbr(buf, size, 10);
 	ft_append(buf, UNIT);
 }
 
 static void	ft_put_addr(const void *addr, char buf[BUFSIZE])
 {
-	(void)addr;
 	ft_append(buf, HEAD_HEX);
-	ft_append(buf, "ADDR"); // addr
+	ft_nbr(buf, (size_t)addr, 16);
 }
 
 static void	ft_print_total(const size_t total) // in bytes
