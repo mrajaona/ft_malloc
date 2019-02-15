@@ -39,7 +39,7 @@ static void	ft_print_chunk(const t_chunk_id *chunk)
 	ft_print_ln(buf, STDOUT);
 }
 
-static void	ft_print_zone(const t_zone_id *zone)
+static void	ft_print_zone(const t_zone_id *zone, size_t *total)
 {
 	t_chunk_id	*chunk;
 
@@ -47,7 +47,10 @@ static void	ft_print_zone(const t_zone_id *zone)
 	while (chunk)
 	{
 		if (chunk->isfree == false)
+		{
 			ft_print_chunk(chunk);
+			*total += chunk->size;
+		}
 		chunk = chunk->next;
 	}
 }
@@ -85,30 +88,33 @@ void	show_mem_alloc()
 	write(1, "\nshow_mem_alloc\n", 16);
 
 	t_list	c;
+	size_t	total;
 
 	c = g_lst;
+	total = 0;
 	while (c.tiny || c.small || c.large)
 	{
 		if (c.tiny && ft_smallest(c.tiny, c.small, c.large) == true)
 		{
 			ft_print_header(c.tiny, TINY);
-			ft_print_zone(c.tiny);
+			ft_print_zone(c.tiny, &total);
 			c.tiny = c.tiny->next;
 		}
 		else if (c.small && ft_smallest(c.small, c.tiny, c.large) == true)
 		{
 			ft_print_header(c.small, SMALL);
-			ft_print_zone(c.small);
+			ft_print_zone(c.small, &total);
 			c.small = c.small->next;
 		}
 		else if (c.large && ft_smallest(c.large, c.tiny, c.small) == true)
 		{
 			ft_print_header(c.large, LARGE);
 			ft_print_chunk(c.large);
+			total += c.large->size;
 			c.large = c.large->next;
 		}
 		else
 			write(1, ".", 1); // debug // error
 	}
-	ft_print_total(0);
+	ft_print_total(total);
 }
