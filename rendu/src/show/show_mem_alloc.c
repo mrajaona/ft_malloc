@@ -3,7 +3,7 @@
 
 static void	ft_put_size(const size_t size, char buf[BUFSIZE])
 {
-	ft_nbr(buf, size - sizeof(t_chunk_id), 10);
+	ft_nbr(buf, size, 10);
 	ft_append(buf, UNIT);
 }
 
