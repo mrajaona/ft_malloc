@@ -20,14 +20,12 @@
 ** int munmap(void *addr, size_t length);
 */
 
-# include <sys/time.h>
-# include <sys/resource.h>
+// # include <sys/time.h>
+// # include <sys/resource.h>
 /*
 ** int getrlimit(int resource, struct rlimit *rlim);
 */
-
 // TODO
-# include <pthread.h>
 
 /*
 ** set errno
@@ -38,8 +36,6 @@
 ** bool type
 */
 # include <stdbool.h>
-
-# include "malloc.h"
 
 # define MMAP_PROT PROT_READ | PROT_WRITE
 # define MMAP_FLAGS MAP_ANONYMOUS | MAP_PRIVATE // LINUX
@@ -56,7 +52,7 @@
 ** malloc(n+1 ~ m) -> SMALL
 ** malloc(>= m+1) -> LARGE (hors zone == mmap())
 */
-enum	e_type
+enum				e_type
 {
 	TINY,
 	SMALL,
@@ -81,7 +77,7 @@ enum	e_type
 ** prev : NULL | address of previous identifier
 ** next : NULL | address of next identifier
 */
-typedef struct	s_block_id
+typedef struct		s_block_id
 {
 	enum e_type			type;
 	void				*addr;
@@ -89,7 +85,7 @@ typedef struct	s_block_id
 	bool				isfree;
 	struct s_block_id	*prev;
 	struct s_block_id	*next;
-}				t_chunk_id;
+}					t_chunk_id;
 
 /*
 ** size	: size of zone (including header)
@@ -97,43 +93,51 @@ typedef struct	s_block_id
 ** prev : NULL | address of previous zone
 ** next : NULL | address of next zone
 */
-typedef struct	s_zone_id
+typedef struct		s_zone_id
 {
 	size_t				size;
 	struct s_zone_id	*prev;
 	struct s_zone_id	*next;
-}				t_zone_id;
+}					t_zone_id;
 
 /*
 ** listes des allocations
 */
-typedef struct	s_list
+typedef struct		s_list
 {
+	/*
+	struct rlimit	*rlim;
+	size_t			total;
+	*/
 	t_zone_id	*tiny;
 	t_zone_id	*small;
 	t_chunk_id	*large;
-}				t_list;
+}					t_list;
 
 
 /*
 ** store adresses of first zones
 */
-extern t_list	g_lst;
+extern t_list		g_lst;
 
-void		merge(t_chunk_id *first, t_chunk_id *second);
+void				ft_free(void *ptr);
+void				*ft_malloc(size_t size);
+void				*ft_realloc(void *ptr, size_t size);
 
-size_t		chunk_align(size_t size);
-size_t		zone_align(size_t size);
-size_t		mmap_align(size_t size);
+void				merge(t_chunk_id *first, t_chunk_id *second);
 
-t_zone_id	*create_zone(const enum e_type type);
-t_chunk_id	*check_zone(t_zone_id *zone, const size_t size);
+size_t				chunk_align(size_t size);
+size_t				zone_align(size_t size);
+size_t				mmap_align(size_t size);
 
-void		merge(t_chunk_id *first, t_chunk_id *second);
-void		split(t_chunk_id *first, const size_t size);
+t_zone_id			*create_zone(const enum e_type type);
+t_chunk_id			*check_zone(t_zone_id *zone, const size_t size);
 
-t_chunk_id	*identify(void *ptr);
+void				merge(t_chunk_id *first, t_chunk_id *second);
+void				split(t_chunk_id *first, const size_t size);
 
-void		*ft_memcpy(void *dest, const void *src, const size_t n);
+t_chunk_id			*identify(void *ptr);
+
+void				*ft_memcpy(void *dest, const void *src, const size_t n);
 
 #endif

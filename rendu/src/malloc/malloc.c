@@ -2,7 +2,7 @@
 
 t_list	g_lst = {NULL, NULL, NULL};
 
-static void	*ft_malloc(const size_t size, const enum e_type type)
+static void	*ft_malloc_small(const size_t size, const enum e_type type)
 {
 	t_chunk_id	*id;
 	t_zone_id	*cursor;
@@ -78,12 +78,12 @@ static void	*ft_malloc_large(const size_t size)
 	return (id->addr);
 }
 
-void	*malloc(size_t size)
+void	*ft_malloc(size_t size)
 {
 	if (size <= TINY_SIZE_MAX)
-		return (ft_malloc(size, TINY));
+		return (ft_malloc_small(size, TINY));
 	else if (size <= SMALL_SIZE_MAX)
-		return (ft_malloc(size, SMALL));
+		return (ft_malloc_small(size, SMALL));
 	else
 		return (ft_malloc_large(size));
 }

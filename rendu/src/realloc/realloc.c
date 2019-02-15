@@ -1,6 +1,6 @@
-#include "ft_malloc_util.h"
+#include "ft_malloc.h"
 
-static void	*ft_realloc(void *addr, t_chunk_id *id, size_t size) // norme
+static void	*ft_reallocate(void *addr, t_chunk_id *id, size_t size) // norme
 {
 	void		*ptr;
 
@@ -44,7 +44,7 @@ static void	*ft_realloc(void *addr, t_chunk_id *id, size_t size) // norme
 	}
 }
 
-void		*realloc(void *addr, size_t size)
+void		*ft_realloc(void *addr, size_t size)
 {
 	t_chunk_id	*id;
 	size_t		aligned;
@@ -57,10 +57,14 @@ void		*realloc(void *addr, size_t size)
 		return (NULL);
 	}
 	if ((id = identify(addr)) == NULL)
+	{
 		return (NULL);
+	}
 	aligned = chunk_align(size);
 	if (aligned == id->size)
+	{
 		return (addr);
+	}
 	else if (aligned < id->size)
 	{
 		split(id, size);
@@ -68,5 +72,5 @@ void		*realloc(void *addr, size_t size)
 		return (addr);
 	}
 	else
-		return (ft_realloc(addr, id, size));
+		return (ft_reallocate(addr, id, size));
 }

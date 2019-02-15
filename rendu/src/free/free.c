@@ -27,7 +27,7 @@ static void	ft_free_large(t_chunk_id *id)
 	munmap(id, id->size);
 }
 
-void	free(void *addr)
+void	ft_free(void *addr)
 {
 	t_chunk_id	*id;
 

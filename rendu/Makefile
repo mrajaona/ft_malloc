@@ -6,7 +6,9 @@ NAME			=	libft_malloc_$(HOSTTYPE).so
 LNAME			=	libft_malloc.so
 INCLUDE		 	=	./inc/
 
-INC				=	ft_malloc.h ft_malloc_util.h ft_malloc_print.h
+INC				=	ft_malloc.h \
+					ft_malloc_util.h \
+					ft_malloc_print.h
 INCS			=	$(addprefix $(INCLUDE), $(INC))
 
 DIR_FREE		=	./src/free/
@@ -37,11 +39,16 @@ SRC_UTIL		=	util.c \
 					chunk.c
 SRCS_UTIL		=	$(addprefix $(DIR_UTIL), $(SRC_UTIL))
 
+DIR_THREAD		=	./src/thread/
+SRC_THREAD		=	thread.c
+SRCS_THREAD		=	$(addprefix $(DIR_THREAD), $(SRC_THREAD))
+
 SRCS			=	$(SRCS_FREE) \
 					$(SRCS_MALLOC) \
 					$(SRCS_REALLOC) \
 					$(SRCS_SHOW) \
-					$(SRCS_UTIL)
+					$(SRCS_UTIL) \
+					$(SRCS_THREAD)
 
 OBJS			=	$(SRCS:.c=.o)
 
