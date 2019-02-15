@@ -33,3 +33,10 @@ void	*realloc(void *ptr, size_t size)
 	return (ret);
 }
 
+void	show_mem_alloc(void *ptr)
+{
+	if (pthread_mutex_lock(&g_mutex) != 0)
+		return ;
+	ft_show_mem_alloc(ptr);
+	pthread_mutex_unlock(&g_mutex);
+}

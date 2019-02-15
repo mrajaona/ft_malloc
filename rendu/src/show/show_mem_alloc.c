@@ -35,7 +35,7 @@ static bool	ft_check(t_list *c, size_t *total)
 	return (true);
 }
 
-void	show_mem_alloc()
+void	ft_show_mem_alloc()
 {
 	t_list	c;
 	size_t	total;

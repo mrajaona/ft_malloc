@@ -123,6 +123,7 @@ extern t_list		g_lst;
 void				ft_free(void *ptr);
 void				*ft_malloc(size_t size);
 void				*ft_realloc(void *ptr, size_t size);
+void				ft_show_mem_alloc();
 
 void				merge(t_chunk_id *first, t_chunk_id *second);
 
