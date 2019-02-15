@@ -1,4 +1,4 @@
-#include "ft_malloc.h"
+#include "ft_malloc_util.h"
 
 static void	*ft_reallocate(void *addr, t_chunk_id *id, size_t size) // norme
 {
@@ -10,13 +10,13 @@ static void	*ft_reallocate(void *addr, t_chunk_id *id, size_t size) // norme
 		|| (id->type == LARGE && size < LARGE_SIZE_MIN)
 		)
 	{
-		if ((ptr = malloc(size)) == NULL)
+		if ((ptr = ft_malloc(size)) == NULL)
 		{
 			errno = ENOMEM;
 			return (addr);
 		}
 		ft_memcpy(ptr, addr, size);
-		free(addr);
+		ft_free(addr);
 		return (ptr);		
 	}
 	else if (
@@ -33,13 +33,13 @@ static void	*ft_reallocate(void *addr, t_chunk_id *id, size_t size) // norme
 	}
 	else // (LARGE || size > MAX_SIZE || size < MIN_SIZE)
 	{
-		if ((ptr = malloc(size)) == NULL)
+		if ((ptr = ft_malloc(size)) == NULL)
 		{
 			errno = ENOMEM;
 			return (addr);
 		}
 		ft_memcpy(ptr, addr, id->size);
-		free(addr);
+		ft_free(addr);
 		return (ptr);
 	}
 }
@@ -50,10 +50,10 @@ void		*ft_realloc(void *addr, size_t size)
 	size_t		aligned;
 
 	if (!addr)
-		return (malloc(size));
+		return (ft_malloc(size));
 	if (size == 0)
 	{
-		free(addr);
+		ft_free(addr);
 		return (NULL);
 	}
 	if ((id = identify(addr)) == NULL)
@@ -68,7 +68,7 @@ void		*ft_realloc(void *addr, size_t size)
 	else if (aligned < id->size)
 	{
 		split(id, size);
-		free(id->next);
+		ft_free(id->next);
 		return (addr);
 	}
 	else

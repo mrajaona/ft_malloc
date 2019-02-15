@@ -1,4 +1,3 @@
-#include <unistd.h>
 #include "ft_malloc.h"
 
 static pthread_mutex_t g_mutex = PTHREAD_MUTEX_INITIALIZER;
