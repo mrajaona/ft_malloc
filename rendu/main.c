@@ -18,8 +18,8 @@ int	main(int ac, char **av)
 	write(1, "1 --\n", 5);
 
 	a = malloc(1 << 1);
-	b = malloc(1 << 1);
-	c = malloc(1 << 1);
+	b = malloc(12);
+	c = malloc(65);
 
 	if (!a) write(1, "a is NULL\n", 10);
 	if (!b) write(1, "b is NULL\n", 10);
