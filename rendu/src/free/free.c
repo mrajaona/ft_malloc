@@ -24,7 +24,8 @@ static void	ft_free_large(t_chunk_id *id)
 		id->prev->next = id->next;
 	else
 		g_lst.large = id->next;
-	munmap(id, id->size);
+
+	munmap(id, id->size); // bug
 }
 
 void	ft_free(void *addr)

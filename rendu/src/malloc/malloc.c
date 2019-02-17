@@ -30,27 +30,30 @@ static void	ft_push_large(t_chunk_id *id)
 	t_chunk_id	*cursor;
 
 	cursor = g_lst.large;
-	id->prev = NULL;
-	id->next = NULL;
 	if (!cursor)
 		g_lst.large = id;
 	else
 	{
 		while (cursor->next && cursor->addr < id->addr)
 			cursor = cursor->next;
-		if (cursor->addr > id->addr)
+
+		if (cursor->addr < id->addr)
 		{
-			id->prev = cursor->prev;
-			id->next = cursor;
-			cursor->prev = id;
-		}
-		else // !cursor->next && cursor->addr < id->addr
-		{
-			id->next = cursor;
+			id->next = cursor->next;
 			id->prev = cursor;
-			cursor->next = id;
 		}
-		if (id->prev == NULL)
+		else
+		{
+			id->next = cursor;
+			id->prev = cursor->prev;
+		}
+
+		if (id->next)
+			id->next->prev = id;
+		if (id->prev)
+			id->prev->next = id;
+
+		if (!(id->prev)) // first
 			g_lst.large = id;
 	}
 }
@@ -74,6 +77,8 @@ static void	*ft_malloc_large(const size_t size)
 	id->addr = (char *)id + sizeof(t_chunk_id);
 	id->size = length;
 	id->isfree = false;
+	id->prev = NULL;
+	id->next = NULL;
 	ft_push_large(id);
 	return (id->addr);
 }

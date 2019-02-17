@@ -28,7 +28,7 @@ void	ft_print_chunk(const t_chunk_id *chunk)
 	ft_append(buf, SEP_ADDR);
 	ft_put_addr((char *)chunk + chunk->size - 1, buf); // end
 	ft_append(buf, SEP_DATA);
-	ft_put_size(chunk->size - sizeof(t_chunk_id), buf); // size // bytes
+	ft_put_size(chunk->size/* - sizeof(t_chunk_id)*/, buf); // size // bytes
 	ft_print_ln(buf, STDOUT);
 }
 
