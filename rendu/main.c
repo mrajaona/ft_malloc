@@ -2,7 +2,7 @@
 #include <pthread.h>
 
 #include "ft_malloc.h"
-
+/*
 pthread_t tid[2];
 int counter;
 pthread_mutex_t lock;
@@ -33,9 +33,10 @@ void* doSomeThing(void *arg)
 	(void)arg;
     return NULL;
 }
-
+*/
 int main(void)
 {
+/*
     int i = 0;
 
     if (pthread_mutex_init(&lock, NULL) != 0)
@@ -50,6 +51,8 @@ int main(void)
     pthread_join(tid[0], NULL);
     pthread_join(tid[1], NULL);
     pthread_mutex_destroy(&lock);
-
+*/
+//    doSomeThing(NULL);
+    show_mem_alloc();
     return 0;
 }

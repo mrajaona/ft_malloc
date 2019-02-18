@@ -6,6 +6,7 @@ void	free(void *ptr)
 {
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return ;
+	write(1, "f", 1); ft_show_mem_alloc();
 	ft_free(ptr);
 	pthread_mutex_unlock(&g_mutex);
 }
@@ -16,6 +17,7 @@ void	*malloc(size_t size)
 
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return (NULL);
+	write(1, "m", 1); ft_show_mem_alloc();
 	ret = ft_malloc(size);
 	pthread_mutex_unlock(&g_mutex);
 	return (ret);
@@ -27,6 +29,7 @@ void	*realloc(void *ptr, size_t size)
 
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return (NULL);
+	write(1, "r", 1); ft_show_mem_alloc();
 	ret = ft_realloc(ptr, size);
 	pthread_mutex_unlock(&g_mutex);
 	return (ret);
