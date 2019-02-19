@@ -58,6 +58,8 @@ static void	ft_push_large(t_chunk_id *id)
 	}
 }
 
+#include "ft_malloc_print.h"
+
 static void	*ft_malloc_large(const size_t size)
 {
 	size_t		length;
@@ -80,11 +82,24 @@ static void	*ft_malloc_large(const size_t size)
 	id->prev = NULL;
 	id->next = NULL;
 	ft_push_large(id);
+
+	char	buf[BUFSIZE];
+
+	ft_clrbuf(buf);
+	ft_put_addr(id->addr, buf);
+	ft_append(buf, " at ");
+	ft_put_addr(id, buf);
+	ft_print_ln(buf, STDOUT);
+
 	return (id->addr);
 }
 
 void	*ft_malloc(size_t size)
 {
+	//
+	if (size)
+		return (ft_malloc_large(size));
+	//
 	if (size <= TINY_SIZE_MAX)
 		return (ft_malloc_small(size, TINY));
 	else if (size <= SMALL_SIZE_MAX)

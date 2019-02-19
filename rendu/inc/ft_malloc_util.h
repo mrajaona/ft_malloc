@@ -38,8 +38,7 @@
 # include <stdbool.h>
 
 # define MMAP_PROT PROT_READ | PROT_WRITE
-// # define MMAP_FLAGS MAP_ANONYMOUS | MAP_PRIVATE // LINUX
-# define MMAP_FLAGS MAP_ANON | MAP_PRIVATE // MAC_OS
+# define MMAP_FLAGS MAP_ANONYMOUS | MAP_PRIVATE
 # define MMAP_FD -1
 # define MMAP_OFFSET 0
 
