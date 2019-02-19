@@ -1,0 +1,32 @@
+m 0x10239C048 . 32 octets
+TINY : 0x10239C000
+0x10239C048 - 0x10239C097 : 80 octets
+Total : 80 octets
+f 0x7FB69EC00090 . 0 octets
+false
+TINY : 0x10239C000
+0x10239C048 - 0x10239C097 : 80 octets
+Total : 80 octets
+f 0x7FB69EC00080 . 0 octets
+false
+TINY : 0x10239C000
+0x10239C048 - 0x10239C097 : 80 octets
+Total : 80 octets
+f 0x7FB69EC000B0 . 0 octets
+false
+TINY : 0x10239C000
+0x10239C048 - 0x10239C097 : 80 octets
+Total : 80 octets
+m 0x10239C0C8 . 32 octets
+TINY : 0x10239C000
+0x10239C048 - 0x10239C097 : 80 octets
+0x10239C0C8 - 0x10239C117 : 80 octets
+Total : 160 octets
+f 0x7FB69EC00160 . 0 octets
+false
+TINY : 0x10239C000
+0x10239C048 - 0x10239C097 : 80 octets
+0x10239C0C8 - 0x10239C117 : 80 octets
+Total : 160 octets
+f 0x7FB69F000000 . 0 octets
+./test_macos.sh: line 5: 51007 Segmentation fault: 11  $@
