@@ -20,10 +20,12 @@ SRC_REALLOC		=	realloc.c \
 					ft_memcpy.c
 SRCS_REALLOC	=	$(addprefix	$(DIR_REALLOC), $(SRC_REALLOC))
 
+MORE_INC	=	size.h
+
 SRC			=	$(SRCS_MALLOC) \
 				$(SRC_FREE) \
 				$(SRC_REALLOC)
-INC			=	$(SRC:.c=.h)
+INC			=	$(SRC:.c=.h) $(MORE_INC)
 
 INCS		=	$(addprefix $(DIR_INC), $(INC))
 SRCS		=	$(addprefix $(DIR_SRC), $(SRC))
