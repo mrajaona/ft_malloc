@@ -20,7 +20,7 @@ SRC_REALLOC		=	realloc.c \
 					ft_memcpy.c
 SRCS_REALLOC	=	$(addprefix	$(DIR_REALLOC), $(SRC_REALLOC))
 
-MORE_INC	=	size.h
+MORE_INC	=	memory.h
 
 SRC			=	$(SRCS_MALLOC) \
 				$(SRC_FREE) \

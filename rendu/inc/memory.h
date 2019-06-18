@@ -1,5 +1,5 @@
-#ifndef SIZE_H
-# define SIZE_H
+#ifndef MEMORY_H
+# define MEMORY_H
 
 # define TINY
 # define SMALL
