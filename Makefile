@@ -3,26 +3,33 @@ ifeq ($(HOSTTYPE),)
 endif
 
 NAME			=	libft_malloc_$(HOSTTYPE).so
-INCLUDE		 	=	./inc/
 
-INC				=	ft_malloc.h
-INCS			=	$(addprefix $(INCLUDE), $(INC))
+DIR_INC		=	./inc/
+DIR_SRC		=	./src/
 
-DIR_FREE		=	./src/free/
-SRC_FREE		=	free.c
-SRCS_FREE		=	$(addprefix $(DIR_FREE), $(SRC_FREE))
+DIR_MALLOC	=	malloc/
+SRC_MALLOC	=	malloc.c
+SRCS_MALLOC	=	$(addprefix	$(DIR_MALLOC), $(SRC_MALLOC))
 
-DIR_MALLOC		=	./src/malloc/
-SRC_MALLOC		=	malloc.c
-SRCS_MALLOC		=	$(addprefix $(DIR_MALLOC), $(SRC_MALLOC))
+DIR_FREE	=	free/
+SRC_FREE	=	free.c
+SRCS_FREE	=	$(addprefix	$(DIR_FREE), $(SRC_FREE))
 
-DIR_REALLOC		=	./src/realloc/
-SRC_REALLOC		=	realloc.c
-SRCS_REALLOC	=	$(addprefix $(DIR_REALLOC), $(SRC_REALLOC))
+DIR_REALLOC		=	realloc/
+SRC_REALLOC		=	realloc.c \
+					ft_memcpy.c
+SRCS_REALLOC	=	$(addprefix	$(DIR_REALLOC), $(SRC_REALLOC))
 
-SRCS			=	$(SRCS_FREE) \
-					$(SRCS_MALLOC) \
-					$(SRCS_REALLOC)
+SRC			=	$(SRCS_MALLOC) \
+				$(SRC_FREE) \
+				$(SRC_REALLOC)
+INC			=	$(SRC:.c=.h)
+
+INCS		=	$(addprefix $(DIR_INC), $(INC))
+SRCS		=	$(addprefix $(DIR_SRC), $(SRC))
+
+DIRS		=	$(DIR_MAIN)
+DIRS_INC	=	$(addprefix -I$(DIR_INC), $(DIRS))
 
 OBJS			=	$(SRCS:.c=.o)
 

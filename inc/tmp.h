@@ -1,5 +1,5 @@
-#ifndef FT_MALLOC_H
-# define FT_MALLOC_H
+#ifndef TMP_H
+# define TMP_H
 
 # include <sys/mman.h>
 /*
@@ -25,9 +25,5 @@
 # define TINY
 # define SMALL
 # define LARGE
-
-void	free(void *ptr);
-void	*malloc(size_t size);
-void	*realloc(void *ptr, size_t size);
 
 #endif
