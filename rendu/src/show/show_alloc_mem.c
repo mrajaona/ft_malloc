@@ -2,5 +2,5 @@
 
 void    show_alloc_mem(void)
 {
-    write(1, "show_alloc_mem()\n", 17);
+    write(1, "show_alloc_mem\n", 15);
 }

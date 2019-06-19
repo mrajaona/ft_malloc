@@ -4,9 +4,8 @@ endif
 
 DIR_INC		=	./inc/
 DIR_SRC		=	./src/
-DIR_LIB		=	./lib/
 
-NAME		=	$(addprefix $(DIR_LIB), libft_malloc_$(HOSTTYPE).so)
+NAME		=	libft_malloc_$(HOSTTYPE).so
 LNNAME		=	libft_malloc.so
 
 DIR_FREE	=	free/
@@ -46,9 +45,7 @@ CFLAGS		=	-Wall -Wextra -Werror -fpic $(DIRS_INC) -c
 
 CC			=	/usr/bin/gcc
 RM			=	/bin/rm -f
-MKDIR		=	/bin/mkdir -p
 LN			=	/bin/ln -s
-CP			=	/bin/cp
 ECHO		=	/usr/bin/printf
 
 all			:	$(NAME)
@@ -56,12 +53,9 @@ all			:	$(NAME)
 $(OBJS) 	:	$(INCS)
 
 $(NAME) 	:	$(INCS) $(SRCS) $(OBJS)
-				$(MKDIR) $(DIR_LIB)
 				$(CC) -shared -o $(NAME) $(OBJS)
 				$(RM) $(LNNAME)
 				$(LN) $(NAME) $(LNNAME)
-				$(CP) $(LNNAME) $(DIR_LIB)
-				$(RM) $(LNNAME)
 				@$(ECHO) "\033[32m> Executable compiled\033[0m\n"
 
 clean		:
@@ -69,7 +63,7 @@ clean		:
 				@$(ECHO) "\033[31m> Directory cleaned\033[0m\n"
 
 fclean		:	clean
-				@$(RM) -r $(DIR_LIB)
+				@$(RM) $(NAME) $(LNAME)
 				@$(ECHO) "\033[31m> Removed executable\033[0m\n"
 
 re			:	fclean all
