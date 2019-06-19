@@ -2,28 +2,21 @@
 
 clear
 
-rm ./lib/*
-cp -R ./rendu/lib/* ./lib
-rm ./inc/*
+rm -f *.so
+cp ./rendu/*.so .
+rm -f ./inc/*
 cp ./rendu/ft_malloc.h ./inc
 
-echo
+gcc -Wall -Wextra -Werror -I./inc/ -L. -lft_malloc -o test main.c
 
-echo -n "./lib "
-ls -l ./lib
-echo -n ">> file: " && file -L ./lib/libft_malloc.so
+echo "------------ system"
 
-echo
+./test
 
-# gcc -Wall -Wextra -Werror -I./inc/ -L./lib -lft_malloc -o test main.c
-gcc -Wall -Wextra -Werror -I./inc/ -L./lib -lft_malloc_x86_64_Darwin -o test main.c
+echo "------------ custom"
 
-echo
-
-# export DYLD_LIBRARY_PATH="./lib"
-# export DYLD_INSERT_LIBRARIES="libft_malloc.so"
-# export DYLD_FORCE_FLAT_NAMESPACE=1
-
-echo "------------"
+export DYLD_LIBRARY_PATH=.
+export DYLD_INSERT_LIBRARIES="libft_malloc.so"
+export DYLD_FORCE_FLAT_NAMESPACE=1
 
 ./test
