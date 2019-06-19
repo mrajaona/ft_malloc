@@ -58,7 +58,7 @@ $(OBJS) 	:	$(INCS)
 $(NAME) 	:	$(INCS) $(SRCS) $(OBJS)
 				$(MKDIR) $(DIR_LIB)
 				$(CC) -shared -o $(NAME) $(OBJS)
-				$(RM) $(LNAME)
+				$(RM) $(LNNAME)
 				$(LN) $(NAME) $(LNNAME)
 				@$(ECHO) "\033[32m> Executable compiled\033[0m\n"
 
