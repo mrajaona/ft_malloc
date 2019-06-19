@@ -7,7 +7,7 @@ DIR_SRC		=	./src/
 DIR_LIB		=	./lib/
 
 NAME		=	$(addprefix $(DIR_LIB), libft_malloc_$(HOSTTYPE).so)
-LNNAME		=	$(addprefix $(DIR_LIB), libft_malloc.so)
+LNNAME		=	libft_malloc.so
 
 DIR_FREE	=	free/
 SRC_FREE	=	free.c
@@ -46,10 +46,10 @@ CFLAGS		=	-Wall -Wextra -Werror -fpic $(DIRS_INC) -c
 
 CC			=	/usr/bin/gcc
 RM			=	/bin/rm -f
-ECHO		=	/usr/bin/printf
-LIB			=	/usr/bin/ar rc
-LN			=	/bin/ln -s
 MKDIR		=	/bin/mkdir -p
+LN			=	/bin/ln -s
+CP			=	/bin/cp
+ECHO		=	/usr/bin/printf
 
 all			:	$(NAME)
 
@@ -60,6 +60,8 @@ $(NAME) 	:	$(INCS) $(SRCS) $(OBJS)
 				$(CC) -shared -o $(NAME) $(OBJS)
 				$(RM) $(LNNAME)
 				$(LN) $(NAME) $(LNNAME)
+				$(CP) $(LNNAME) $(DIR_LIB)
+				$(RM) $(LNNAME)
 				@$(ECHO) "\033[32m> Executable compiled\033[0m\n"
 
 clean		:
