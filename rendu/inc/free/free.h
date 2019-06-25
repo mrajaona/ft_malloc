@@ -1,7 +1,12 @@
 #ifndef FREE_H
 # define FREE_H
 
-# include <pthread.h>
+// # include <pthread.h>
+
+# include <unistd.h>
+/*
+** ssize_t write(int fd, const void *buf, size_t count);
+*/
 
 # include <sys/mman.h>
 /*

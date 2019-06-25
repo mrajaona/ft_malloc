@@ -20,7 +20,7 @@ typedef struct	s_elem_info
 
 /*
 ** size : available size (not including header)
-** first : adress of the first element in the zone
+** first : address of the first element in the zone
 */
 
 typedef struct	s_zone_info

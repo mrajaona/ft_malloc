@@ -1,7 +1,7 @@
 #ifndef MALLOC_H
 # define MALLOC_H
 
-# include <pthread.h>
+// # include <pthread.h>
 
 # include <sys/mman.h>
 /*
@@ -12,6 +12,7 @@
 # include <unistd.h>
 /*
 ** int getpagesize(void);
+** ssize_t write(int fd, const void *buf, size_t count);
 */
 
 # include <sys/time.h>
