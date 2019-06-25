@@ -26,6 +26,14 @@ static t_elem_info	*find_in_zone(t_elem_info *first, const void *ptr)
 	return (NULL);
 }
 
+static t_elem_info	*check_zone(t_zone_info *zone, const void *ptr)
+{
+	if (ptr < (void *)(zone->first)
+		|| ptr > ((void *)(zone->first) + zone->size))
+		return (NULL);
+	return (find_in_zone(zone->first, ptr));
+}
+
 static t_elem_info	*find_elem(const void *ptr)
 {
 	t_zone_info	*zone;
@@ -35,7 +43,7 @@ static t_elem_info	*find_elem(const void *ptr)
 	zone = g_zones.tiny;
 	while (zone)
 	{
-		if (NULL != (elem = find_in_zone(zone->first, ptr)))
+		if (NULL != (elem = check_zone(zone, ptr)))
 			return (elem);
 		zone = zone->next;
 	}
@@ -44,7 +52,7 @@ static t_elem_info	*find_elem(const void *ptr)
 	zone = g_zones.small;
 	while (zone)
 	{
-		if (NULL != (elem = find_in_zone(zone->first, ptr)))
+		if (NULL != (elem = check_zone(zone, ptr)))
 			return (elem);
 		zone = zone->next;
 	}
