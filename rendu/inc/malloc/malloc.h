@@ -21,6 +21,7 @@
 */
 
 # include "memory.h"
+# include "global.h"
 
 void	*malloc(size_t size);
 

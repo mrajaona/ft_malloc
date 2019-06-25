@@ -25,18 +25,25 @@ DIR_SHOW	=	show/
 SRC_SHOW	=	show_alloc_mem.c
 SRCS_SHOW	=	$(addprefix $(DIR_SHOW), $(SRC_SHOW))
 
+DIR_GLOBAL	=	global/
+SRC_GLOBAL	=	global.c
+SRCS_GLOBAL	=	$(addprefix $(DIR_GLOBAL), $(SRC_GLOBAL))
+
+DIR_MORE	=	./
 MORE_INC	=	memory.h
 
 SRC			=	$(SRCS_MALLOC) \
 				$(SRCS_FREE) \
 				$(SRCS_REALLOC) \
-				$(SRCS_SHOW)
+				$(SRCS_SHOW) \
+				$(SRCS_GLOBAL)
 INC			=	$(SRC:.c=.h) $(MORE_INC)
 
 INCS		=	$(addprefix $(DIR_INC), $(INC))
 SRCS		=	$(addprefix $(DIR_SRC), $(SRC))
 
-DIRS		=	$(DIR_FREE) $(DIR_MALLOC) $(DIR_REALLOC) $(DIR_SHOW)
+DIRS		=	$(DIR_FREE) $(DIR_MALLOC) $(DIR_REALLOC) \
+				$(DIR_SHOW) $(DIR_GLOBAL) $(DIR_MORE)
 DIRS_INC	=	$(addprefix -I$(DIR_INC), $(DIRS))
 
 OBJS		=	$(SRCS:.c=.o)

@@ -1,28 +1,43 @@
 #ifndef MEMORY_H
 # define MEMORY_H
 
+# include <stddef.h>
+
 /*
-** size : available size
+** size : available size (not including header)
 ** isfree : status
 ** addr : start of available memory
 */
 
-typedef struct	s_info
+typedef struct	s_elem_info
 {
-	void	*addr;
-	size_t	size;
-	bool	isfree;
-}				t_info;
+	struct s_elem_info	*prev;
+	struct s_elem_info	*next;
+	size_t				size;
+	char				isfree;
+	void				*addr;
+}				t_elem_info;
+
+/*
+** size : available size (not including header)
+** first : adress of the first element in the zone
+*/
+
+typedef struct	s_zone_info
+{
+	struct s_zone_info	*prev;
+	struct s_zone_info	*next;
+	size_t				size;
+	t_elem_info			*first;
+}				t_zone_info;
 
 # define ZONE_CAPACITY (100)
 
 # define TINY_MIN (1)
 # define TINY_MAX (256)
-# define TINY_ZONE_SIZE (ZONE_CAPACITY * TINY_MAX)
 
 # define SMALL_MIN (TINY_MAX + 1)
 # define SMALL_MAX (1024)
-# define SMALL_ZONE_SIZE (ZONE_CAPACITY * SMALL_MAX)
 
 # define LARGE_MIN (SMALL_MAX + 1)
 

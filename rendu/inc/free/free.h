@@ -8,6 +8,8 @@
 ** int munmap(void *addr, size_t length);
 */
 
+# include "global.h"
+
 void	free(void *ptr);
 
 #endif
