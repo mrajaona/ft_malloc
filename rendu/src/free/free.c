@@ -39,7 +39,14 @@ void	free(void *ptr)
 	if (ptr == NULL)
 		return ;
 
+	if ((size_t)ptr < sizeof(t_elem_info))
+	{
+		write(1, "\nInvalid address\n", 17);
+		return ;
+	}
+
 	elem = ptr - sizeof(t_elem_info);
+
 	if (elem->addr != ptr)
 	{
 		write(1, "\nInvalid address\n", 17);
