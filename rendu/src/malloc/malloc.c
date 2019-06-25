@@ -47,6 +47,6 @@ static void	*large(size_t size)
 
 void		*malloc(size_t size)
 {
-	write(1, "m", 1);
+	write(1, "m", 1); // debug
 	return (large(size));
 }
