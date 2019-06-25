@@ -30,6 +30,22 @@ static void	free_large(t_elem_info *elem)
 	write(1, "4", 1);
 }
 
+static t_elem_info	*find_elem(void *ptr)
+{
+	t_elem_info	*elem;
+
+	// LARGE
+	elem = g_zones.large;
+	while (elem)
+	{
+		if (elem->addr == ptr)
+			return (elem);
+		elem = elem->next;
+	}
+
+	return (NULL);
+}
+
 void	free(void *ptr)
 {
 	t_elem_info	*elem;
@@ -39,22 +55,10 @@ void	free(void *ptr)
 	if (ptr == NULL)
 		return ;
 
-	if ((size_t)ptr < sizeof(t_elem_info))
+	if (!(elem = find_elem(ptr)))
 	{
 		write(1, "\nInvalid address\n", 17);
 		return ;
-	}
-
-	elem = ptr - sizeof(t_elem_info);
-
-	if (elem->addr != ptr)
-	{
-		write(1, "\nInvalid address\n", 17);
-		return ;
-	}
-	else
-	{
-		write(1, "\nValid address\n", 15);
 	}
 
 	elem->isfree = 1;
