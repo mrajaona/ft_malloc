@@ -82,10 +82,13 @@ static t_elem_info	*create_zone(t_type type)
 	new->first->size = new->size - sizeof(t_elem_info);
 	new->first->isfree = 1;
 	new->first->addr = (void *)(new->first) + sizeof(t_elem_info);
+	new->first->prev = NULL;
+	new->first->next = NULL;
 
-	return (new->first->addr);
+	return (new->first);
 }
 
+// todo : find smallest fitting
 static t_elem_info	*find_in_zone(t_elem_info *first, size_t size)
 {
 	t_elem_info	*elem;
@@ -97,6 +100,7 @@ static t_elem_info	*find_in_zone(t_elem_info *first, size_t size)
 			return (elem);
 		elem = elem->next;
 	}
+
 	return (NULL);
 }
 
@@ -118,22 +122,44 @@ static t_elem_info	*find_free(size_t size)
 static void	*other(size_t size)
 {
 	t_elem_info	*elem;
+	t_elem_info	*free_elem;
+
 	if (!(elem = find_free(size)))
 		elem = create_zone(size >= SMALL_MIN ? SMALL : TINY);
 
 	if (!elem)
-	{
-		// ENOMEM
 		return (NULL);
-	}
-	// todo : split
+	
+	elem->isfree = 0;
 
-	return (NULL);
+	if ((elem->size - sizeof(t_zone_info)) <= (sizeof(t_zone_info)))
+		return (elem->addr);
+
+	free_elem = (void *)elem + size + sizeof(t_zone_info);
+	free_elem->isfree = 1;
+	free_elem->size = elem->size - size - sizeof(t_zone_info);
+	free_elem->addr = (void *)free_elem + sizeof(t_elem_info);
+	free_elem->prev = elem;
+	free_elem->next = elem->next;
+
+	if (elem->next)
+		elem->next->prev = free_elem;
+	elem->size = size;
+	elem->next = free_elem;
+
+	return (elem->addr);
 }
 
 void		*malloc(size_t size)
 {
 	write(1, "m", 1); // debug
+
+	if (size >= LARGE_MIN)
+		write(1, "L", 1);
+	else if (size >= SMALL_MIN)
+		write(1, "S", 1);
+	else
+		write(1, "T", 1);
 
 	if (size >= LARGE_MIN)
 		return (large(size));

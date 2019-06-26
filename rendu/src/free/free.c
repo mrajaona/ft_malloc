@@ -105,6 +105,7 @@ void	free(void *ptr)
 		return ;
 	}
 	elem->isfree = 1;
+
 	if (elem->size >= LARGE_MIN)
 		free_large(elem);
 	else
