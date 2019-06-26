@@ -41,4 +41,11 @@ typedef struct	s_zone_info
 
 # define LARGE_MIN (SMALL_MAX + 1)
 
+typedef enum	e_type
+{
+	TINY,
+	SMALL,
+	LARGE
+}				t_type;
+
 #endif

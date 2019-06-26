@@ -1,5 +1,7 @@
 #include "free.h"
 
+// free
+
 static void	free_large(t_elem_info *elem)
 {
 	if (!(elem->prev))
@@ -11,6 +13,33 @@ static void	free_large(t_elem_info *elem)
 	if (munmap(elem, elem->size + sizeof(t_elem_info)) < 0)
 		write(2, "munmap failed\n", 14);
 }
+
+static void	free_other(t_elem_info *elem)
+{
+	t_zone_info	*zone;
+
+	// todo : merge
+
+	if (!(elem->prev) && !(elem->next))
+	{
+		zone = (void *)elem - sizeof(t_zone_info);
+		if (!(zone->prev))
+		{
+			if (zone->size >= SMALL_MIN)
+				g_zones.small = zone->next;
+			else
+				g_zones.tiny = zone->next;
+		}
+		else
+			zone->prev->next = zone->next;
+		if (zone->next)
+			zone->next->prev = zone->prev;
+		if (munmap(zone, zone->size + sizeof(t_zone_info)) < 0)
+			write(2, "munmap failed\n", 14);
+	}
+}
+
+// find elem
 
 static t_elem_info	*find_in_zone(t_elem_info *first, const void *ptr)
 {
@@ -61,6 +90,8 @@ static t_elem_info	*find_elem(const void *ptr)
 	return (find_in_zone(g_zones.large, ptr));
 }
 
+// main
+
 void	free(void *ptr)
 {
 	t_elem_info	*elem;
@@ -74,11 +105,8 @@ void	free(void *ptr)
 		return ;
 	}
 	elem->isfree = 1;
-	free_large(elem);
-
-	// todo : merge
-	/*
-	if (!(elem->prev) && !(elem->next))
-		munmap(zone, zone size);
-	*/
+	if (elem->size >= LARGE_MIN)
+		free_large(elem);
+	else
+		free_other(elem);
 }
