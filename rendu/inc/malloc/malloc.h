@@ -21,6 +21,8 @@
 ** int getrlimit(int resource, struct rlimit *rlim);
 */
 
+# include <errno.h>
+
 # include "memory.h"
 # include "global.h"
 

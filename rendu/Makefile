@@ -29,6 +29,11 @@ DIR_GLOBAL	=	global/
 SRC_GLOBAL	=	global.c
 SRCS_GLOBAL	=	$(addprefix $(DIR_GLOBAL), $(SRC_GLOBAL))
 
+DIR_UTIL	=	util/
+SRC_UTIL	=	identify.c \
+				merge.c
+SRCS_UTIL	=	$(addprefix $(DIR_UTIL), $(SRC_UTIL))
+
 DIR_MORE	=	./
 MORE_INC	=	memory.h
 
@@ -36,14 +41,15 @@ SRC			=	$(SRCS_MALLOC) \
 				$(SRCS_FREE) \
 				$(SRCS_REALLOC) \
 				$(SRCS_SHOW) \
-				$(SRCS_GLOBAL)
+				$(SRCS_GLOBAL) \
+				$(SRCS_UTIL)
 INC			=	$(SRC:.c=.h) $(MORE_INC)
 
 INCS		=	$(addprefix $(DIR_INC), $(INC))
 SRCS		=	$(addprefix $(DIR_SRC), $(SRC))
 
 DIRS		=	$(DIR_FREE) $(DIR_MALLOC) $(DIR_REALLOC) \
-				$(DIR_SHOW) $(DIR_GLOBAL) $(DIR_MORE)
+				$(DIR_SHOW) $(DIR_GLOBAL) $(DIR_UTIL) $(DIR_MORE)
 DIRS_INC	=	$(addprefix -I$(DIR_INC), $(DIRS))
 
 OBJS		=	$(SRCS:.c=.o)

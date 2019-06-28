@@ -12,8 +12,11 @@
 # include "free.h"
 # include "ft_memcpy.h"
 
+# include "identify.h"
+
 # include "memory.h"
 # include "global.h"
+# include "merge.h"
 
 void	*realloc(void *ptr, size_t size);
 

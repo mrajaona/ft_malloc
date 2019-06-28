@@ -1,6 +1,45 @@
 #include "malloc.h"
 
-// add to start of list
+static void	push_large(t_elem_info *new)
+{
+	t_elem_info	*cursor;
+
+	cursor = g_zones.large;
+	if (!cursor)
+	{
+		new->prev = NULL;
+		new->next = NULL;
+		g_zones.large = new;
+	}
+	else
+	{
+		while (cursor->next && cursor->addr < new->addr)
+			cursor = cursor->next;
+
+		if (cursor->addr < new->addr)
+		{
+			new->next = cursor->next;
+			new->prev = cursor;
+			cursor->next = new;
+		}
+		else
+		{
+			new->next = cursor;
+			new->prev = cursor->prev;
+			cursor->prev = new;
+		}
+
+		if (new->next)
+			new->next->prev = new;
+		if (new->prev)
+			new->prev->next = new;
+
+		if (!(new->prev)) // first
+			g_zones.large = new;
+
+	}
+}
+
 static void	*large(size_t size)
 {
 	t_elem_info	*new;
@@ -21,17 +60,55 @@ static void	*large(size_t size)
 		return (NULL);
 	}
 
-	new->prev = NULL;
-	if (g_zones.large)
-		g_zones.large->prev = new;
-	new->next = g_zones.large;
-	g_zones.large = new;
-
 	new->size = size - sizeof(t_elem_info);
 	new->isfree = 0;
 	new->addr = new + sizeof(t_elem_info);
 
+	push_large(new);
 	return (new->addr);
+}
+
+static void	push_zone(t_zone_info **list, t_zone_info *new)
+{
+	t_zone_info	*cursor;
+
+	cursor = *list;
+
+	if (!cursor)
+	{
+		new->prev = NULL;
+		new->next = NULL;
+		*list = new;
+	}
+	else
+	{
+		while (cursor->next && cursor->first < new->first)
+			cursor = cursor->next;
+
+		if (cursor->first < new->first)
+		{
+			new->next = cursor->next;
+			new->prev = cursor;
+			cursor->next = new;
+		}
+		else
+		{
+			new->next = cursor;
+			new->prev = cursor->prev;
+			cursor->prev = new;
+		}
+
+		if (new->next)
+			new->next->prev = new;
+		if (new->prev)
+			new->prev->next = new;
+
+		if (!(new->prev)) // first
+			*list = new;
+	}
+
+	if (!(new->prev))
+		*list = new;
 }
 
 // zone_size % getpagesize == 0
@@ -67,14 +144,9 @@ static t_elem_info	*create_zone(t_type type)
 	if (new == MAP_FAILED)
 	{
 		write(2, "MAP_FAILED\n", 11);
+		errno = ENOMEM;
 		return (NULL);
 	}
-
-	new->prev = NULL;
-	if (*list)
-		(*list)->prev = new;
-	new->next = *list;
-	*list = new;
 
 	new->size = size - sizeof(t_zone_info);
 	new->first = (void *)new + sizeof(t_zone_info);
@@ -84,6 +156,8 @@ static t_elem_info	*create_zone(t_type type)
 	new->first->addr = (void *)(new->first) + sizeof(t_elem_info);
 	new->first->prev = NULL;
 	new->first->next = NULL;
+
+	push_zone(list, new);
 
 	return (new->first);
 }
@@ -135,7 +209,7 @@ static void	*other(size_t size)
 	if ((elem->size - sizeof(t_zone_info)) <= (sizeof(t_zone_info)))
 		return (elem->addr);
 
-	free_elem = (void *)elem + size + sizeof(t_zone_info);
+	free_elem = (void *)elem + sizeof(t_zone_info) + size;
 	free_elem->isfree = 1;
 	free_elem->size = elem->size - size - sizeof(t_zone_info);
 	free_elem->addr = (void *)free_elem + sizeof(t_elem_info);

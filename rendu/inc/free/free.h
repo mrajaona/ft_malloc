@@ -15,6 +15,9 @@
 
 # include "global.h"
 
+# include "identify.h"
+# include "merge.h"
+
 void	free(void *ptr);
 
 #endif
