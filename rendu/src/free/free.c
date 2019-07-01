@@ -1,6 +1,7 @@
 #include "ft_malloc_util.h"
 
 // debug
+/*
 #include "ft_malloc_print.h"
 static void	ft_debug(const t_chunk_id *chunk)
 {
@@ -12,7 +13,7 @@ static void	ft_debug(const t_chunk_id *chunk)
 	ft_put_addr((char *)chunk + sizeof(t_chunk_id), buf);
 	ft_print_ln(buf, STDOUT);
 }
-
+*/
 static void	ft_free_zone(const enum e_type type, t_zone_id *zone)
 {
 	if (zone->next)
@@ -47,15 +48,15 @@ void	ft_free(void *addr)
 
 	if (!addr)
 	{
-		write(1, "0\n", 2);
+		write(1, "no addr to free\n", 16);
 		return ;
 	}
 	if ((id = identify(addr)) == NULL) // invalid addr
 	{
-		write(1, "false\n", 6);
+		write(1, "invalid free\n", 13);
 		return ;
 	}
-	ft_debug(id);
+	// ft_debug(id);
 	if (id->type != LARGE)
 	{
 		id->isfree = true;

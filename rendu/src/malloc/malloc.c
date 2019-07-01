@@ -83,6 +83,7 @@ static void	*ft_malloc_large(const size_t size)
 	id->next = NULL;
 	ft_push_large(id);
 
+/*
 	char	buf[BUFSIZE];
 
 	ft_clrbuf(buf);
@@ -90,7 +91,7 @@ static void	*ft_malloc_large(const size_t size)
 	ft_append(buf, " at ");
 	ft_put_addr(id, buf);
 	ft_print_ln(buf, STDOUT);
-
+*/
 	return (id->addr);
 }
 

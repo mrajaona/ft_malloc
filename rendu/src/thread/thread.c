@@ -1,7 +1,7 @@
 #include "ft_malloc.h"
 
 static pthread_mutex_t g_mutex = PTHREAD_MUTEX_INITIALIZER;
-
+/*
 // debug
 #include "ft_malloc_print.h"
 static void	ft_debug(void *addr, size_t size)
@@ -17,15 +17,15 @@ static void	ft_debug(void *addr, size_t size)
 	ft_put_size(size, buf);
 	ft_print_ln(buf, STDOUT);
 }
-
+*/
 void	free(void *ptr)
 {
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return ;
 	
-		write(1, "f ", 2); ft_debug(ptr, 0);
+	//	write(1, "f ", 2); ft_debug(ptr, 0);
 	ft_free(ptr);
-		ft_show_mem_alloc();
+		// ft_show_mem_alloc();
 
 	pthread_mutex_unlock(&g_mutex);
 }
@@ -37,10 +37,10 @@ void	*malloc(size_t size)
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return (NULL);
 	
-		write(1, "m ", 2);
+	//	write(1, "m ", 2);
 	ret = ft_malloc(size);
-		ft_debug(ret, size);
-		ft_show_mem_alloc();
+		// ft_debug(ret, size);
+		// ft_show_mem_alloc();
 	pthread_mutex_unlock(&g_mutex);
 	return (ret);
 }
@@ -52,9 +52,9 @@ void	*realloc(void *ptr, size_t size)
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return (NULL);
 	
-		write(1, "r ", 2); ft_debug(ptr, size);
+	//	write(1, "r ", 2); ft_debug(ptr, size);
 	ret = ft_realloc(ptr, size);
-		ft_show_mem_alloc();
+		// ft_show_mem_alloc();
 	pthread_mutex_unlock(&g_mutex);
 	return (ret);
 }
