@@ -50,7 +50,7 @@ static void	*large(size_t size)
 	new = mmap(NULL,
 		size,
 		PROT_READ | PROT_WRITE | PROT_EXEC,
-		MAP_ANON | MAP_PRIVATE,
+		MAP_ANONYMOUS | MAP_PRIVATE,
 		-1,
 		0);
 
@@ -148,6 +148,8 @@ static t_elem_info	*create_zone(t_type type)
 		return (NULL);
 	}
 
+	write(1, "\nnew zone\n", 10); // debug
+
 	new->size = size - sizeof(t_zone_info);
 	new->first = (void *)new + sizeof(t_zone_info);
 
@@ -178,6 +180,7 @@ static t_elem_info	*find_in_zone(t_elem_info *first, size_t size)
 	return (NULL);
 }
 
+// todo : find smallest fitting
 static t_elem_info	*find_free(size_t size)
 {
 	t_zone_info	*zone;
@@ -206,7 +209,7 @@ static void	*other(size_t size)
 	
 	elem->isfree = 0;
 
-	if ((elem->size - sizeof(t_zone_info)) <= (sizeof(t_zone_info)))
+	if ((elem->size - size) <= (sizeof(t_zone_info)))
 		return (elem->addr);
 
 	free_elem = (void *)elem + sizeof(t_zone_info) + size;
@@ -226,7 +229,7 @@ static void	*other(size_t size)
 
 void		*malloc(size_t size)
 {
-	write(1, "m", 1); // debug
+	write(1, "\nm", 2); // debug
 
 	if (size >= LARGE_MIN)
 		write(1, "L", 1);

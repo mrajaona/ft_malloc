@@ -4,6 +4,7 @@
 
 static void	free_large(t_elem_info *elem)
 {
+	write(1, "1", 1); // debug
 	if (!(elem->prev))
 		g_zones.large = elem->next;
 	else
@@ -18,6 +19,19 @@ static void	free_other(t_elem_info *elem)
 {
 	t_zone_info	*zone;
 
+	write(1, "2", 1); // debug
+
+	if (elem->prev)
+		write(1, " prev ", 6);
+	else
+		write(1, " no prev ", 9);
+
+	if (elem->prev->isfree)
+		write(1, "abc", 3);
+	else
+		write(1, "def", 3);
+
+	write(1, ".", 1); // debug
 	while (elem->prev && elem->prev->isfree)
 		elem = merge(elem->prev, elem);
 	while (elem->next && elem->next->isfree)
@@ -48,7 +62,7 @@ void	free(void *ptr)
 {
 	t_elem_info	*elem;
 
-	write(1, "f", 1); // debug
+	write(1, "\nf", 2); // debug
 	if (ptr == NULL)
 		return ;
 	if (!(elem = identify(ptr)))
