@@ -4,6 +4,7 @@
 
 static void	*other(size_t size, const t_type type)
 {
+	(void)size; (void)type;
 	return (NULL);
 }
 
@@ -84,7 +85,7 @@ void		*malloc(size_t size)
 	void	*ret;
 
 	if (pthread_mutex_lock(&g_mutex) != 0)
-		return ;
+		return (NULL);
 	ret = malloc_thread(size);
 	pthread_mutex_unlock(&g_mutex);
 	return (ret);

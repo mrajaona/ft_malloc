@@ -5,7 +5,7 @@ static void	free_large(t_elem_info *elem)
 	if (elem->prev)
 		elem->prev->next = elem->next;
 	else
-		g_lst.large = elem->net;
+		g_zones.large = elem->next;
 	if (elem->next)
 		elem->next->prev = elem->prev;
 	munmap(elem, elem->size + sizeof(t_elem_info));
@@ -47,9 +47,9 @@ static void	free_thread(void *ptr)
 	t_type		type;
 
 	write(1, "\nf", 2); // debug
-	if (!addr)
-		write(2, "no addr to free\n", 16);
-	else if (!(elem = identify(addr)))
+	if (!ptr)
+		write(2, "no address to free\n", 16);
+	else if (!(elem = identify(ptr)))
 		write(2, "invalid free\n", 13);
 	else
 	{

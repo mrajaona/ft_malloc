@@ -30,6 +30,6 @@ void	split(t_elem_info *first, const size_t size)
 	first->next = second;
 	first->size = size;
 
-	while (second->next && second->newxt->isfree)
+	while (second->next && second->next->isfree)
 		merge(second, second->next);
 }
