@@ -1,33 +1,17 @@
 #include "free.h"
 
-void	free_thread(void *ptr)
+static void	free_large(t_elem_info *elem)
 {
-	t_elem_info	*elem;
-
-	write(1, "\nf", 2); // debug
-	if (!addr)
-	{
-		write(2, "no addr to free\n", 16);
-		return ;
-	}
-	if (!(elem = identify(addr)))
-	{
-		write(2, "invalid free\n", 13);
-		return ;
-	}	
+	if (elem->prev)
+		elem->prev->next = elem->next;
+	else
+		g_lst.large = elem->net;
+	if (elem->next)
+		elem->next->prev = elem->prev;
+	munmap(elem, elem->size + sizeof(t_elem_info));
 }
 
-void	free(void *ptr)
-{
-	if (pthread_mutex_lock(&g_mutex) != 0)
-		return ;
-	free_thread(ptr);
-	pthread_mutex_unlock(&g_mutex);
-}
-
-/** OLD **/
-
-static void	ft_free_zone(const enum e_type type, t_zone_id *zone)
+static void	free_zone(t_type type, t_zone_info *zone)
 {
 	if (zone->next)
 		zone->next->prev = zone->prev;
@@ -43,47 +27,43 @@ static void	ft_free_zone(const enum e_type type, t_zone_id *zone)
 	munmap(zone, zone->size);	
 }
 
-static void	ft_free_large(t_chunk_id *id)
+static void	free_other(t_elem_info *elem, const t_type type)
 {
-	if (id->next)
-		id->next->prev = id->prev;
-	if (id->prev)
-		id->prev->next = id->next;
-	else
-		g_lst.large = id->next;
-
-	munmap(id, id->size); // bug
+	elem->isfree = 1;
+	while (elem->next && elem->next->isfree)
+		merge(elem, elem->next);
+	while (elem->prev && elem->prev->isfree)
+	{
+		elem = elem->prev;
+		merge(elem, elem->next);
+	}
+	if (!(elem->prev) && !(elem->next))
+		free_zone(type, (t_zone_info *)((void *)elem - sizeof(t_zone_info)));
 }
 
-void	ft_free(void *addr)
+static void	free_thread(void *ptr)
 {
-	t_chunk_id	*id;
+	t_elem_info	*elem;
+	t_type		type;
 
+	write(1, "\nf", 2); // debug
 	if (!addr)
+		write(2, "no addr to free\n", 16);
+	else if (!(elem = identify(addr)))
+		write(2, "invalid free\n", 13);
+	else
 	{
-		write(1, "no addr to free\n", 16);
+		if ((type = get_type(elem->size)) == LARGE)
+			free_large(elem);
+		else
+			free_other(elem, type);
+	}
+}
+
+void	free(void *ptr)
+{
+	if (pthread_mutex_lock(&g_mutex) != 0)
 		return ;
-	}
-	if ((id = identify(addr)) == NULL) // invalid addr
-	{
-		write(1, "invalid free\n", 13);
-		return ;
-	}
-	// ft_debug(id);
-	if (id->type != LARGE)
-	{
-		id->isfree = true;
-		if (id->next && id->next->isfree == true)
-			merge(id, id->next);
-		if (id->prev && id->prev->isfree == true)
-		{
-			id = id->prev;
-			merge(id, id->next);
-		}
-		if (!(id->prev) && !(id->next)) // empty zone
-			ft_free_zone(id->type,
-				(t_zone_id *)((char *)id - sizeof(t_zone_id)));
-	}
-	else // if (id->type == LARGE)
-		ft_free_large(id);
+	free_thread(ptr);
+	pthread_mutex_unlock(&g_mutex);
 }

@@ -17,6 +17,7 @@
 
 # include "identify.h"
 # include "merge.h"
+# include "get_type.h"
 
 void	free(void *ptr);
 

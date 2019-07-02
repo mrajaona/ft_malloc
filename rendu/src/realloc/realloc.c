@@ -14,7 +14,7 @@ static void		*reallocate(t_elem_info *elem, size_t size)
 	return (ptr);
 }
 
-void			*realloc_less(t_elem_info *elem, size_t size)
+static void		*realloc_less(t_elem_info *elem, size_t size)
 {
 	if (get_type(elem->size) == get_type(size))
 	{
@@ -25,7 +25,7 @@ void			*realloc_less(t_elem_info *elem, size_t size)
 		return (reallocate(elem, size));
 }
 
-void			*realloc_more(t_elem_info *elem, size_t size)
+static void		*realloc_more(t_elem_info *elem, size_t size)
 {
 	if (get_type(elem->size) == get_type(size))
 	{
@@ -43,7 +43,7 @@ void			*realloc_more(t_elem_info *elem, size_t size)
 		return (reallocate(elem, size));
 }
 
-void			*realloc_thread(void *ptr, size_t size)
+static void		*realloc_thread(void *ptr, size_t size)
 {
 	t_elem_info	*elem;
 	write(1, "\nr", 2); // debug

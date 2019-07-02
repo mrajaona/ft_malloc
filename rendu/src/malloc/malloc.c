@@ -70,7 +70,7 @@ static void	*large(size_t size)
 }
 */
 
-void		*malloc_thread(size_t size)
+static void	*malloc_thread(size_t size)
 {
 	write(1, "\nm", 2); // debug
 	return (NULL);
