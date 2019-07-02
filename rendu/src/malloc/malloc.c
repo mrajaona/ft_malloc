@@ -2,10 +2,52 @@
 
 // TINY - SMALL
 
+static t_zone_info	*create_zone(t_type type)
+{
+	t_zone_info	*list;
+	t_zone_info	*new;
+
+	list = type == TINY ? g_zones.tiny : g_zones.small;
+
+	// TODO
+	new = NULL;
+
+	return (new);
+}
+
+static void	chk_zone(t_elem_info **current, t_zone_info *zone, size_t size)
+{
+	t_elem_info	*cursor;
+
+	cursor = zone->first;
+	while (cursor)
+	{
+		if (cursor->size >= size && cursor->size < (*current)->size)
+			*current = cursor;
+		cursor = cursor->next;
+	}
+}
+
 static void	*other(size_t size, const t_type type)
 {
-	(void)size; (void)type;
-	return (NULL);
+	t_zone_info	*cursor;
+	t_elem_info	*elem;
+
+	cursor = type == TINY ? g_zones.tiny : g_zones.small;
+	elem = NULL;
+	while (cursor)
+	{
+		chk_zone(&elem, cursor, size);
+		cursor = cursor->next;		
+	}
+	if (!elem)
+	{
+		if (!(cursor = create_zone(type)))
+			return (NULL); // ENOMEM
+		elem = cursor->first;
+	}
+	split(elem, size);
+	return (elem->addr);
 }
 
 // LARGE
@@ -72,6 +114,8 @@ static void	*malloc_thread(size_t size)
 	t_type	type;
 
 	write(1, "\nm", 2); // debug
+	if (size == 0)
+		return (NULL);
 	type = get_type(size);
 	if (type == LARGE)
 		return (large(size));

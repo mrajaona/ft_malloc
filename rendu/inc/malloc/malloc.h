@@ -27,6 +27,8 @@
 # include "global.h"
 # include "get_type.h"
 
+# include "split.h"
+
 void	*malloc(size_t size);
 
 #endif

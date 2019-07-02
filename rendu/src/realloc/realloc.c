@@ -46,12 +46,17 @@ static void		*realloc_more(t_elem_info *elem, size_t size)
 static void		*realloc_thread(void *ptr, size_t size)
 {
 	t_elem_info	*elem;
-	write(1, "\nr", 2); // debug
 
+	write(1, "\nr", 2); // debug
 	if (!ptr)
 		return (malloc(size));
 	else if (!(elem = identify(ptr)))
 		return (NULL);
+	else if (size == 0) // Check behaviour
+	{
+		free(ptr);
+		return (NULL);
+	}
 	else if (size == elem->size)
 		return (elem->addr);
 	else if (size < elem->size)
