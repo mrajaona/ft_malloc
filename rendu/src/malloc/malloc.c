@@ -1,5 +1,6 @@
 #include "malloc.h"
 
+/*
 static void	push_large(t_elem_info *new)
 {
 	t_elem_info	*cursor;
@@ -67,11 +68,21 @@ static void	*large(size_t size)
 	push_large(new);
 	return (new->addr);
 }
+*/
+
+void		*malloc_thread(size_t size)
+{
+	write(1, "\nm", 2); // debug
+	return (NULL);
+}
 
 void		*malloc(size_t size)
 {
+	void	*ret;
+
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return ;
-	write(1, "\nm", 2); // debug
+	ret = malloc_thread(size);
 	pthread_mutex_unlock(&g_mutex);
+	return (ret);
 }
