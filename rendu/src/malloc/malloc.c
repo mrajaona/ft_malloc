@@ -1,5 +1,14 @@
 #include "malloc.h"
 
+// TINY - SMALL
+
+static void	*other(size_t size, const t_type type)
+{
+	return (NULL);
+}
+
+// LARGE
+
 static void	push_large(t_elem_info *new)
 {
 	t_elem_info	*cursor;
@@ -55,9 +64,18 @@ static void	*large(size_t size)
 	return (new->addr);
 }
 
+// MAIN
+
 static void	*malloc_thread(size_t size)
 {
+	t_type	type;
+
 	write(1, "\nm", 2); // debug
+	type = get_type(size);
+	if (type == LARGE)
+		return (large(size));
+	else
+		return (other(size, type));
 	return (NULL);
 }
 
