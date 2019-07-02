@@ -1,7 +1,7 @@
 #ifndef REALLOC_H
 # define REALLOC_H
 
-// # include <pthread.h>
+# include <pthread.h>
 
 # include <unistd.h>
 /*
@@ -16,7 +16,10 @@
 
 # include "memory.h"
 # include "global.h"
+
+# include "get_type.h"
 # include "merge.h"
+# include "split.h"
 
 void	*realloc(void *ptr, size_t size);
 

@@ -1,7 +1,7 @@
 #ifndef MALLOC_H
 # define MALLOC_H
 
-// # include <pthread.h>
+# include <pthread.h>
 
 # include <sys/mman.h>
 /*

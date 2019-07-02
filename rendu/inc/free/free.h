@@ -1,7 +1,7 @@
 #ifndef FREE_H
 # define FREE_H
 
-// # include <pthread.h>
+# include <pthread.h>
 
 # include <unistd.h>
 /*

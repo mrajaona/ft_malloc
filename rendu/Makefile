@@ -31,7 +31,9 @@ SRCS_GLOBAL	=	$(addprefix $(DIR_GLOBAL), $(SRC_GLOBAL))
 
 DIR_UTIL	=	util/
 SRC_UTIL	=	identify.c \
-				merge.c
+				merge.c \
+				split.c \
+				get_type.c
 SRCS_UTIL	=	$(addprefix $(DIR_UTIL), $(SRC_UTIL))
 
 DIR_MORE	=	./
