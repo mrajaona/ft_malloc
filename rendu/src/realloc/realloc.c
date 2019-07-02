@@ -8,7 +8,7 @@ static void		*reallocate(t_elem_info *elem, size_t size)
 	if (!(ptr = malloc(size)))
 		return (elem->addr); // Check behaviour
 	if (!(new = identify(ptr)))
-		return (elem->addr); // BUG
+		return (elem->addr); // ERROR
 	ft_memcpy(ptr, elem->addr, (size < elem->size ? size : elem->size));
 	free(elem->addr);
 	return (ptr);

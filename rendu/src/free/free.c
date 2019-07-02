@@ -20,9 +20,9 @@ static void	free_zone(t_type type, t_zone_info *zone)
 	else
 	{
 		if (type == TINY)
-			g_lst.tiny = zone->next;
+			g_zones.tiny = zone->next;
 		else
-			g_lst.small = zone->next;
+			g_zones.small = zone->next;
 	}
 	munmap(zone, zone->size);	
 }
