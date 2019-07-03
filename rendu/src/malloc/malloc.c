@@ -2,16 +2,65 @@
 
 // TINY - SMALL
 
+static void	push_zone(t_zone_info *new, t_type type)
+{
+	t_zone_info	**list;
+	t_zone_info	*cursor;
+
+	list = type == TINY ? &(g_zones.tiny) : &(g_zones.small);
+	cursor = *list;
+
+	if (!(*list))
+	{
+		new->prev = NULL;
+		new->next = NULL;
+		*list = new;
+	}
+
+	while (cursor->next && cursor < new)
+		cursor = cursor->next;
+	if (cursor < new)
+	{
+		new->next = cursor->next;
+		new->prev = cursor;
+		cursor->next = new;
+	}
+	else
+	{
+		new->next = cursor;
+		new->prev = cursor->prev;
+		cursor->prev = new;
+	}
+	if (new->next)
+		new->next->prev = new;
+	if (new->prev)
+		new->prev->next = new;
+	if (!(new->prev)) // first
+		*list = new;
+}
+
 static t_zone_info	*create_zone(t_type type)
 {
-	t_zone_info	*list;
 	t_zone_info	*new;
+	size_t		size;
 
-	list = type == TINY ? g_zones.tiny : g_zones.small;
-
-	// TODO
-	new = NULL;
-
+	size = sizeof(t_zone_info)
+		+ (ZONE_CAPACITY
+			* (sizeof(t_elem_info) + (type == TINY ? TINY_MAX : SMALL_MAX)));
+	size = size + (getpagesize() - (size % getpagesize()));
+	if ((new = (t_zone_info *)mmap(NULL, size,
+		PROT_READ | PROT_WRITE | PROT_EXEC,
+		MAP_ANONYMOUS | MAP_PRIVATE,
+		-1, 0)) == MAP_FAILED)
+	{
+		errno = ENOMEM;
+		return (NULL);
+	}
+	new->size = size - sizeof(t_zone_info);
+	new->prev = NULL;
+	new->next = NULL;
+	new->first = (void *)new + sizeof(t_zone_info);
+	push_zone(new, type);
 	return (new);
 }
 

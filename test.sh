@@ -6,11 +6,17 @@ make -C rendu re
 make -C rendu clean
 
 rm -f *.so
-cp ./rendu/*.so .
+cp -r ./rendu/*.so .
 rm -f ./inc/*
 cp ./rendu/ft_malloc.h ./inc
 
-gcc -Wall -Wextra -Werror -I./inc/ -L. -lft_malloc -o test main.c
+echo "------------ ls"
+
+ls -l libft*
+
+echo "------------ compile"
+
+gcc -Wall -Wextra -Werror -I./inc/ -o test main.c -L. -lft_malloc -lpthread
 
 if [ $# -eq 0 ]
 
