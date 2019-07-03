@@ -52,33 +52,42 @@ SRCS		=	$(addprefix $(DIR_SRC), $(SRC))
 
 DIRS		=	$(DIR_FREE) $(DIR_MALLOC) $(DIR_REALLOC) \
 				$(DIR_SHOW) $(DIR_GLOBAL) $(DIR_UTIL) $(DIR_MORE)
-DIRS_INC	=	$(addprefix -I$(DIR_INC), $(DIRS))
+DIRS_INC	=	$(addprefix -I$(DIR_INC), $(DIRS)) -I./ft_printf/inc
 
 OBJS		=	$(SRCS:.c=.o)
 
-CFLAGS		=	-Wall -Wextra -Werror -fpic $(DIRS_INC) -c
+CFLAGS		=	-Wall -Wextra -Werror -fPIC \
+				$(DIRS_INC) -c
 
 CC			=	/usr/bin/gcc
 RM			=	/bin/rm -f
 LN			=	/bin/ln -s
 ECHO		=	/usr/bin/printf
 
+MAKE		=	/usr/bin/make -C
+
 all			:	$(NAME)
 
 $(OBJS) 	:	$(INCS)
 
+libs		:
+				$(MAKE) ./ft_printf
+
 $(NAME) 	:	$(INCS) $(SRCS) $(OBJS)
-				$(CC) -shared -o $(NAME) $(OBJS)
+				$(MAKE) ./ft_printf
+				$(CC) -shared -o $(NAME) $(OBJS) ./ft_printf/libftprintf.a 
 				$(RM) $(LNNAME)
 				$(LN) $(NAME) $(LNNAME)
 				@$(ECHO) "\033[32m> Executable compiled\033[0m\n"
 
 clean		:
 				@$(RM) $(OBJS)
+				$(MAKE) ./ft_printf clean
 				@$(ECHO) "\033[31m> Directory cleaned\033[0m\n"
 
 fclean		:	clean
 				@$(RM) $(NAME) $(LNAME)
+				$(MAKE) ./ft_printf fclean
 				@$(ECHO) "\033[31m> Removed executable\033[0m\n"
 
 re			:	fclean all

@@ -10,13 +10,9 @@ cp -r ./rendu/*.so .
 rm -f ./inc/*
 cp ./rendu/ft_malloc.h ./inc
 
-echo "------------ ls"
-
-ls -l libft*
-
 echo "------------ compile"
 
-gcc -Wall -Wextra -Werror -I./inc/ -o test main.c -L. -lft_malloc -lpthread
+gcc -Wall -Wextra -Werror -I./inc/ -o test main.c -lpthread -L. -lft_malloc
 
 if [ $# -eq 0 ]
 
