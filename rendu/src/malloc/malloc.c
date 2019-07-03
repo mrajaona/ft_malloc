@@ -2,20 +2,10 @@
 
 // TINY - SMALL
 
-static void	push_zone(t_zone_info *new, t_type type)
+static void	insert_zone(t_zone_info *new, t_zone_info **list)
 {
-	t_zone_info	**list;
 	t_zone_info	*cursor;
-
-	list = type == TINY ? &(g_zones.tiny) : &(g_zones.small);
 	cursor = *list;
-
-	if (!(*list))
-	{
-		new->prev = NULL;
-		new->next = NULL;
-		*list = new;
-	}
 
 	while (cursor->next && cursor < new)
 		cursor = cursor->next;
@@ -37,6 +27,21 @@ static void	push_zone(t_zone_info *new, t_type type)
 		new->prev->next = new;
 	if (!(new->prev)) // first
 		*list = new;
+}
+
+static void	push_zone(t_zone_info *new, t_type type)
+{
+	t_zone_info	**list;
+
+	list = type == TINY ? &(g_zones.tiny) : &(g_zones.small);
+	if (!(*list))
+	{
+		new->prev = NULL;
+		new->next = NULL;
+		*list = new;
+	}
+	else
+		insert_zone(new, list);
 }
 
 static t_zone_info	*create_zone(t_type type)
