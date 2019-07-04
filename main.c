@@ -11,12 +11,12 @@ int main(void)
 	i = 0;
 	while (i < 10)
 	{
-		tmp[i] = malloc(1025);
-		// tmp[i] = malloc(7);
+		// tmp[i] = malloc(1025);
+		tmp[i] = malloc(5);
 		if (tmp[i])
 		{
-			strcpy(tmp[i], "a");
-			write(1, tmp[i], 1);
+			strcpy(tmp[i], "test\n");
+			write(1, tmp[i], 5);
 		}
 		else
 			write(1, "not allocated\n", 14);
