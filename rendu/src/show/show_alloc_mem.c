@@ -52,9 +52,9 @@ static void	*get_first(void *a, void *b, void *c)
 	void	*first;
 
 	first = a;
-	if (!first || b < first)
+	if (!first || (b && b < first))
 		first = b;
-	if (!first || c < first)
+	if (!first || (c && c < first))
 		first = c;
 	return (first);
 }
@@ -76,12 +76,12 @@ void    show_alloc_mem(void)
 			show_tiny(zones.tiny, &total);
 			zones.tiny = zones.tiny->next;
 		}
-		if (first == (void *)(zones.small))
+		else if (first == (void *)(zones.small))
 		{
 			show_small(zones.small, &total);
 			zones.small = zones.small->next;
 		}
-		if (first == (void *)(zones.large))
+		else if (first == (void *)(zones.large))
 		{
 			show_large(zones.large, &total);
 			zones.large = zones.large->next;

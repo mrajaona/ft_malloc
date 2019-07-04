@@ -18,7 +18,7 @@ static t_elem_info	*check_zone(t_zone_info *zone, const void *ptr)
 {
 	if (ptr < (void *)(zone->first)
 		|| ptr > ((void *)(zone->first) + zone->size))
-		return (NULL);
+		return (NULL);		
 	return (find_in_zone(zone->first, ptr));
 }
 

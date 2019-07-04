@@ -52,6 +52,7 @@ static void	free_thread(void *ptr)
 		write(2, "invalid free\n", 13);
 	else
 	{
+		write(2, "valid free\n", 11);
 		if ((type = get_type(elem->size)) == LARGE)
 			free_large(elem);
 		else
