@@ -71,7 +71,6 @@ void    show_alloc_mem(void)
 	{
 		if (!(first = get_first(zones.tiny, zones.small, zones.large)))
 			break ; // check norme
-		// TODO : ignore free
 		if (first == (void *)(zones.tiny))
 		{
 			show_tiny(zones.tiny, &total);

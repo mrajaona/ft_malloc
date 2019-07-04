@@ -46,7 +46,6 @@ static void	free_thread(void *ptr)
 	t_elem_info	*elem;
 	t_type		type;
 
-	write(1, "\nf", 2); // debug
 	if (!ptr)
 		write(2, "no address to free\n", 16);
 	else if (!(elem = identify(ptr)))

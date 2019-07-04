@@ -49,8 +49,7 @@ static t_zone_info	*create_zone(t_type type)
 	t_zone_info	*new;
 	size_t		size;
 
-	size = sizeof(t_zone_info)
-		+ (ZONE_CAPACITY
+	size = sizeof(t_zone_info) + (ZONE_CAPACITY
 			* (sizeof(t_elem_info) + (type == TINY ? TINY_MAX : SMALL_MAX)));
 	size = size + (getpagesize() - (size % getpagesize()));
 	if ((new = (t_zone_info *)mmap(NULL, size,
@@ -65,6 +64,11 @@ static t_zone_info	*create_zone(t_type type)
 	new->prev = NULL;
 	new->next = NULL;
 	new->first = (void *)new + sizeof(t_zone_info);
+	new->first->prev = NULL;
+	new->first->next = NULL;
+	new->first->size = new->size - sizeof(t_elem_info);
+	new->first->isfree = 1;
+	new->first->addr = (void *)(new->first) + sizeof(t_elem_info);
 	push_zone(new, type);
 	return (new);
 }
@@ -168,7 +172,6 @@ static void	*malloc_thread(size_t size)
 {
 	t_type	type;
 
-	write(1, "\nm", 2); // debug
 	if (size == 0)
 		return (NULL);
 	type = get_type(size);
