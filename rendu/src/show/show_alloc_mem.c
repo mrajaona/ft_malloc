@@ -4,7 +4,7 @@
 
 static void	show_elem(t_elem_info *elem, unsigned long long *total)
 {
-	ft_printf("%p - %p : \n",
+	ft_printf("%p - %p : %llu\n",
 		elem->addr,
 		elem->addr + elem->size - 1,
 		elem->size
