@@ -19,7 +19,7 @@ static void	show_zone(t_zone_info *zone, unsigned long long *total)
 	cursor = zone->first;
 	while (cursor)
 	{
-		if (!(cursor->isfree))
+		// if (!(cursor->isfree))
 			show_elem(cursor, total);
 		cursor = cursor->next;
 	}
