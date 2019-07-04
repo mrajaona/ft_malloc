@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_util.h"
 
 static int				check_neg_zero(long long int dec_part,
 	t_ft_printf *args)

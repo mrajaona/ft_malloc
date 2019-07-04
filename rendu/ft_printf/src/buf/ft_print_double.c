@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_util.h"
 
 static int	ft_put_precision(t_ft_printf *args, char *dec_part)
 {
