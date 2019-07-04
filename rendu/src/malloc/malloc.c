@@ -80,7 +80,7 @@ static void	chk_zone(t_elem_info **current, t_zone_info *zone, size_t size)
 	cursor = zone->first;
 	while (cursor)
 	{
-		if (cursor->size >= size
+		if (cursor->isfree && cursor->size >= size
 			&& (!(*current) || cursor->size < (*current)->size))
 			*current = cursor;
 		cursor = cursor->next;

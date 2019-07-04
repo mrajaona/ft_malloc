@@ -12,7 +12,8 @@ int main(void)
 	while (i < 10)
 	{
 		// tmp[i] = malloc(1025);
-		tmp[i] = malloc(5);
+		// tmp[i] = malloc(7);
+		tmp[i] = malloc(100);
 		if (tmp[i])
 		{
 			strcpy(tmp[i], "test\n");
