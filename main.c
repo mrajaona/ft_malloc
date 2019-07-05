@@ -112,18 +112,18 @@ int main(void)
 	{
 		char	*tmp;
 
-		tmp = malloc(7);
+		tmp = malloc(1);
 		
 		write(1, "malloc\n", 7);
 		show_alloc_mem();
 		write(1, "\n", 1);
 		
-		// if (tmp)
-		// {
-		// 	*tmp = 'a';
-		// 	write(1, tmp, 1);
-		// 	write(1, "\n", 1);
-		// }
+		if (tmp)
+		{
+			*tmp = 'a';
+			write(1, tmp, 1);
+			write(1, "\n", 1);
+		}
 
 		free(tmp); // invalid free
 		

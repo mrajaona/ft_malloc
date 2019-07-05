@@ -12,8 +12,6 @@ void	split(t_elem_info *first, const size_t size)
 	t_elem_info	*second;
 	size_t		second_size;
 
-	ft_printf("split : %p -> %llu\n", first->addr, size);
-
 	if (!first)
 		return ;
 	first->isfree = 0;
@@ -25,24 +23,18 @@ void	split(t_elem_info *first, const size_t size)
 	if (second_size < sizeof(t_zone_info))
 		return ; // Not enough space to split
 
-	second = (void *)first + sizeof(t_zone_info) + size;
+	first->size = size;
+	second = first->addr + size;
 	second->isfree = 1;
 	second->size = second_size;
 	second->addr = (void *)second + sizeof(t_elem_info);
 	second->prev = first;
 	second->next = first->next;
 	first->next = second;
-	first->size = size;
 
 	while (second->next && second->next->isfree)
 		merge(second, second->next);
 
 	if (second->next)
 		second->prev = second;
-
-	ft_printf("split res : %p -> %llu, %p -> %llu\n",
-		first->addr, first->size,
-		second->addr, second->size
-		);
-
 }
