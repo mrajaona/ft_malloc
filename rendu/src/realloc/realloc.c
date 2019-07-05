@@ -16,10 +16,23 @@ static void		*reallocate(t_elem_info *elem, size_t size)
 
 static void		*realloc_less(t_elem_info *elem, size_t size)
 {
-	if (get_type(elem->size) == get_type(size))
+	t_type	type;
+	size_t	l_size;
+
+	type = get_type(elem->size);
+	if (type != LARGE && type == get_type(size))
 	{
 		split(elem, size);
 		return (elem->addr);
+	}
+	else if (type == LARGE)
+	{
+		l_size = size + sizeof(t_elem_info);
+		l_size = l_size + (getpagesize() - (l_size % getpagesize()));
+		if (l_size == elem->size + sizeof(t_elem_info))
+			return (elem->addr);
+		else
+			return (reallocate(elem, size));
 	}
 	else
 		return (reallocate(elem, size));

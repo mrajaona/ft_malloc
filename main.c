@@ -62,14 +62,15 @@ int main(void)
 //    doSomeThing(NULL);
 
 	{
-		size_t	tab[] = {SIZE_T, SIZE_S, SIZE_L};
+		// size_t	tab[] = {SIZE_T, SIZE_S, SIZE_L};
 		char	*tmp[10];
 		int		i;
 
 		i = 0;
 		while (i < 10)
 		{
-			tmp[i] = malloc(tab[i % 3]);
+			// tmp[i] = malloc(tab[i % 3]);
+			tmp[i] = malloc(SIZE_T);
 			if (tmp[i])
 			{
 				strcpy(tmp[i], "test\n");
