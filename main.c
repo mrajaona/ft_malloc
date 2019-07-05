@@ -85,11 +85,33 @@ int main(void)
 		i = 0;
 		while (i < 10)
 		{
-			tmp[i] = realloc(tmp[i], 0);
+			tmp[i] = realloc(tmp[i], 1);
 			i++;
 		}
 
 		write(1, "realloc\n", 8);
+		show_alloc_mem();
+		write(1, "\n", 1);
+
+		i = 0;
+		while (i < 10)
+		{
+			tmp[i] = realloc(tmp[i], 0);
+			i++;
+		}
+
+		write(1, "realloc (free)\n", 15);
+		show_alloc_mem();
+		write(1, "\n", 1);
+
+		i = 0;
+		while (i < 10)
+		{
+			tmp[i] = realloc(tmp[i], SIZE_S);
+			i++;
+		}
+
+		write(1, "realloc (malloc)\n", 17);
 		show_alloc_mem();
 		write(1, "\n", 1);
 
