@@ -1,7 +1,5 @@
 #include "realloc.h"
 
-#include "ft_printf.h" // debug
-
 static void		*reallocate(t_elem_info *elem, size_t size)
 {
 	void		*ptr;
@@ -24,9 +22,6 @@ static void		*realloc_less(t_elem_info *elem, size_t size)
 
 	old_type = get_type(elem->size);
 	new_type = get_type(size);
-
-	char *tab[] = {"TINY", "SMALL", "LARGE"}; // debug
-	ft_printf("%s\t-> %s\n", tab[old_type], tab[new_type]); // debug
 
 	if (old_type == new_type)
 	{

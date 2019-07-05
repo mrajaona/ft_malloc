@@ -85,10 +85,7 @@ int main(void)
 		i = 0;
 		while (i < 10)
 		{
-			write(1, "<\n", 2);
 			tmp[i] = realloc(tmp[i], 10);
-			show_alloc_mem();
-			write(1, ">\n", 2);
 			i++;
 		}
 
