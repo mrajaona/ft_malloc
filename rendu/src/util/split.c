@@ -17,7 +17,7 @@ void	split(t_elem_info *first, const size_t size)
 		return ;
 	if (first->size == size)
 		return ;
-	second_size = first->size - (size + sizeof(t_zone_info));
+	second_size = first->size - (size + sizeof(t_elem_info));
 	if (second_size < sizeof(t_elem_info))
 		return ; // Not enough space to split
 
