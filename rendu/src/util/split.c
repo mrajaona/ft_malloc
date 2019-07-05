@@ -1,5 +1,7 @@
 #include "split.h"
 
+#include "ft_printf.h" // debug
+
 /*
 ** sets first elem as allocated
 ** and second elem as free
@@ -15,19 +17,19 @@ void	split(t_elem_info *first, const size_t size)
 	first->isfree = 0;
 	if (first->size < size) // Error : Not enough space
 		return ;
-	if (first->size == size)
+	if (first->size == size || (first->size - size) < sizeof(t_elem_info))
 		return ;
-	second_size = first->size - (size + sizeof(t_elem_info));
-	if (second_size < sizeof(t_elem_info))
-		return ; // Not enough space to split
 
+	second_size = first->size - (size + sizeof(t_elem_info));
 	first->size = size;
-	second = first->addr + size;
+
+	second = first->addr + first->size;
 	second->isfree = 1;
 	second->size = second_size;
-	second->addr = (void *)second + sizeof(t_elem_info);
+	second->addr = second->size ? (void *)second + sizeof(t_elem_info) : NULL;
 	second->prev = first;
 	second->next = first->next;
+
 	first->next = second;
 
 	while (second->next && second->next->isfree)
