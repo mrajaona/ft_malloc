@@ -18,15 +18,14 @@ void	split(t_elem_info *first, const size_t size)
 	if (first->size == size || (first->size - size) < sizeof(t_elem_info))
 		return ;
 
-	if (0 == (second_size = first->size - (size + sizeof(t_elem_info))))
-		return ;
+	second_size = first->size - (size + sizeof(t_elem_info));
 
 	first->size = size;
 
 	second = first->addr + first->size;
 	second->isfree = 1;
 	second->size = second_size;
-	second->addr = second->size ? (void *)second + sizeof(t_elem_info) : NULL;
+	second->addr = (void *)second + sizeof(t_elem_info);
 	second->prev = first;
 	second->next = first->next;
 

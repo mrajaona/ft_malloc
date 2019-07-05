@@ -4,18 +4,18 @@
 
 static void	show_elem(t_elem_info *elem, unsigned long long *total)
 {
-	ft_printf("%p - %p : %llu\n",
-		elem->addr,
-		elem->addr + elem->size - 1,
-		elem->size
-		);
-
-	// ft_printf("%p - %p : %llu (%s)\n",
+	// ft_printf("%p - %p : %llu\n",
 	// 	elem->addr,
 	// 	elem->addr + elem->size - 1,
-	// 	elem->size,
-	// 	elem->isfree ? "free" : "used"
-	// 	); // debug
+	// 	elem->size
+	// 	);
+
+	ft_printf("%p - %p : %llu (%s)\n",
+		elem->addr,
+		elem->addr + elem->size - 1,
+		elem->size,
+		elem->isfree ? "free" : "used"
+		); // debug
 
 	*total += elem->size; // TODO
 }
@@ -27,7 +27,7 @@ static void	show_zone(t_zone_info *zone, unsigned long long *total)
 	cursor = zone->first;
 	while (cursor)
 	{
-		if (!(cursor->isfree))
+		// if (!(cursor->isfree))
 			show_elem(cursor, total);
 		cursor = cursor->next;
 	}
