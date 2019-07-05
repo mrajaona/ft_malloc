@@ -1,5 +1,7 @@
 #include "split.h"
 
+#include "ft_printf.h"
+
 /*
 ** sets first elem as allocated
 ** and second elem as free
@@ -9,6 +11,8 @@ void	split(t_elem_info *first, const size_t size)
 {
 	t_elem_info	*second;
 	size_t		second_size;
+
+	ft_printf("split : %p -> %llu\n", first->addr, size);
 
 	if (!first)
 		return ;
@@ -35,4 +39,10 @@ void	split(t_elem_info *first, const size_t size)
 
 	if (second->next)
 		second->prev = second;
+
+	ft_printf("split res : %p -> %llu, %p -> %llu\n",
+		first->addr, first->size,
+		second->addr, second->size
+		);
+
 }
