@@ -111,17 +111,21 @@ int main(void)
 
 	{
 		char	*tmp;
+		char	*zone;
 
+		zone = malloc(8);
 		tmp = malloc(7);
 		
 		write(1, "malloc\n", 7);
 		show_alloc_mem();
 		write(1, "\n", 1);
 		
-		*tmp = 'a';
-		write(1, tmp, 1);
-		write(1, "\n", 1);
-		free(tmp);
+		// *tmp = 'a';
+		// write(1, tmp, 1);
+		// write(1, "\n", 1);
+
+		free(tmp); // invalid free
+		free(zone);
 		
 		write(1, "free\n", 5);
 		show_alloc_mem();
