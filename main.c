@@ -8,7 +8,6 @@
 #define SIZE_S 500
 #define SIZE_L 1050
 
-/*
 pthread_t tid[2];
 int counter;
 pthread_mutex_t lock;
@@ -39,27 +38,29 @@ void* doSomeThing(void *arg)
 	(void)arg;
 	return NULL;
 }
-*/
 
 int main(void)
 {
-/*
-	int i = 0;
-
-	if (pthread_mutex_init(&lock, NULL) != 0)
-		return 1;
-
-	while(i < 2)
 	{
-		pthread_create(&(tid[i]), NULL, &doSomeThing, NULL);
-		i++;
+		int i = 0;
+
+		if (pthread_mutex_init(&lock, NULL) != 0)
+			return 1;
+
+		while(i < 2)
+		{
+			pthread_create(&(tid[i]), NULL, &doSomeThing, NULL);
+			i++;
+		}
+
+		pthread_join(tid[0], NULL);
+		pthread_join(tid[1], NULL);
+		pthread_mutex_destroy(&lock);
 	}
 
-	pthread_join(tid[0], NULL);
-	pthread_join(tid[1], NULL);
-	pthread_mutex_destroy(&lock);
-*/
-//    doSomeThing(NULL);
+	{
+    	doSomeThing(NULL);
+	}
 
 	{
 		size_t	tab[] = {SIZE_T, SIZE_S, SIZE_L};
