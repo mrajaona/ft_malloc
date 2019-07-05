@@ -1,7 +1,5 @@
 #include "split.h"
 
-#include "ft_printf.h"
-
 /*
 ** sets first elem as allocated
 ** and second elem as free

@@ -5,13 +5,10 @@ static void		*reallocate(t_elem_info *elem, size_t size)
 	void		*ptr;
 	t_elem_info	*new;
 
-	write(1, "d", 1);
 	if (!(ptr = malloc_thread(size)))
 		return (elem->addr); // Check behaviour
-	write(1, "e", 1);
 	if (!(new = identify(ptr)))
 		return (elem->addr); // ERROR
-	write(1, "f", 1);
 	ft_memcpy(ptr, elem->addr, (size < elem->size ? size : elem->size));
 	free_thread(elem->addr);
 	return (ptr);
@@ -25,13 +22,11 @@ static void		*realloc_less(t_elem_info *elem, size_t size)
 	type = get_type(elem->size);
 	if (type != LARGE && type == get_type(size))
 	{
-		write(1, "1", 1);
 		split(elem, size);
 		return (elem->addr);
 	}
 	else if (type == LARGE && type == get_type(size))
 	{
-		write(1, "2", 1);
 		l_size = size + sizeof(t_elem_info);
 		l_size = l_size + (getpagesize() - (l_size % getpagesize()));
 		if (l_size == elem->size + sizeof(t_elem_info))
@@ -40,10 +35,7 @@ static void		*realloc_less(t_elem_info *elem, size_t size)
 			return (reallocate(elem, size));
 	}
 	else
-	{
-		write(1, "3", 1);
 		return (reallocate(elem, size));
-	}
 }
 
 static void		*realloc_more(t_elem_info *elem, size_t size)
@@ -78,20 +70,11 @@ static void		*realloc_thread(void *ptr, size_t size)
 		return (NULL);
 	}
 	else if (size == elem->size)
-	{
-		write(1, "a", 1);
 		return (elem->addr);
-	}
 	else if (size < elem->size)
-	{
-		write(1, "b", 1);
 		return (realloc_less(elem, size));
-	}
 	else // (size > elem->size)
-	{
-		write(1, "c", 1);
 		return (realloc_more(elem, size));	
-	}
 }
 
 void			*realloc(void *ptr, size_t size)
@@ -101,7 +84,6 @@ void			*realloc(void *ptr, size_t size)
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return (ptr); // Check behaviour
 	ret = realloc_thread(ptr, size);
-	write(1, ".", 1);
 	pthread_mutex_unlock(&g_mutex);
 	return (ret);
 }
