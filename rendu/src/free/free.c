@@ -34,6 +34,7 @@ static void	free_other(t_elem_info *elem, const t_type type)
 		merge(elem, elem->next);
 	while (elem->prev && elem->prev->isfree)
 	{
+		write(1, "!", 1);
 		elem = elem->prev;
 		merge(elem, elem->next);
 	}
