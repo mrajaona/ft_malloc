@@ -18,13 +18,15 @@ void* doSomeThing(void *arg)
 	void *b = NULL;
 	void *c = NULL;
 
+	(void)arg;
+
 	a = malloc(1 << 6);
 	b = malloc(0);
 	c = malloc(1 << 11);
 
-	if (!a) write(1, "a is NULL\n", 10);
-	if (!b) write(1, "b is NULL\n", 10);
-	if (!c) write(1, "c is NULL\n", 10);
+	if (!a) write(1, "!a\n", 3);
+	if (!b) write(1, "!b\n", 3);
+	if (!c) write(1, "!c\n", 3);
 
 	show_alloc_mem();
 	write(1, "1 --\n", 5);
@@ -35,7 +37,6 @@ void* doSomeThing(void *arg)
 
 	show_alloc_mem();
 	write(1, "2 --\n", 5);
-	(void)arg;
 	return NULL;
 }
 
@@ -47,7 +48,7 @@ int main(void)
 		if (pthread_mutex_init(&lock, NULL) != 0)
 			return 1;
 
-		while(i < 2)
+		while (i < 2)
 		{
 			pthread_create(&(tid[i]), NULL, &doSomeThing, NULL);
 			i++;
