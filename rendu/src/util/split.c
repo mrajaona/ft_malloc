@@ -36,5 +36,5 @@ void	split(t_elem_info *first, const size_t size)
 		merge(second, second->next);
 
 	if (second->next)
-		second->prev = second;
+		second->next->prev = second;
 }
