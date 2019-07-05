@@ -59,10 +59,6 @@ int main(void)
 	}
 
 	{
-    	doSomeThing(NULL);
-	}
-
-	{
 		size_t	tab[] = {SIZE_T, SIZE_S, SIZE_L};
 		char	*tmp[10];
 		int		i;
