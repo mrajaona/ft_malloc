@@ -67,12 +67,12 @@ static void		*realloc_thread(void *ptr, size_t size)
 	t_elem_info	*elem;
 
 	if (!ptr)
-		return (malloc(size));
+		return (malloc_thread(size));
 	else if (!(elem = identify(ptr)))
 		return (NULL);
 	else if (size == 0) // Check behaviour
 	{
-		free(ptr);
+		free_thread(ptr);
 		return (NULL);
 	}
 	else if (size == elem->size)

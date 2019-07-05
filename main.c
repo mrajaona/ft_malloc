@@ -85,7 +85,7 @@ int main(void)
 		i = 0;
 		while (i < 10)
 		{
-			tmp[i] = realloc(tmp[i], 10);
+			tmp[i] = realloc(tmp[i], 0);
 			i++;
 		}
 
