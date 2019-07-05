@@ -20,5 +20,6 @@
 # include "get_type.h"
 
 void	free(void *ptr);
+void	free_thread(void *ptr);
 
 #endif

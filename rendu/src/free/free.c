@@ -41,7 +41,7 @@ static void	free_other(t_elem_info *elem, const t_type type)
 		free_zone(type, (t_zone_info *)((void *)elem - sizeof(t_zone_info)));
 }
 
-static void	free_thread(void *ptr)
+void	free_thread(void *ptr)
 {
 	t_elem_info	*elem;
 	t_type		type;

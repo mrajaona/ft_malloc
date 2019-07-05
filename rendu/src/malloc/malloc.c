@@ -168,7 +168,7 @@ static void	*large(size_t size)
 
 // MAIN
 
-static void	*malloc_thread(size_t size)
+void	*malloc_thread(size_t size)
 {
 	t_type	type;
 

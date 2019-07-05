@@ -30,5 +30,6 @@
 # include "split.h"
 
 void	*malloc(size_t size);
+void	*malloc_thread(size_t size);
 
 #endif
