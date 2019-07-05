@@ -4,7 +4,7 @@
 
 #include "ft_malloc.h"
 
-#define SIZE_T 200
+#define SIZE_T 100
 #define SIZE_S 500
 #define SIZE_L 1050
 
@@ -85,7 +85,10 @@ int main(void)
 		i = 0;
 		while (i < 10)
 		{
-			tmp[i] = realloc(tmp[i], 50);
+			write(1, "<\n", 2);
+			tmp[i] = realloc(tmp[i], 10);
+			show_alloc_mem();
+			write(1, ">\n", 2);
 			i++;
 		}
 

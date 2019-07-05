@@ -1,5 +1,7 @@
 #include "realloc.h"
 
+#include "ft_printf.h" // debug
+
 static void		*reallocate(t_elem_info *elem, size_t size)
 {
 	void		*ptr;
@@ -9,6 +11,12 @@ static void		*reallocate(t_elem_info *elem, size_t size)
 		return (elem->addr); // Check behaviour
 	if (!(new = identify(ptr)))
 		return (elem->addr); // ERROR
+
+	ft_printf("addr : %p, size : %llu (%llu)\n", new->addr,
+		new->size, new->size + sizeof(t_elem_info)); // debug
+
+	ft_printf("t_elem_info : %llu\n", sizeof(t_elem_info));
+
 	ft_memcpy(ptr, elem->addr, (size < elem->size ? size : elem->size));
 	free_thread(elem->addr);
 	return (ptr);
@@ -16,16 +24,22 @@ static void		*reallocate(t_elem_info *elem, size_t size)
 
 static void		*realloc_less(t_elem_info *elem, size_t size)
 {
-	t_type	type;
+	t_type	old_type;
+	t_type	new_type;
 	size_t	l_size;
 
-	type = get_type(elem->size);
-	if (type != LARGE && type == get_type(size))
+	old_type = get_type(elem->size);
+	new_type = get_type(size);
+
+	char *tab[] = {"TINY", "SMALL", "LARGE"}; // debug
+	ft_printf("%s\t-> %s\n", tab[old_type], tab[new_type]); // debug
+
+	if (old_type != LARGE && old_type == new_type)
 	{
 		split(elem, size);
 		return (elem->addr);
 	}
-	else if (type == LARGE && type == get_type(size))
+	else if (old_type == LARGE && old_type == new_type)
 	{
 		l_size = size + sizeof(t_elem_info);
 		l_size = l_size + (getpagesize() - (l_size % getpagesize()));
