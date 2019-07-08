@@ -13,7 +13,9 @@ SRC_FREE	=	free.c
 SRCS_FREE	=	$(addprefix $(DIR_FREE), $(SRC_FREE))
 
 DIR_MALLOC	=	malloc/
-SRC_MALLOC	=	malloc.c
+SRC_MALLOC	=	malloc.c \
+				malloc_large.c \
+				malloc_other.c
 SRCS_MALLOC	=	$(addprefix $(DIR_MALLOC), $(SRC_MALLOC))
 
 DIR_REALLOC		=	realloc/
@@ -22,7 +24,9 @@ SRC_REALLOC		=	realloc.c \
 SRCS_REALLOC	=	$(addprefix $(DIR_REALLOC), $(SRC_REALLOC))
 
 DIR_SHOW	=	show/
-SRC_SHOW	=	show_alloc_mem.c
+SRC_SHOW	=	show_alloc_mem.c \
+				show_type.c \
+				show_item.c
 SRCS_SHOW	=	$(addprefix $(DIR_SHOW), $(SRC_SHOW))
 
 DIR_GLOBAL	=	global/

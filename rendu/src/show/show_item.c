@@ -1,38 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc.c                                           :+:      :+:    :+:   */
+/*   show_item.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrajaona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/08 13:32:03 by mrajaona          #+#    #+#             */
-/*   Updated: 2019/07/08 13:32:04 by mrajaona         ###   ########.fr       */
+/*   Created: 2019/07/08 13:54:02 by mrajaona          #+#    #+#             */
+/*   Updated: 2019/07/08 13:54:04 by mrajaona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include "show_item.h"
 
-void	*malloc_thread(size_t size)
+void	show_elem(t_elem_info *elem, unsigned long long *total)
 {
-	t_type	type;
-
-	if (size == 0)
-		return (NULL);
-	type = get_type(size);
-	if (type == LARGE)
-		return (large(size));
-	else
-		return (other(size, type));
-	return (NULL);
+	ft_printf("%p - %p : %llu\n",
+		elem->addr,
+		elem->addr + elem->size - 1,
+		elem->size);
+	*total += elem->size;
 }
 
-void	*malloc(size_t size)
+void	show_zone(t_zone_info *zone, unsigned long long *total)
 {
-	void	*ret;
+	t_elem_info	*cursor;
 
-	if (pthread_mutex_lock(&g_mutex) != 0)
-		return (NULL);
-	ret = malloc_thread(size);
-	pthread_mutex_unlock(&g_mutex);
-	return (ret);
+	cursor = zone->first;
+	while (cursor)
+	{
+		if (!(cursor->isfree))
+			show_elem(cursor, total);
+		cursor = cursor->next;
+	}
 }

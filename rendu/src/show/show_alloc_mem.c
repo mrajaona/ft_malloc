@@ -12,52 +12,6 @@
 
 #include "show_alloc_mem.h"
 
-// SHOW SUB
-
-static void	show_elem(t_elem_info *elem, unsigned long long *total)
-{
-	ft_printf("%p - %p : %llu\n",
-		elem->addr,
-		elem->addr + elem->size - 1,
-		elem->size);
-	*total += elem->size;
-}
-
-static void	show_zone(t_zone_info *zone, unsigned long long *total)
-{
-	t_elem_info	*cursor;
-
-	cursor = zone->first;
-	while (cursor)
-	{
-		if (!(cursor->isfree))
-			show_elem(cursor, total);
-		cursor = cursor->next;
-	}
-}
-
-// SHOW
-
-static void	show_tiny(t_zone_info *zone, unsigned long long *total)
-{
-	ft_printf("%s : %p\n", "TINY", zone);
-	show_zone(zone, total);
-}
-
-static void	show_small(t_zone_info *zone, unsigned long long *total)
-{
-	ft_printf("%s : %p\n", "SMALL", zone);
-	show_zone(zone, total);
-}
-
-static void	show_large(t_elem_info *elem, unsigned long long *total)
-{
-	ft_printf("%s : %p\n", "LARGE", elem);
-	show_elem(elem, total);
-}
-
-// INIT
-
 static void	*get_first(void *a, void *b, void *c)
 {
 	void	*first;

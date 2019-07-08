@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc.c                                           :+:      :+:    :+:   */
+/*   show_type.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrajaona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/08 13:32:03 by mrajaona          #+#    #+#             */
-/*   Updated: 2019/07/08 13:32:04 by mrajaona         ###   ########.fr       */
+/*   Created: 2019/07/08 13:54:09 by mrajaona          #+#    #+#             */
+/*   Updated: 2019/07/08 13:54:09 by mrajaona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "malloc.h"
+#include "show_type.h"
 
-void	*malloc_thread(size_t size)
+void	show_tiny(t_zone_info *zone, unsigned long long *total)
 {
-	t_type	type;
-
-	if (size == 0)
-		return (NULL);
-	type = get_type(size);
-	if (type == LARGE)
-		return (large(size));
-	else
-		return (other(size, type));
-	return (NULL);
+	ft_printf("%s : %p\n", "TINY", zone);
+	show_zone(zone, total);
 }
 
-void	*malloc(size_t size)
+void	show_small(t_zone_info *zone, unsigned long long *total)
 {
-	void	*ret;
+	ft_printf("%s : %p\n", "SMALL", zone);
+	show_zone(zone, total);
+}
 
-	if (pthread_mutex_lock(&g_mutex) != 0)
-		return (NULL);
-	ret = malloc_thread(size);
-	pthread_mutex_unlock(&g_mutex);
-	return (ret);
+void	show_large(t_elem_info *elem, unsigned long long *total)
+{
+	ft_printf("%s : %p\n", "LARGE", elem);
+	show_elem(elem, total);
 }
