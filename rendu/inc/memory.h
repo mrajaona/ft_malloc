@@ -34,11 +34,11 @@ typedef struct	s_zone_info
 # define ZONE_CAPACITY (100)
 
 # define TINY_MIN (1)
-# define TINY_MAX (1 << 10)
+# define TINY_MAX (1 << 15)
 // # define TINY_MAX (2)
 
 # define SMALL_MIN (TINY_MAX + 1)
-# define SMALL_MAX (1 << 15)
+# define SMALL_MAX (1 << 20)
 // # define SMALL_MAX (4)
 
 # define LARGE_MIN (SMALL_MAX + 1)
