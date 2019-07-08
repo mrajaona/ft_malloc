@@ -14,6 +14,7 @@ cp ./rendu/ft_malloc.h ./inc
 
 echo "------------ compile"
 
+rm test
 gcc -Wall -Wextra -Werror -I./inc/ -o test main.c -lpthread -L. -lft_malloc
 
 if [ $# -eq 0 ]
@@ -40,5 +41,7 @@ elif [ $1 = "linux" ]
 
 fi
 
-#./test
-/usr/bin/time -l ./test
+if [ -f ./test ]
+	then
+	/usr/bin/time -l ./test
+fi
