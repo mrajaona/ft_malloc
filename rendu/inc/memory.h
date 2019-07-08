@@ -50,4 +50,7 @@ typedef enum	e_type
 	LARGE
 }				t_type;
 
+# define MMAP_PROT (PROT_READ | PROT_WRITE | PROT_EXEC)
+# define MMAP_FLAG (MAP_ANONYMOUS | MAP_PRIVATE)
+
 #endif

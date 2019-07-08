@@ -53,8 +53,8 @@ static t_zone_info	*create_zone(t_type type)
 			* (sizeof(t_elem_info) + (type == TINY ? TINY_MAX : SMALL_MAX)));
 	size = size + (getpagesize() - (size % getpagesize()));
 	if ((new = (t_zone_info *)mmap(NULL, size,
-		PROT_READ | PROT_WRITE | PROT_EXEC,
-		MAP_ANONYMOUS | MAP_PRIVATE,
+		MMAP_PROT,
+		MMAP_FLAG,
 		-1, 0)) == MAP_FAILED)
 	{
 		errno = ENOMEM;
@@ -145,8 +145,8 @@ static void	*large(size_t size)
 	size = size + sizeof(t_elem_info);
 	size = size + (getpagesize() - (size % getpagesize()));
 	if ((new = (t_elem_info *)mmap(NULL, size,
-		PROT_READ | PROT_WRITE | PROT_EXEC,
-		MAP_ANONYMOUS | MAP_PRIVATE,
+		MMAP_PROT,
+		MMAP_FLAG,
 		-1, 0)) == MAP_FAILED)
 	{
 		write(2, "MAP_FAILED\n", 11);
