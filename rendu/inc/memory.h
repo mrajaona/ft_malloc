@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   memory.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrajaona <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/08 13:28:04 by mrajaona          #+#    #+#             */
+/*   Updated: 2019/07/08 13:28:05 by mrajaona         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MEMORY_H
 # define MEMORY_H
 
@@ -35,11 +47,9 @@ typedef struct	s_zone_info
 
 # define TINY_MIN (1)
 # define TINY_MAX (1 << 15)
-// # define TINY_MAX (2)
 
 # define SMALL_MIN (TINY_MAX + 1)
 # define SMALL_MAX (1 << 20)
-// # define SMALL_MAX (4)
 
 # define LARGE_MIN (SMALL_MAX + 1)
 
