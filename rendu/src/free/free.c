@@ -9,9 +9,7 @@ static void	free_large(t_elem_info *elem)
 	if (elem->next)
 		elem->next->prev = elem->prev;
 	if (munmap(elem, elem->size + sizeof(t_elem_info)) != 0)
-		write(2, "munmap l error\n", 15); // debug
-	else
-		write(1, "munmap l\n", 9); // debug
+		write(2, "munmap error\n", 13);
 }
 
 static void	free_zone(t_type type, t_zone_info *zone)
@@ -29,8 +27,6 @@ static void	free_zone(t_type type, t_zone_info *zone)
 	}
 	if (munmap(zone, zone->size + sizeof(t_zone_info)) != 0)
 		write(2, "munmap error\n", 13); // debug
-	else
-		write(1, "munmap\n", 7); // debug
 }
 
 static void	free_other(t_elem_info *elem, const t_type type)
