@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrajaona <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/08 13:31:44 by mrajaona          #+#    #+#             */
+/*   Updated: 2019/07/08 13:31:45 by mrajaona         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "free.h"
 
 static void	free_large(t_elem_info *elem)
@@ -8,8 +20,7 @@ static void	free_large(t_elem_info *elem)
 		g_zones.large = elem->next;
 	if (elem->next)
 		elem->next->prev = elem->prev;
-	if (munmap(elem, elem->size + sizeof(t_elem_info)) != 0)
-		write(2, "munmap error\n", 13);
+	munmap(elem, elem->size + sizeof(t_elem_info));
 }
 
 static void	free_zone(t_type type, t_zone_info *zone)
@@ -25,8 +36,7 @@ static void	free_zone(t_type type, t_zone_info *zone)
 		else
 			g_zones.small = zone->next;
 	}
-	if (munmap(zone, zone->size + sizeof(t_zone_info)) != 0)
-		write(2, "munmap error\n", 13); // debug
+	munmap(zone, zone->size + sizeof(t_zone_info));
 }
 
 static void	free_other(t_elem_info *elem, const t_type type)
@@ -43,18 +53,15 @@ static void	free_other(t_elem_info *elem, const t_type type)
 		free_zone(type, (t_zone_info *)((void *)elem - sizeof(t_zone_info)));
 }
 
-void	free_thread(void *ptr)
+void		free_thread(void *ptr)
 {
 	t_elem_info	*elem;
 	t_type		type;
 
-	if (!ptr)
-		; // write(2, "no address to free\n", 19); // debug
-	else if (!(elem = identify(ptr)))
-		; // write(2, "invalid free\n", 13); // debug
+	if (!ptr || !(elem = identify(ptr)))
+		return ;
 	else
 	{
-		// write(2, "valid free\n", 11); // debug
 		if ((type = get_type(elem->size)) == LARGE)
 			free_large(elem);
 		else
@@ -62,7 +69,7 @@ void	free_thread(void *ptr)
 	}
 }
 
-void	free(void *ptr)
+void		free(void *ptr)
 {
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return ;
