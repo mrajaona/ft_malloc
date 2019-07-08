@@ -8,7 +8,9 @@ static void	free_large(t_elem_info *elem)
 		g_zones.large = elem->next;
 	if (elem->next)
 		elem->next->prev = elem->prev;
-	munmap(elem, elem->size + sizeof(t_elem_info));
+	write(1, "munmap l\n", 9); // debug
+	if (munmap(elem, elem->size + sizeof(t_elem_info)) < 0)
+		write(2, "munmap error\n", 13); // debug
 }
 
 static void	free_zone(t_type type, t_zone_info *zone)
@@ -24,7 +26,9 @@ static void	free_zone(t_type type, t_zone_info *zone)
 		else
 			g_zones.small = zone->next;
 	}
-	munmap(zone, zone->size);	
+	write(1, "munmap\n", 7); // debug
+	if (munmap(zone, zone->size + sizeof(t_zone_info)) < 0)
+		write(2, "munmap error\n", 13); // debug
 }
 
 static void	free_other(t_elem_info *elem, const t_type type)
@@ -47,9 +51,9 @@ void	free_thread(void *ptr)
 	t_type		type;
 
 	if (!ptr)
-		write(2, "no address to free\n", 16);
+		write(2, "no address to free\n", 19); // debug
 	else if (!(elem = identify(ptr)))
-		write(2, "invalid free\n", 13);
+		write(2, "invalid free\n", 13); // debug
 	else
 	{
 		// write(2, "valid free\n", 11); // debug

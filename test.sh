@@ -2,6 +2,8 @@
 
 clear
 
+export HOSTTYPE=Testing
+
 make -C rendu re
 make -C rendu clean
 
@@ -38,4 +40,5 @@ elif [ $1 = "linux" ]
 
 fi
 
-./test
+#./test
+/usr/bin/time -l ./test
