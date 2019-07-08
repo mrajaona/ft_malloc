@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include <pthread.h>
@@ -42,6 +43,10 @@ void* doSomeThing(void *arg)
 
 int main(void)
 {
+
+	write(1, "thread\n", 7);
+	getchar();
+
 	{
 		int i = 0;
 
@@ -59,11 +64,16 @@ int main(void)
 		pthread_mutex_destroy(&lock);
 	}
 
+	write(1, "thread\n", 7);
+	getchar();
 	{
 		size_t	tab[] = {SIZE_T, SIZE_S, SIZE_L};
 		char	*tmp[10];
 		int		i;
 
+
+		write(1, "malloc\n", 7);
+		getchar();
 		i = 0;
 		while (i < 10)
 		{
@@ -78,10 +88,13 @@ int main(void)
 			i++;
 		}
 
-		write(1, "malloc\n", 7);
+		getchar();
 		show_alloc_mem();
 		write(1, "\n", 1);
 
+		
+		write(1, "realloc\n", 8);
+		getchar();
 		i = 0;
 		while (i < 10)
 		{
@@ -89,10 +102,12 @@ int main(void)
 			i++;
 		}
 
-		write(1, "realloc\n", 8);
+		getchar();
 		show_alloc_mem();
 		write(1, "\n", 1);
 
+		write(1, "realloc (free)\n", 15);
+		getchar();
 		i = 0;
 		while (i < 10)
 		{
@@ -100,10 +115,12 @@ int main(void)
 			i++;
 		}
 
-		write(1, "realloc (free)\n", 15);
+		getchar();
 		show_alloc_mem();
 		write(1, "\n", 1);
 
+		write(1, "realloc (malloc)\n", 17);
+		getchar();
 		i = 0;
 		while (i < 10)
 		{
@@ -111,10 +128,12 @@ int main(void)
 			i++;
 		}
 
-		write(1, "realloc (malloc)\n", 17);
+		getchar();
 		show_alloc_mem();
 		write(1, "\n", 1);
 
+		write(1, "free\n", 5);
+		getchar();
 		i = 0;
 		while (i < 10)
 		{
@@ -122,7 +141,7 @@ int main(void)
 			i++;
 		}
 
-		write(1, "free\n", 5);
+		getchar();
 		show_alloc_mem();
 		write(1, "\n", 1);
 	}
@@ -132,9 +151,11 @@ int main(void)
 	{
 		char	*tmp;
 
+		write(1, "malloc\n", 7);
+		getchar();
 		tmp = malloc(1);
 		
-		write(1, "malloc\n", 7);
+		getchar();
 		show_alloc_mem();
 		write(1, "\n", 1);
 		
@@ -145,14 +166,16 @@ int main(void)
 			write(1, "\n", 1);
 		}
 
-		free(tmp); // invalid free
-		
 		write(1, "free\n", 5);
+		getchar();
+		free(tmp);
+		
+		getchar();
 		show_alloc_mem();
 		write(1, "\n", 1);
 	}
 
-
 	while (1) {}
+
 	return (0);
 }
