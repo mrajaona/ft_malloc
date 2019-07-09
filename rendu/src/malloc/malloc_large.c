@@ -55,7 +55,7 @@ void		*large(size_t size)
 	}
 	new->size = size - sizeof(t_elem_info);
 	new->isfree = 0;
-	new->addr = new + sizeof(t_elem_info);
+	new->addr = (char *)new + sizeof(t_elem_info);
 	if (!(g_zones.large))
 	{
 		new->prev = NULL;

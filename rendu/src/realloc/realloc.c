@@ -57,9 +57,16 @@ static void		*realloc_less(t_elem_info *elem, size_t size)
 
 static void		*realloc_more(t_elem_info *elem, size_t size)
 {
-	if (get_type(elem->size) == get_type(size))
+	t_type	old_type;
+	t_type	new_type;
+
+	old_type = get_type(elem->size);
+	new_type = get_type(size);
+	if (old_type == new_type)
 	{
-		if (elem->next && elem->next->isfree
+		if (old_type == LARGE)
+			return (reallocate(elem, size));
+		else if (elem->next && elem->next->isfree
 			&& elem->size + sizeof(t_elem_info) + elem->next->size >= size)
 		{
 			merge(elem, elem->next);
