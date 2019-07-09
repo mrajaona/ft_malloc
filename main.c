@@ -18,7 +18,7 @@ int main()
 	return (0);
 }
 */
-/*
+
 #include <string.h>
 #define M (1024 * 1024)
 
@@ -26,7 +26,7 @@ void print(char *s)
 {
 	write(1, s, strlen(s));
 }
-*/
+
 /*
 int main()
 {
@@ -62,6 +62,18 @@ int main()
 
 int main()
 {
+	char *addr;
+
+	addr = malloc(16);
+	free(NULL);
+	free((void *)addr + 5);
+	if (realloc((void *)addr + 5, 10) == NULL)
+		print("Bonjours\n");
+} 
+
+/*
+int main()
+{
 	show_alloc_mem();
 
 	write (1, " ------------ \n", 15);
@@ -74,3 +86,4 @@ int main()
 	show_alloc_mem();
 	return (0);
 }
+*/
