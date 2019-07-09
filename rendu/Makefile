@@ -80,8 +80,8 @@ libs		:
 $(NAME) 	:	$(INCS) $(SRCS) $(OBJS)
 				$(MAKE) ./ft_printf
 				$(CC) -shared -o $(NAME) $(OBJS) ./ft_printf/libftprintf.a 
-				$(RM) $(LNNAME)
-				$(LN) $(NAME) $(LNNAME)
+				$(RM) $(LNAME)
+				$(LN) $(NAME) $(LNAME)
 				@$(ECHO) "\033[32m> Executable compiled\033[0m\n"
 
 clean		:
