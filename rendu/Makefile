@@ -6,7 +6,7 @@ DIR_INC		=	./inc/
 DIR_SRC		=	./src/
 
 NAME		=	libft_malloc_$(HOSTTYPE).so
-LNNAME		=	libft_malloc.so
+LNAME		=	libft_malloc.so
 
 DIR_FREE	=	free/
 SRC_FREE	=	free.c
