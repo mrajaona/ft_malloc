@@ -21,6 +21,8 @@
 ** ssize_t write(int fd, const void *buf, size_t count);
 */
 
+# include "malloc_good_size.h"
+
 # include "malloc.h"
 # include "free.h"
 # include "ft_memcpy.h"

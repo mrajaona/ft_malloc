@@ -42,9 +42,9 @@ static void	free_zone(t_type type, t_zone_info *zone)
 static void	free_other(t_elem_info *elem, const t_type type)
 {
 	elem->isfree = 1;
-	while (elem->next && elem->next->isfree)
+	if (elem->next && elem->next->isfree)
 		merge(elem, elem->next);
-	while (elem->prev && elem->prev->isfree)
+	if (elem->prev && elem->prev->isfree)
 	{
 		elem = elem->prev;
 		merge(elem, elem->next);
