@@ -18,7 +18,7 @@ static void		*reallocate(t_elem_info *elem, size_t size)
 	t_elem_info	*new;
 
 	if (!(ptr = malloc_thread(size)))
-		return (elem->addr);
+		return (NULL);
 	if (!(new = identify(ptr)))
 		return (elem->addr);
 	ft_memcpy(ptr, elem->addr, (size < elem->size ? size : elem->size));
