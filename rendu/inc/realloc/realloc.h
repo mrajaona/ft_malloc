@@ -36,6 +36,7 @@
 # include "merge.h"
 # include "split.h"
 
+void	*realloc_thread(void *ptr, size_t size);
 void	*realloc(void *ptr, size_t size);
 
 #endif

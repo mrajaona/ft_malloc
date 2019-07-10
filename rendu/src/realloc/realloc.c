@@ -80,7 +80,7 @@ static void		*realloc_more(t_elem_info *elem, size_t size)
 		return (reallocate(elem, size));
 }
 
-static void		*realloc_thread(void *ptr, size_t size)
+void		*realloc_thread(void *ptr, size_t size)
 {
 	t_elem_info	*elem;
 
@@ -107,7 +107,7 @@ void			*realloc(void *ptr, size_t size)
 	void	*ret;
 
 	if (pthread_mutex_lock(&g_mutex) != 0)
-		return (ptr);
+		return (NULL);
 	ret = realloc_thread(ptr, size);
 	pthread_mutex_unlock(&g_mutex);
 	return (ret);
