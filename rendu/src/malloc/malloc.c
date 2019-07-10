@@ -16,9 +16,9 @@ void	*malloc_thread(size_t size)
 {
 	t_type	type;
 
+	size = malloc_check_size(size);
 	if (size == 0)
 		return (NULL);
-	size = malloc_good_size(size);
 	type = get_type(size);
 	if (type == LARGE)
 		return (large(size));
