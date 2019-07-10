@@ -17,7 +17,7 @@ size_t	malloc_good_size(size_t size)
 }
 
 // man 3
-size_t	malloc_size(const void *ptr)
+size_t	malloc_size_thread(const void *ptr)
 {
 	t_elem_info	*elem;
 
