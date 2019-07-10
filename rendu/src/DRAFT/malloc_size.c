@@ -39,6 +39,7 @@ size_t	malloc_size(const void *ptr)
 
 #include <sys/resource.h>
 #include <sys/time.h>
+#include <limits.h>
 
 /*
 int main()
@@ -62,7 +63,9 @@ size_t	malloc_check_size(size_t size)
 	size_t	max_size;
 	struct	rlimit limit;
 
-	size = malloc_good_size(size);
+	if (size == SIZE_MAX)
+		return (0);
+	size = malloc_good_size_thread(size);
 	getrlimit(RLIMIT_AS, &limit);
 	max_size = limit.rlim_cur - sizeof(t_elem_info);
 	if (max_size < size)
