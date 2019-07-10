@@ -20,6 +20,7 @@ SRCS_MALLOC	=	$(addprefix $(DIR_MALLOC), $(SRC_MALLOC))
 
 DIR_REALLOC		=	realloc/
 SRC_REALLOC		=	realloc.c \
+					reallocf.c \
 					ft_memcpy.c
 SRCS_REALLOC	=	$(addprefix $(DIR_REALLOC), $(SRC_REALLOC))
 

@@ -13,6 +13,7 @@
 #ifndef SHOW_ALLOC_MEM_H
 # define SHOW_ALLOC_MEM_H
 
+# include <pthread.h>
 # include <unistd.h>
 
 /*
