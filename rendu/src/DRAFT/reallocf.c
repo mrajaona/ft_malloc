@@ -4,8 +4,7 @@ void *reallocf(void *ptr, size_t size)
 {
     void *nptr;
 
-    nptr = realloc(ptr, size);
-    if (nptr == NULL)
-        free(nptr);
+    if (!(nptr = realloc(ptr, size)))
+        free(ptr);
     return (nptr);
 }
