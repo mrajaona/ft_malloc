@@ -30,6 +30,12 @@ SRC_SHOW	=	show_alloc_mem.c \
 				show_item.c
 SRCS_SHOW	=	$(addprefix $(DIR_SHOW), $(SRC_SHOW))
 
+DIR_SIZE	=	size/
+SRC_SIZE	=	malloc_good_size.c \
+				malloc_size.c \
+				malloc_check_size.c
+SRCS_SIZE	=	$(addprefix $(DIR_SIZE), $(SRC_SIZE))
+
 DIR_GLOBAL	=	global/
 SRC_GLOBAL	=	global.c
 SRCS_GLOBAL	=	$(addprefix $(DIR_GLOBAL), $(SRC_GLOBAL))
@@ -48,6 +54,7 @@ SRC			=	$(SRCS_MALLOC) \
 				$(SRCS_FREE) \
 				$(SRCS_REALLOC) \
 				$(SRCS_SHOW) \
+				$(SRCS_SIZE) \
 				$(SRCS_GLOBAL) \
 				$(SRCS_UTIL)
 INC			=	$(SRC:.c=.h) $(MORE_INC)
@@ -56,7 +63,7 @@ INCS		=	$(addprefix $(DIR_INC), $(INC))
 SRCS		=	$(addprefix $(DIR_SRC), $(SRC))
 
 DIRS		=	$(DIR_FREE) $(DIR_MALLOC) $(DIR_REALLOC) \
-				$(DIR_SHOW) $(DIR_GLOBAL) $(DIR_UTIL) $(DIR_MORE)
+				$(DIR_SHOW) $(DIR_SIZE) $(DIR_GLOBAL) $(DIR_UTIL) $(DIR_MORE)
 DIRS_INC	=	$(addprefix -I$(DIR_INC), $(DIRS)) -I./ft_printf/inc
 
 OBJS		=	$(SRCS:.c=.o)
