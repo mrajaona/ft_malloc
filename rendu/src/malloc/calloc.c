@@ -5,10 +5,10 @@ void	*calloc_thread(size_t count, size_t size)
 	void	*ptr;
 	size_t	full_size;
 
-	ptr = malloc(count * size);
+	ptr = malloc_thread(count * size);
 	if (ptr)
 	{
-		full_size = malloc_size(ptr);
+		full_size = malloc_size_thread(ptr);
 		while (full_size)
 		{
 			full_size--;

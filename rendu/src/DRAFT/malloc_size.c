@@ -1,18 +1,40 @@
 // man 3
 // align 16 bits (2 bytes)
-size_t	malloc_good_size(size_t size)
+size_t	malloc_good_size_thread(size_t size)
 {
 	return (size + size % 2);
 }
 
+size_t	malloc_good_size(size_t size)
+{
+	size_t	ret;
+
+	if (pthread_mutex_lock(&g_mutex) != 0)
+		return (ptr);
+	ret = malloc_good_size_thread(size);
+	pthread_mutex_unlock(&g_mutex);
+	return (ret);
+}
+
 // man 3
-size_t	malloc_size(const_void *ptr)
+size_t	malloc_size(const void *ptr)
 {
 	t_elem_info	*elem;
 
 	if ((elem = identify(ptr)) != NULL)
 		return (elem->size);
 	return (0);
+}
+
+size_t	malloc_size(const void *ptr)
+{
+	size_t	ret;
+
+	if (pthread_mutex_lock(&g_mutex) != 0)
+		return (ptr);
+	ret = malloc_size_thread(ptr);
+	pthread_mutex_unlock(&g_mutex);
+	return (ret);
 }
 
 #include <sys/resource.h>
