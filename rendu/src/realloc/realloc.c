@@ -85,10 +85,8 @@ void		*realloc_thread(void *ptr, size_t size)
 	t_elem_info	*elem;
 
 	size = malloc_check_size(size);
-	if (!ptr)
+	if (!(elem = identify(ptr)))
 		return (malloc_thread(size));
-	else if (!(elem = identify(ptr)))
-		return (NULL);
 	else if (size == 0)
 	{
 		free_thread(ptr);

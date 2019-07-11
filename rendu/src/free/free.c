@@ -58,7 +58,7 @@ void		free_thread(void *ptr)
 	t_elem_info	*elem;
 	t_type		type;
 
-	if (!ptr || !(elem = identify(ptr)))
+	if (!(elem = identify(ptr)))
 		return ;
 	else
 	{
