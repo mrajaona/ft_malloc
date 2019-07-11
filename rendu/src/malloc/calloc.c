@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// ls et vim marchent si on vire calloc du Makefile
 #include "calloc.h"
 
 void	*calloc_thread(size_t count, size_t size)
@@ -30,8 +31,8 @@ void	*calloc_thread(size_t count, size_t size)
 	return (ptr);
 }
 
-#include "ft_printf.h"
-#include "malloc_size.h"
+#include "ft_printf.h" // debug
+#include "malloc_size.h" // debug
 
 void	*calloc(size_t count, size_t size)
 {
@@ -39,9 +40,10 @@ void	*calloc(size_t count, size_t size)
 
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return (NULL);
-	ft_printf("%-10s : %llu (%llu x %llu)\n", "calloc", count * size, count, size);
+	ft_printf("%-10s : %llu (%llu x %llu)\n", "calloc", count * size, count, size); // debug
+	ft_printf("%-10s : %llu\n", ">>", malloc_check_size(count * size)); // debug
 	ret = calloc_thread(count, size);
-	ft_printf("%-10s : %llu %p\n", ">>", malloc_size_thread(ret), ret);
+	ft_printf("%-10s : %llu %p\n", ">>", malloc_size_thread(ret), ret); // debug
 	pthread_mutex_unlock(&g_mutex);
 	return (ret);
 }
