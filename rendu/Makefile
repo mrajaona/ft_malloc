@@ -16,7 +16,7 @@ DIR_MALLOC	=	malloc/
 SRC_MALLOC	=	malloc.c \
 				malloc_large.c \
 				malloc_other.c \
-				calloc
+				calloc.c
 SRCS_MALLOC	=	$(addprefix $(DIR_MALLOC), $(SRC_MALLOC))
 
 DIR_REALLOC		=	realloc/

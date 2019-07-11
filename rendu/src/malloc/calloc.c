@@ -39,9 +39,9 @@ void	*calloc(size_t count, size_t size)
 
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return (NULL);
-	// ft_printf("%-10s : %llu\n", "calloc", size);
+	ft_printf("%-10s : %llu (%llu x %llu)\n", "calloc", count * size, count, size);
 	ret = calloc_thread(count, size);
-	// ft_printf("%-10s : %llu %p\n", ">>", malloc_size_thread(ret), ret);
+	ft_printf("%-10s : %llu %p\n", ">>", malloc_size_thread(ret), ret);
 	pthread_mutex_unlock(&g_mutex);
 	return (ret);
 }
