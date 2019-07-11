@@ -90,7 +90,7 @@ void			*realloc_thread(void *ptr, size_t size)
 	else if (size == 0)
 	{
 		free_thread(ptr);
-		return (NULL);
+		return (malloc_thread(0));
 	}
 	else if (size == elem->size)
 		return (elem->addr);

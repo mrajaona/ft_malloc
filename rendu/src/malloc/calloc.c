@@ -18,7 +18,8 @@ void	*calloc_thread(size_t count, size_t size)
 	char	*ptr;
 	size_t	full_size;
 
-	ptr = (char *)malloc_thread(count * size);
+	full_size = count * size;
+	ptr = (char *)malloc_thread(full_size);
 	if (ptr)
 	{
 		full_size = malloc_size_thread(ptr);
@@ -40,8 +41,8 @@ void	*calloc(size_t count, size_t size)
 
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return (NULL);
-	ft_printf("%-10s : %llu (%llu x %llu)\n", "calloc", count * size, count, size); // debug
-	ft_printf("%-10s : %llu\n", ">>", malloc_check_size(count * size)); // debug
+	ft_printf("%-10s : %llu (%llu x %llu)\n", // debug
+		"calloc", count * size, count, size); // debug
 	ret = calloc_thread(count, size);
 	ft_printf("%-10s : %llu %p\n", ">>", malloc_size_thread(ret), ret); // debug
 	pthread_mutex_unlock(&g_mutex);
