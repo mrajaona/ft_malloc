@@ -27,13 +27,18 @@ void	*malloc_thread(size_t size)
 	return (NULL);
 }
 
+#include "ft_printf.h"
+#include "malloc_size.h"
+
 void	*malloc(size_t size)
 {
 	void	*ret;
 
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return (NULL);
+	// ft_printf("%-10s : %llu\n", "malloc", size);
 	ret = malloc_thread(size);
+	// ft_printf("%-10s : %llu %p\n", ">>", malloc_size_thread(ret), ret);
 	pthread_mutex_unlock(&g_mutex);
 	return (ret);
 }

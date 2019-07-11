@@ -17,6 +17,7 @@
 
 # include "global.h"
 
+# include "malloc.h"
 # include "malloc_size.h"
 
 void *calloc_thread(size_t count, size_t size);

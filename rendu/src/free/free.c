@@ -69,10 +69,15 @@ void		free_thread(void *ptr)
 	}
 }
 
+#include "ft_printf.h"
+#include "malloc_size.h"
+
 void		free(void *ptr)
 {
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return ;
+	// ft_printf("%-10s : %llu %p (%llu)\n", "free", ptr, malloc_size_thread(ptr));
 	free_thread(ptr);
+	// ft_printf("%-10s : %llu\n", ">>", malloc_size_thread(ptr));
 	pthread_mutex_unlock(&g_mutex);
 }
