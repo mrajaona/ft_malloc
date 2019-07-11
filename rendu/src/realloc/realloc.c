@@ -80,7 +80,7 @@ static void		*realloc_more(t_elem_info *elem, size_t size)
 		return (reallocate(elem, size));
 }
 
-void		*realloc_thread(void *ptr, size_t size)
+void			*realloc_thread(void *ptr, size_t size)
 {
 	t_elem_info	*elem;
 
