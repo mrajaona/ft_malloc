@@ -39,6 +39,8 @@ t_elem_info			*identify(const void *ptr)
 	t_zone_info	*zone;
 	t_elem_info	*elem;
 
+	if (!ptr)
+		return (NULL);
 	zone = g_zones.tiny;
 	while (zone)
 	{
