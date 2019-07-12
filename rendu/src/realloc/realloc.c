@@ -86,8 +86,9 @@ void			*realloc_thread(void *ptr, size_t size)
 
 	size = malloc_check_size(size);
 	if (!ptr)
-    	return (malloc_thread(size));
+		return (malloc_thread(size));
 	else if (!(elem = identify(ptr)))
+		// return (malloc_thread(size)); // Pas le comportement attendu, mais ca fait marcher vim
 		return (NULL);
 	else if (size == 0)
 	{
