@@ -65,7 +65,21 @@ do
 	else
 		./tests/${FILE}
 	fi
+
+	read -p "Press enter key"
 done
 
 printf "\e[32m$/bin/ls -la\e[0m\n"
 /bin/ls -la
+read -p "Press enter key"
+
+printf "\e[32m$/usr/bin/vim\e[0m\n"
+/usr/bin/vim
+read -p "Press enter key"
+
+printf "\e[32m$/usr/bin/emacs\e[0m\n"
+/usr/bin/emacs
+read -p "Press enter key"
+
+printf "\e[32m$/usr/bin/open .\e[0m\n"
+/usr/bin/open .
