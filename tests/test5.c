@@ -1,12 +1,14 @@
 #include <stdlib.h>
 
+#include "ft_malloc.h"
+
 int main()
 {
-  malloc(1024);
-  malloc(1024 * 32);
-  malloc(1024 * 1024);
-  malloc(1024 * 1024 * 16);
-  malloc(1024 * 1024 * 128);
+  (void)malloc(1024);
+  (void)malloc(1024 * 32);
+  (void)malloc(1024 * 1024);
+  (void)malloc(1024 * 1024 * 16);
+  (void)malloc(1024 * 1024 * 128);
   show_alloc_mem();
   return (0);
 }

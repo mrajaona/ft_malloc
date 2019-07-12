@@ -12,10 +12,15 @@ cp -r ./rendu/*.so .
 rm -f ./inc/*
 cp ./rendu/ft_malloc.h ./inc
 
+FILES=(test0 test1 test2 test3 test3.1 test4 test5 test_limit)
+
 echo "------------ compile"
 
-rm test
-gcc -Wall -Wextra -Werror -I./inc/ -o test main.c -lpthread -L. -lft_malloc
+for FILE in ${FILES[@]}
+do
+	echo ${FILE}
+	./compile_test.sh ./tests/${FILE}
+done
 
 if [ $# -eq 0 ]
 
@@ -41,7 +46,11 @@ elif [ $1 = "linux" ]
 
 fi
 
-if [ -f ./test ]
-	then
-	/usr/bin/time -l ./test
-fi
+for FILE in ${FILES[@]}
+do
+	echo ${FILE}
+	./tests/${FILE}
+	#/usr/bin/time -l ./tests/${FILE}
+done
+
+make fclean

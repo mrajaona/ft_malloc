@@ -1,21 +1,13 @@
 #include <stdlib.h>
-#include <stdint.h>
-#include <limits.h>
-#include <stdio.h>
-#include <sys/resource.h>
-#include <sys/time.h>
 
 int main()
 {
-	void *ptr;
-	size_t size = SIZE_MAX;
-	struct rlimit limit;
+	int i;
 
-	getrlimit(RLIMIT_AS, &limit);
-	printf("%zu %zu %zu\n", size, limit.rlim_cur, limit.rlim_max);
-	ptr = malloc(size);
-	printf("%p\n", ptr);
-	if (ptr != NULL)
-		return (1);
+	i = 0;
+	while (i < 1024)
+	{
+		i++;
+	}
 	return (0);
 }
