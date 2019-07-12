@@ -12,10 +12,11 @@ int main()
 	struct rlimit limit;
 
 	getrlimit(RLIMIT_AS, &limit);
-	printf("%llu %ld %llu %llu\n", SIZE_MAX, SSIZE_MAX, 
+	printf("%llu\n %ld\n %llu\n %llu\n",
+		SIZE_MAX, SSIZE_MAX, 
 		limit.rlim_cur, limit.rlim_max);
 	ptr = malloc(SIZE_MAX);
-	printf("%p\n", ptr);
+	printf("address >> %p\n", ptr);
 	if (ptr != NULL)
 		return (1);
 	return (0);

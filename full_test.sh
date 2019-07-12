@@ -65,7 +65,4 @@ do
 	else
 		./tests/${FILE}
 	fi
-
 done
-
-make fclean
