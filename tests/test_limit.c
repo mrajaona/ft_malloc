@@ -4,16 +4,17 @@
 #include <stdio.h>
 #include <sys/resource.h>
 #include <sys/time.h>
+#include <unistd.h>
 
 int main()
 {
 	void *ptr;
-	size_t size = SIZE_MAX;
 	struct rlimit limit;
 
 	getrlimit(RLIMIT_AS, &limit);
-	printf("%zu %llu %llu\n", size, limit.rlim_cur, limit.rlim_max);
-	ptr = malloc(size);
+	printf("%llu %ld %llu %llu\n", SIZE_MAX, SSIZE_MAX, 
+		limit.rlim_cur, limit.rlim_max);
+	ptr = malloc(SIZE_MAX);
 	printf("%p\n", ptr);
 	if (ptr != NULL)
 		return (1);

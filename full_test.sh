@@ -14,11 +14,18 @@ cp ./rendu/ft_malloc.h ./inc
 
 FILES=(test0 test1 test2 test3 test3.1 test4 test5 test_limit)
 
-echo "------------ compile"
+if [ ! -f libft_malloc.so ]
+	then
+		echo "Makefile failed"
+		exit
+fi
+
+clear
 
 for FILE in ${FILES[@]}
 do
-	echo ${FILE}
+	echo compiling ${FILE}
+	rm -f ${FILE}
 	./compile_test.sh ./tests/${FILE}
 done
 
@@ -46,11 +53,19 @@ elif [ $1 = "linux" ]
 
 fi
 
+TIMED=(test0 test1 test2)
+
 for FILE in ${FILES[@]}
 do
-	echo ${FILE}
-	./tests/${FILE}
-	#/usr/bin/time -l ./tests/${FILE}
+	printf "\e[32m${FILE}\e[0m\n"
+
+	if [[ ${TIMED[@]} =~ ${FILE} ]]
+		then
+		/usr/bin/time -l ./tests/${FILE}
+	else
+		./tests/${FILE}
+	fi
+
 done
 
 make fclean
