@@ -13,6 +13,7 @@ rm -f ./inc/*
 cp ./rendu/ft_malloc.h ./inc
 
 FILES=(test0 test1 test2 test3 test3.1 test4 test5 test_limit)
+EXECS=("/usr/bin/ls -la")
 
 if [ ! -f libft_malloc.so ]
 	then
@@ -65,4 +66,10 @@ do
 	else
 		./tests/${FILE}
 	fi
+done
+
+for EXEC in ${EXECS[@]}
+do
+	printf "\e[32m${EXEC}\e[0m\n"
+	${EXEC}
 done
