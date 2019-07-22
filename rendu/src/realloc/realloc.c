@@ -88,7 +88,6 @@ void			*realloc_thread(void *ptr, size_t size)
 		return (malloc_thread(size));
 	else if (!(elem = identify(ptr)))
 	{
-		write(1, "!id\n", 4); // debug
 		// return (malloc_thread(size)); // Pas le comportement attendu, mais ca fait marcher vim
 		return (NULL);
 	}

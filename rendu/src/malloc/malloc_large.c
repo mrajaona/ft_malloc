@@ -39,6 +39,8 @@ static void	push_large(t_elem_info *new)
 		g_zones.large = new;
 }
 
+#include "ft_printf.h" // debug
+
 void		*large(size_t size)
 {
 	t_elem_info	*new;
@@ -56,6 +58,15 @@ void		*large(size_t size)
 	new->size = size - sizeof(t_elem_info);
 	new->isfree = 0;
 	new->addr = (char *)new + sizeof(t_elem_info);
+
+	// debug
+	ft_printf("%s\n\telem %llu (%llu)\n\taddr %llu (%llu)\n", "large",
+		(unsigned long long)new,
+		(unsigned long long)new % 16,
+		(unsigned long long)(new->addr),
+		(unsigned long long)(new->addr) % 16
+	);
+
 	if (!(g_zones.large))
 	{
 		new->prev = NULL;

@@ -98,6 +98,8 @@ static void			chk_zone(t_elem_info **current, t_zone_info *zone,
 	}
 }
 
+#include "ft_printf.h" // debug
+
 void				*other(size_t size, const t_type type)
 {
 	t_zone_info	*cursor;
@@ -116,6 +118,18 @@ void				*other(size_t size, const t_type type)
 			return (NULL);
 		elem = cursor->first;
 	}
+
+	// debug
+	ft_printf("%s\n\tzone %llu (%llu)\n\telem %llu (%llu)\n\taddr %llu (%llu)\n", type == TINY ? "tiny" : "small",
+		(unsigned long long)cursor,
+		(unsigned long long)cursor % 16,
+		(unsigned long long)elem,
+		(unsigned long long)elem % 16,
+		(unsigned long long)(elem->addr),
+		(unsigned long long)(elem->addr) % 16
+	);
+
 	split(elem, size);
+
 	return (elem->addr);
 }

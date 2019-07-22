@@ -12,8 +12,6 @@
 
 #include "malloc_check_size.h"
 
-#include "ft_printf.h"
-
 size_t	malloc_check_size(size_t size)
 {
 	size_t			max_size;

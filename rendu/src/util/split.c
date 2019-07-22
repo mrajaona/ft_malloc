@@ -17,6 +17,8 @@
 ** and second elem as free
 */
 
+#include "ft_printf.h" // debug
+
 void	split(t_elem_info *first, const size_t size)
 {
 	t_elem_info	*second;
@@ -38,8 +40,22 @@ void	split(t_elem_info *first, const size_t size)
 	second->prev = first;
 	second->next = first->next;
 	first->next = second;
-	while (second->next && second->next->isfree)
+	if (second->next && second->next->isfree)
 		merge(second, second->next);
 	if (second->next)
 		second->next->prev = second;
+
+	// debug
+	ft_printf("%s\n\telem %llu (%llu)\n\taddr %llu (%llu)\n", "split first",
+		(unsigned long long)first,
+		(unsigned long long)first % 16,
+		(unsigned long long)(first->addr),
+		(unsigned long long)(first->addr) % 16
+	);
+	ft_printf("%s\n\telem %llu (%llu)\n\taddr %llu (%llu)\n", "split second",
+		(unsigned long long)second,
+		(unsigned long long)second % 16,
+		(unsigned long long)(second->addr),
+		(unsigned long long)(second->addr) % 16
+	);
 }

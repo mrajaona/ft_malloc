@@ -14,7 +14,8 @@
 
 size_t	malloc_good_size_thread(size_t size)
 {
-	return (size + size % 2);
+	// return (size + size % 2);
+	return (size + size % 16);
 }
 
 size_t	malloc_good_size(size_t size)

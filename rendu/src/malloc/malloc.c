@@ -12,6 +12,8 @@
 
 #include "malloc.h"
 
+// Assertion failed: (((vm_address_t) p % 16) == 0)
+
 void	*malloc_thread(size_t size)
 {
 	t_type	type;
