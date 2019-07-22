@@ -12,7 +12,7 @@ int main()
 	struct rlimit limit;
 
 	getrlimit(RLIMIT_AS, &limit);
-	printf("%llu\n %ld\n %llu\n %llu\n",
+	printf("%llu\n%ld\n%llu\n%llu\n",
 		SIZE_MAX, SSIZE_MAX, 
 		limit.rlim_cur, limit.rlim_max);
 	ptr = malloc(SIZE_MAX);
