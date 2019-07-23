@@ -21,8 +21,9 @@ static void		*reallocate(t_elem_info *elem, size_t size)
 		return (NULL);
 	if (!(new = identify(ptr)))
 		return (NULL);
-	ft_memcpy(ptr, elem->addr, (size < elem->size ? size : elem->size));
-	free_thread(elem->addr);
+	ft_memcpy(ptr, (void *)elem + sizeof(t_elem_info),
+		(size < elem->size ? size : elem->size));
+	free_thread((void *)elem + sizeof(t_elem_info));
 	return (ptr);
 }
 
@@ -39,14 +40,14 @@ static void		*realloc_less(t_elem_info *elem, size_t size)
 		if (old_type != LARGE)
 		{
 			split(elem, size);
-			return (elem->addr);
+			return ((void *)elem + sizeof(t_elem_info));
 		}
 		else
 		{
 			l_size = size + sizeof(t_elem_info);
 			l_size = l_size + (getpagesize() - (l_size % getpagesize()));
 			if (l_size == elem->size + sizeof(t_elem_info))
-				return (elem->addr);
+				return ((void *)elem + sizeof(t_elem_info));
 			else
 				return (reallocate(elem, size));
 		}
@@ -71,7 +72,7 @@ static void		*realloc_more(t_elem_info *elem, size_t size)
 		{
 			merge(elem, elem->next);
 			split(elem, size);
-			return (elem->addr);
+			return ((void *)elem + sizeof(t_elem_info));
 		}
 		else
 			return (reallocate(elem, size));
@@ -97,7 +98,7 @@ void			*realloc_thread(void *ptr, size_t size)
 	{
 		size = malloc_check_size(size);
 		if (size == elem->size)
-			return (elem->addr);
+			return ((void *)elem + sizeof(t_elem_info));
 		else if (size < elem->size)
 			return (realloc_less(elem, size));
 		else

@@ -15,8 +15,8 @@
 void	show_elem(t_elem_info *elem, unsigned long long *total)
 {
 	ft_printf("%p - %p : %llu\n",
-		elem->addr,
-		elem->addr + elem->size - 1,
+		(void *)elem + sizeof(t_elem_info),
+		(void *)elem + sizeof(t_elem_info) + elem->size - 1,
 		elem->size);
 	*total += elem->size;
 }

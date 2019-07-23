@@ -19,7 +19,7 @@ static t_elem_info	*find_in_zone(t_elem_info *first, const void *ptr)
 	elem = first;
 	while (elem)
 	{
-		if (elem->addr == ptr)
+		if ((void *)elem + sizeof(t_elem_info) == ptr)
 			return (elem);
 		elem = elem->next;
 	}

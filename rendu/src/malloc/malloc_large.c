@@ -17,9 +17,9 @@ static void	push_large(t_elem_info *new)
 	t_elem_info	*cursor;
 
 	cursor = g_zones.large;
-	while (cursor->next && cursor->addr < new->addr)
+	while (cursor->next && cursor < new)
 		cursor = cursor->next;
-	if (cursor->addr < new->addr)
+	if (cursor < new)
 	{
 		new->next = cursor->next;
 		new->prev = cursor;
@@ -55,7 +55,7 @@ void		*large(size_t size)
 	}
 	new->size = size - sizeof(t_elem_info);
 	new->isfree = 0;
-	new->addr = (void *)new + sizeof(t_elem_info);
+	// new->addr = (void *)new + sizeof(t_elem_info);
 	if (!(g_zones.large))
 	{
 		new->prev = NULL;
@@ -64,5 +64,6 @@ void		*large(size_t size)
 	}
 	else
 		push_large(new);
-	return (new->addr);
+	// return (new->addr);
+	return ((void *)new + sizeof(t_elem_info));
 }

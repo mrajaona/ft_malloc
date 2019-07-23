@@ -18,7 +18,6 @@
 /*
 ** size : available size (not including header)
 ** isfree : status
-** addr : start of available memory
 */
 
 typedef struct	s_elem_info
@@ -27,8 +26,6 @@ typedef struct	s_elem_info
 	struct s_elem_info	*next;
 	size_t				size;
 	char				isfree;
-	void				*addr;
-	char				padding;
 }				t_elem_info;
 
 /*
