@@ -78,7 +78,6 @@ static t_zone_info	*create_zone(t_type type)
 	first->next = NULL;
 	first->size = new->size - sizeof(t_elem_info);
 	first->isfree = 1;
-	// first->addr = (void *)(first) + sizeof(t_elem_info);
 	push_zone(new, type);
 	return (new);
 }
@@ -118,5 +117,4 @@ void				*other(size_t size, const t_type type)
 	}
 	split(elem, size);
 	return ((void *)elem + sizeof(t_elem_info));
-	// return (elem->addr);
 }
