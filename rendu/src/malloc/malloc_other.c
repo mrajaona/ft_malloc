@@ -57,6 +57,7 @@ static void			push_zone(t_zone_info *new, t_type type)
 static t_zone_info	*create_zone(t_type type)
 {
 	t_zone_info	*new;
+	t_elem_info	*first;
 	size_t		size;
 
 	size = sizeof(t_zone_info) + ((ZONE_CAPACITY)
@@ -73,12 +74,13 @@ static t_zone_info	*create_zone(t_type type)
 	new->size = size - sizeof(t_zone_info);
 	new->prev = NULL;
 	new->next = NULL;
-	new->first = (t_elem_info *)((char *)new + sizeof(t_zone_info));
-	new->first->prev = NULL;
-	new->first->next = NULL;
-	new->first->size = new->size - sizeof(t_elem_info);
-	new->first->isfree = 1;
-	new->first->addr = (char *)(new->first) + sizeof(t_elem_info);
+	new->first = (t_elem_info *)((void *)new + sizeof(t_zone_info));
+	first = new->first;
+	first->prev = NULL;
+	first->next = NULL;
+	first->size = new->size - sizeof(t_elem_info);
+	first->isfree = 1;
+	first->addr = (void *)(first) + sizeof(t_elem_info);
 	push_zone(new, type);
 	return (new);
 }
@@ -120,14 +122,7 @@ void				*other(size_t size, const t_type type)
 	}
 
 	// debug
-	ft_printf("%s\n\tzone %llu (%llu)\n\telem %llu (%llu)\n\taddr %llu (%llu)\n", type == TINY ? "tiny" : "small",
-		(unsigned long long)cursor,
-		(unsigned long long)cursor % 16,
-		(unsigned long long)elem,
-		(unsigned long long)elem % 16,
-		(unsigned long long)(elem->addr),
-		(unsigned long long)(elem->addr) % 16
-	);
+	ft_printf("%s\n", type == TINY ? "tiny" : "small");
 
 	split(elem, size);
 

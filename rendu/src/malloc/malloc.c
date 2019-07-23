@@ -18,6 +18,8 @@ void	*malloc_thread(size_t size)
 {
 	t_type	type;
 
+	if (!size)
+		return (other(0, TINY));
 	size = malloc_check_size(size);
 	if (!size)
 		return (NULL);

@@ -57,14 +57,14 @@ void		*large(size_t size)
 	}
 	new->size = size - sizeof(t_elem_info);
 	new->isfree = 0;
-	new->addr = (char *)new + sizeof(t_elem_info);
+	new->addr = (void *)new + sizeof(t_elem_info);
 
 	// debug
-	ft_printf("%s\n\telem %llu (%llu)\n\taddr %llu (%llu)\n", "large",
-		(unsigned long long)new,
+	ft_printf("%s\n\telem %p\t(%llu)\n\taddr %p\t(%llu)\n", "large",
+		new,
 		(unsigned long long)new % 16,
-		(unsigned long long)(new->addr),
-		(unsigned long long)(new->addr) % 16
+		new->addr,
+		(unsigned long long)(new->addr) % 1
 	);
 
 	if (!(g_zones.large))

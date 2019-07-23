@@ -27,9 +27,7 @@ void	split(t_elem_info *first, const size_t size)
 	if (!first)
 		return ;
 	first->isfree = 0;
-	if (first->size < size)
-		return ;
-	if (first->size == size || (first->size - size) < sizeof(t_elem_info))
+	if (first->size <= size || (first->size - size) < sizeof(t_elem_info))
 		return ;
 	second_size = first->size - (size + sizeof(t_elem_info));
 	first->size = size;
@@ -46,16 +44,16 @@ void	split(t_elem_info *first, const size_t size)
 		second->next->prev = second;
 
 	// debug
-	ft_printf("%s\n\telem %llu (%llu)\n\taddr %llu (%llu)\n", "split first",
-		(unsigned long long)first,
+	ft_printf("%s\n\telem %p\t(%llu)\n\taddr %p\t(%llu)\n", "split first",
+		first,
 		(unsigned long long)first % 16,
-		(unsigned long long)(first->addr),
+		first->addr,
 		(unsigned long long)(first->addr) % 16
 	);
-	ft_printf("%s\n\telem %llu (%llu)\n\taddr %llu (%llu)\n", "split second",
-		(unsigned long long)second,
+	ft_printf("%s\n\telem %p\t(%llu)\n\taddr %p\t(%llu)\n", "split second",
+		second,
 		(unsigned long long)second % 16,
-		(unsigned long long)(second->addr),
+		second->addr,
 		(unsigned long long)(second->addr) % 16
 	);
 }

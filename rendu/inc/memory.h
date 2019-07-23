@@ -28,7 +28,7 @@ typedef struct	s_elem_info
 	size_t				size;
 	char				isfree;
 	void				*addr;
-	char				padding; // a verifier
+	char				padding;
 }				t_elem_info;
 
 /*
