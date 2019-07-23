@@ -15,8 +15,8 @@ SRCS_FREE	=	$(addprefix $(DIR_FREE), $(SRC_FREE))
 DIR_MALLOC	=	malloc/
 SRC_MALLOC	=	malloc.c \
 				malloc_large.c \
-				malloc_other.c
-#				calloc.c
+				malloc_other.c \
+				calloc.c
 SRCS_MALLOC	=	$(addprefix $(DIR_MALLOC), $(SRC_MALLOC))
 
 DIR_REALLOC		=	realloc/

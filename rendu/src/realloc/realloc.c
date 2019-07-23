@@ -94,16 +94,7 @@ void			*realloc_thread(void *ptr, size_t size)
 
 		return (malloc_thread(size));
 		/*
-		Pas le comportement attendu, mais :
-			- ca fait marcher vim
-			- emacs ne segfault pas :
-				emacs: Terminal type "xterm-256color" is not powerful enough to run Emacs.
-				It lacks the ability to position the cursor.
-				If that is not the actual type of terminal you have,
-				use the Bourne shell command `TERM=... export TERM' (C-shell:
-				`setenv TERM ...') to specify the correct type.  It may be necessary
-				to do `unset TERMINFO' (C-shell: `unsetenv TERMINFO') as well.
-			- open meurt quand meme
+		Pas le comportement attendu, mais ca fait marcher vim, emacs et open
 		*/
 		// return (NULL);
 	}
