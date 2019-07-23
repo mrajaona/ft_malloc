@@ -87,17 +87,7 @@ void			*realloc_thread(void *ptr, size_t size)
 	if (!ptr)
 		return (malloc_thread(size));
 	else if (!(elem = identify(ptr)))
-	{
-		// le vrai realloc balance une erreur
-		// pareil pour un free invalide
-		// mais la correction veut qu'on renvoie NULL
-
-		return (malloc_thread(size));
-		/*
-		Pas le comportement attendu, mais ca fait marcher vim, emacs et open
-		*/
-		// return (NULL);
-	}
+		return (NULL);
 	else if (size == 0)
 	{
 		free_thread(ptr);
