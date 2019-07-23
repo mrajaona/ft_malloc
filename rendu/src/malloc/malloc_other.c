@@ -64,9 +64,7 @@ static t_zone_info	*create_zone(t_type type)
 			* (sizeof(t_elem_info) + (type == TINY ? TINY_MAX : SMALL_MAX)));
 	size = size + (getpagesize() - (size % getpagesize()));
 	if ((new = (t_zone_info *)mmap(NULL, size,
-		MMAP_PROT,
-		MMAP_FLAG,
-		-1, 0)) == MAP_FAILED)
+			MMAP_PROT, MMAP_FLAG, -1, 0)) == MAP_FAILED)
 	{
 		errno = ENOMEM;
 		return (NULL);
