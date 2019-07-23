@@ -88,11 +88,15 @@ void			*realloc_thread(void *ptr, size_t size)
 		return (malloc_thread(size));
 	else if (!(elem = identify(ptr)))
 	{
+		// le vrai realloc balance une erreur
+		// pareil pour un free invalide
+		// mais la correction veut qu'on renvoie NULL
+
 		return (malloc_thread(size));
 		/*
 		Pas le comportement attendu, mais :
 			- ca fait marcher vim
-			- emacs a ne segfault pas :
+			- emacs ne segfault pas :
 				emacs: Terminal type "xterm-256color" is not powerful enough to run Emacs.
 				It lacks the ability to position the cursor.
 				If that is not the actual type of terminal you have,
