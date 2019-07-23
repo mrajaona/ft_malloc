@@ -12,8 +12,6 @@
 
 #include "malloc_check_size.h"
 
-#include "ft_printf.h" //debug
-
 size_t	malloc_check_size(size_t size)
 {
 	size_t			max_size;
@@ -22,15 +20,6 @@ size_t	malloc_check_size(size_t size)
 	if (size >= SSIZE_MAX)
 		return (0);
 	size = malloc_good_size_thread(size);
-
-	// debug
-	ft_printf("%llu + %llu = %llu [%llu]\n",
-		sizeof(t_elem_info),
-		size,
-		(sizeof(t_elem_info) + size),
-		(sizeof(t_elem_info) + size) % 16
-		);
-
 	getrlimit(RLIMIT_AS, &limit);
 	max_size = limit.rlim_cur - sizeof(t_elem_info);
 	if (max_size < size)

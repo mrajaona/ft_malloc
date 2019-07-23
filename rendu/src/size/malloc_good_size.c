@@ -20,9 +20,6 @@ size_t	malloc_good_size_thread(size_t size)
 	tmp = sizeof(t_elem_info) + size;
 	calc = tmp + (16 - (tmp % 16)) - sizeof(t_elem_info);
 	return (calc);
-
-	// return (size + size % 2);
-	// return (size + size % 16);
 }
 
 size_t	malloc_good_size(size_t size)

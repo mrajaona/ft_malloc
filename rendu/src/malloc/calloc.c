@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// ls et vim marchent si on vire calloc du Makefile
+// ls marche si on vire calloc du Makefile
+// vim marche avec le patch realloc
 #include "calloc.h"
 
 void	*calloc_thread(size_t count, size_t size)
