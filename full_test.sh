@@ -12,7 +12,7 @@ cp -r ./rendu/*.so .
 rm -f ./inc/*
 cp ./rendu/ft_malloc.h ./inc
 
-FILES=(test0 test1 test2 test3 test3.1 test4 test5 test_limit)
+FILES=(test0 test1 test2 test3 test3.1 test4 test5 test_limit test_size)
 
 if [ ! -f libft_malloc.so ]
 	then
